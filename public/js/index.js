@@ -177,6 +177,10 @@ function verifyCurrentCombination() {
             .filter(function (e) { return COLORS.includes(e); })[0];
         currentCombination.push(color);
     }
+    if (currentCombination.includes(undefined)) {
+        alert('Mettez des pions dans chaque emplacement de la ligne');
+        return;
+    }
     currentCombination.forEach(function (color, index) {
         if (gameCombination[index] === color) {
             console.log("the color ".concat(color, " at the place ").concat(index + 1, " is at the good place"));

@@ -192,12 +192,16 @@ function verifyCurrentCombination() {
   let wrongPLacement = 0;
 
   // Get the current combination
-  const currentCombination = [];
+  const currentCombination: Array<string | undefined> = [];
   for (let i = 0; i < currentTargets.length; i++) {
     const color = currentTargets[i].className
       .split(' ')
       .filter((e) => COLORS.includes(e))[0];
     currentCombination.push(color);
+  }
+  if (currentCombination.includes(undefined)) {
+    alert('Mettez des pions dans chaque emplacement de la ligne');
+    return;
   }
 
   currentCombination.forEach((color, index) => {
@@ -208,7 +212,7 @@ function verifyCurrentCombination() {
       goodPlacement++;
       return;
     }
-    if (gameCombination.includes(color)) {
+    if (gameCombination.includes(color as string)) {
       console.log(
         `the color ${color} at the place ${index + 1} is not at the good place`
       );
