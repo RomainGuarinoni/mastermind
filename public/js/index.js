@@ -12,6 +12,8 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
+// get the game container
+var gameContainer = document.getElementById('game-container');
 // Get all the piece of the game
 var bluePiece = document.getElementById('blue-piece');
 var redPiece = document.getElementById('red-piece');
@@ -78,8 +80,32 @@ function drop_handler(e, target) {
 /**
  * @returns a combination of 4 colors
  */
-function generateCombination() {
-    return __spreadArray([], Array(4), true).map(function () { return COLORS[Math.floor(Math.random() * COLORS.length)]; });
+function generateCombination(colors) {
+    return __spreadArray([], Array(4), true).map(function () { return colors[Math.floor(Math.random() * colors.length)]; });
+}
+/**
+ * @description Add a new line to the game container
+ * @param index the index for the line id
+ */
+function addNewGameLine(index) {
+    var line = document.createElement('div');
+    line.classList.add('line');
+    line.id = "line-".concat(index);
+    var redIndicatorContainer = document.createElement('div');
+    redIndicatorContainer.classList.add('red-indicator-container');
+    var targetContainer = document.createElement('div');
+    targetContainer.classList.add('targets-container');
+    for (var i = 0; i < 4; i++) {
+        var target = document.createElement('div');
+        target.classList.add('target');
+        targetContainer.appendChild(target);
+    }
+    var whiteIndicatorContainer = document.createElement('div');
+    whiteIndicatorContainer.classList.add('white-indicator-container');
+    line.appendChild(redIndicatorContainer);
+    line.appendChild(targetContainer);
+    line.appendChild(whiteIndicatorContainer);
+    gameContainer.appendChild(line);
 }
 /**
  * @description Reset all game variable and HTML and start the game
@@ -88,10 +114,10 @@ function startNewGame() {
     // Reset current round
     currentRound = 1;
     // Reset game combination
-    gameCombination = generateCombination();
+    gameCombination = generateCombination(COLORS);
     // reset HTML here
-    var gameContainer = document.getElementById('game-container');
-    gameContainer.innerHTML = "\n      <div class=\"line\" id=\"line-".concat(currentRound, "\">\n        <div class=\"red-indicator-container\"></div>\n        <div class=\"targets-container\">\n          <div class=\"target\"></div>\n          <div class=\"target\"></div>\n          <div class=\"target\"></div>\n          <div class=\"target\"></div>\n        </div>\n        <div class=\"white-indicator-container\"></div>\n      </div>\n      ");
+    gameContainer.innerHTML = '';
+    addNewGameLine(currentRound);
     // Reset currentTarget and indicators
     currentLine = document.getElementById("line-".concat(currentRound));
     currentTargets = currentLine.querySelectorAll("div.targets-container > div.target");

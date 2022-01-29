@@ -3,6 +3,9 @@
  * white indicator --> good color at tre wrong place
  */
 
+// get the game container
+const gameContainer = document.getElementById('game-container')!;
+
 // Get all the piece of the game
 const bluePiece = document.getElementById('blue-piece')!;
 const redPiece = document.getElementById('red-piece')!;
@@ -78,10 +81,41 @@ function drop_handler(e: DragEvent, target: Element) {
 /**
  * @returns a combination of 4 colors
  */
-function generateCombination() {
+function generateCombination(colors: string[]) {
   return [...Array(4)].map(
-    () => COLORS[Math.floor(Math.random() * COLORS.length)]
+    () => colors[Math.floor(Math.random() * colors.length)]
   );
+}
+
+/**
+ * @description Add a new line to the game container
+ * @param index the index for the line id
+ */
+function addNewGameLine(index: number) {
+  const line = document.createElement('div');
+  line.classList.add('line');
+  line.id = `line-${index}`;
+
+  const redIndicatorContainer = document.createElement('div');
+  redIndicatorContainer.classList.add('red-indicator-container');
+
+  const targetContainer = document.createElement('div');
+  targetContainer.classList.add('targets-container');
+
+  for (let i = 0; i < 4; i++) {
+    const target = document.createElement('div');
+    target.classList.add('target');
+    targetContainer.appendChild(target);
+  }
+
+  const whiteIndicatorContainer = document.createElement('div');
+  whiteIndicatorContainer.classList.add('white-indicator-container');
+
+  line.appendChild(redIndicatorContainer);
+  line.appendChild(targetContainer);
+  line.appendChild(whiteIndicatorContainer);
+
+  gameContainer.appendChild(line);
 }
 
 /**
@@ -92,22 +126,11 @@ function startNewGame() {
   currentRound = 1;
 
   // Reset game combination
-  gameCombination = generateCombination();
+  gameCombination = generateCombination(COLORS);
 
   // reset HTML here
-  const gameContainer = document.getElementById('game-container')!;
-  gameContainer.innerHTML = `
-      <div class="line" id="line-${currentRound}">
-        <div class="red-indicator-container"></div>
-        <div class="targets-container">
-          <div class="target"></div>
-          <div class="target"></div>
-          <div class="target"></div>
-          <div class="target"></div>
-        </div>
-        <div class="white-indicator-container"></div>
-      </div>
-      `;
+  gameContainer.innerHTML = '';
+  addNewGameLine(currentRound);
 
   // Reset currentTarget and indicators
   currentLine = document.getElementById(`line-${currentRound}`)!;
