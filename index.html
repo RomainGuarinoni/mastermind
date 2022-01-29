@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="public/style.css" />
+    <title>Mastermind</title>
+  </head>
+  <body>
+    <div class="line">
+      <div class="red-indicator-container"></div>
+      <div class="targets-container">
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+        <div class="target"></div>
+      </div>
+      <div class="white-indicator-container"></div>
+    </div>
+
+    <div class="pieces">
+      <div id="blue-piece" draggable="true" class="piece blue"></div>
+      <div id="red-piece" draggable="true" class="piece red"></div>
+      <div id="green-piece" draggable="true" class="piece green"></div>
+      <div id="yellow-piece" draggable="true" class="piece yellow"></div>
+      <div id="orange-piece" draggable="true" class="piece orange"></div>
+      <div id="black-piece" draggable="true" class="piece black"></div>
+      <div id="white-piece" draggable="true" class="piece white"></div>
+      <div id="maroon-piece" draggable="true" class="piece maroon"></div>
+    </div>
+
+    <button id="verify">Vérifier</button>
+
+    <script src="public/js/index.js"></script>
+  </body>
+</html>

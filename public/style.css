@@ -1,0 +1,122 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.line,
+.pieces,
+.targets-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.line,
+.pieces {
+  margin: 20px 0;
+}
+
+.red-indicator-container,
+.white-indicator-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: calc(30px * 4);
+}
+
+.red-indicator-container {
+  justify-content: flex-end;
+}
+
+.white-indicator-container {
+  justify-content: flex-start;
+}
+
+.red-indicator,
+.white-indicator {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 10px rgba(29, 29, 29, 0.445));
+}
+
+.red-indicator {
+  background-color: red;
+}
+
+.white-indicator {
+  background-color: white;
+}
+
+.targets-container {
+  border: 2px solid gray;
+  border-radius: 30px;
+  padding: 10px 20px;
+}
+
+.target,
+.piece {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.329);
+  filter: drop-shadow(0px 0px 10px rgba(29, 29, 29, 0.445));
+  margin: 0 10px;
+}
+
+.piece {
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all ease 200ms;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+.blue {
+  background-color: blue;
+}
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.white {
+  background-color: white;
+}
+
+.black {
+  background-color: black;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.maroon {
+  background-color: maroon;
+}
