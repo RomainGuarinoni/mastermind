@@ -38,9 +38,9 @@ pieces.forEach((piece) =>
 // All the color available in the game based on the pieces available
 const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
-// The button to verrify the current combination
+// The button of the game
 const verifyButton = document.getElementById('verify')!;
-
+const restartButton = document.getElementById('restart')!;
 // current game round
 // min : 1 | max : 12
 let currentRound: number;
@@ -248,5 +248,8 @@ function verifyCurrentCombination() {
 
 // Add the verify event
 verifyButton.onclick = verifyCurrentCombination;
+
+// add restart event
+restartButton.onclick = startNewGame;
 
 startNewGame();

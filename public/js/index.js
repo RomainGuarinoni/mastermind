@@ -42,8 +42,9 @@ pieces.forEach(function (piece) {
 });
 // All the color available in the game based on the pieces available
 var COLORS = pieces.map(function (piece) { return piece.id.split('-')[0]; });
-// The button to verrify the current combination
+// The button of the game
 var verifyButton = document.getElementById('verify');
+var restartButton = document.getElementById('restart');
 // current game round
 // min : 1 | max : 12
 var currentRound;
@@ -208,4 +209,6 @@ function verifyCurrentCombination() {
 }
 // Add the verify event
 verifyButton.onclick = verifyCurrentCombination;
+// add restart event
+restartButton.onclick = startNewGame;
 startNewGame();
