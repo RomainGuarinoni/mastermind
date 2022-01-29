@@ -33,6 +33,13 @@ var pieces = [
     whitePiece,
     marronPiece,
 ];
+// Add drag event listener for each piece and setting the
+// data Transfer to the corresponding color
+pieces.forEach(function (piece) {
+    return piece === null || piece === void 0 ? void 0 : piece.addEventListener('dragstart', function (e) {
+        dragstart_handler(e, piece.id.split('-')[0]);
+    });
+});
 // All the color available in the game based on the pieces available
 var COLORS = pieces.map(function (piece) { return piece.id.split('-')[0]; });
 // The button to verrify the current combination
@@ -87,10 +94,10 @@ function generateCombination(colors) {
  * @description Add a new line to the game container
  * @param index the index for the line id
  */
-function addNewGameLine(index) {
+function addNewGameLine(round) {
     var line = document.createElement('div');
     line.classList.add('line');
-    line.id = "line-".concat(index);
+    line.id = "line-".concat(round);
     var redIndicatorContainer = document.createElement('div');
     redIndicatorContainer.classList.add('red-indicator-container');
     var targetContainer = document.createElement('div');
@@ -108,6 +115,40 @@ function addNewGameLine(index) {
     gameContainer.appendChild(line);
 }
 /**
+ * @description Add the drag event listener of the targets
+ * @param target
+ */
+function addTargetListener(targets) {
+    var _loop_1 = function (i) {
+        targets[i].addEventListener('dragover', function (e) {
+            dragover_handler(e);
+        });
+        targets[i].addEventListener('drop', function (e) {
+            return drop_handler(e, targets[i]);
+        });
+    };
+    for (var i = 0; i < targets.length; i++) {
+        _loop_1(i);
+    }
+}
+/**
+ * @description Remove the drag event listener of the targets
+ * @param target
+ */
+function removeTargetListener(targets) {
+    var _loop_2 = function (i) {
+        targets[i].removeEventListener('dragover', function (e) {
+            dragover_handler(e);
+        });
+        targets[i].removeEventListener('drop', function (e) {
+            return drop_handler(e, targets[i]);
+        });
+    };
+    for (var i = 0; i < targets.length; i++) {
+        _loop_2(i);
+    }
+}
+/**
  * @description Reset all game variable and HTML and start the game
  */
 function startNewGame() {
@@ -123,25 +164,7 @@ function startNewGame() {
     currentTargets = currentLine.querySelectorAll("div.targets-container > div.target");
     currentRedIndicatorsContainer = currentLine.querySelector('div.red-indicator-container');
     currentWhiteIndicatorsContainer = currentLine.querySelector('div.white-indicator-container');
-    // Add drag event listener for each piece and setting the
-    // data Transfer to the corresponding color
-    pieces.forEach(function (piece) {
-        return piece === null || piece === void 0 ? void 0 : piece.addEventListener('dragstart', function (e) {
-            dragstart_handler(e, piece.id.split('-')[0]);
-        });
-    });
-    var _loop_1 = function (i) {
-        currentTargets[i].addEventListener('dragover', function (e) {
-            dragover_handler(e);
-        });
-        currentTargets[i].addEventListener('drop', function (e) {
-            return drop_handler(e, currentTargets[i]);
-        });
-    };
-    // Add drag event for every current targets
-    for (var i = 0; i < currentTargets.length; i++) {
-        _loop_1(i);
-    }
+    addTargetListener(currentTargets);
 }
 function verifyCurrentCombination() {
     var goodPlacement = 0;
@@ -169,17 +192,24 @@ function verifyCurrentCombination() {
     });
     // Add indicator to the current line
     for (var j = 0; j < goodPlacement; j++) {
-        console.log('pass red');
         var redIndicator = document.createElement('div');
         redIndicator.classList.add('red-indicator');
         currentRedIndicatorsContainer.appendChild(redIndicator);
     }
     for (var k = 0; k < wrongPLacement; k++) {
-        console.log('pass white');
         var whiteIndicator = document.createElement('div');
         whiteIndicator.classList.add('white-indicator');
         currentWhiteIndicatorsContainer.appendChild(whiteIndicator);
     }
+    // Add a new line to the game
+    removeTargetListener(currentTargets);
+    currentRound++;
+    addNewGameLine(currentRound);
+    currentLine = document.getElementById("line-".concat(currentRound));
+    currentTargets = currentLine.querySelectorAll("div.targets-container > div.target");
+    currentRedIndicatorsContainer = currentLine.querySelector('div.red-indicator-container');
+    currentWhiteIndicatorsContainer = currentLine.querySelector('div.white-indicator-container');
+    addTargetListener(currentTargets);
 }
 // Add the verify event
 verifyButton.onclick = verifyCurrentCombination;
