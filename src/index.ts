@@ -69,9 +69,9 @@ function dragstart_handler(e: DragEvent, color: string) {
  * @description listener function on drag over event
  * @param e
  */
-function dragover_handler(e: DragEvent) {
+function dragover_handler(e: Event) {
   e.preventDefault();
-  e.dataTransfer!.dropEffect = 'move';
+  (e as DragEvent).dataTransfer!.dropEffect = 'move';
 }
 
 /**
@@ -132,13 +132,12 @@ function addNewGameLine(round: number) {
  */
 function addTargetListener(targets: NodeListOf<Element>) {
   for (let i = 0; i < targets.length; i++) {
-    targets[i].addEventListener('dragover', (e) => {
-      dragover_handler(e as DragEvent);
-    });
+    targets[i].addEventListener('dragover', dragover_handler, true);
 
     targets[i].addEventListener('drop', (e) =>
       drop_handler(e as DragEvent, targets[i])
-    );
+    ),
+      true;
   }
 }
 
@@ -148,13 +147,7 @@ function addTargetListener(targets: NodeListOf<Element>) {
  */
 function removeTargetListener(targets: NodeListOf<Element>) {
   for (let i = 0; i < targets.length; i++) {
-    targets[i].removeEventListener('dragover', (e) => {
-      dragover_handler(e as DragEvent);
-    });
-
-    targets[i].removeEventListener('drop', (e) =>
-      drop_handler(e as DragEvent, targets[i])
-    );
+    targets[i].removeEventListener('dragover', dragover_handler, true);
   }
 }
 

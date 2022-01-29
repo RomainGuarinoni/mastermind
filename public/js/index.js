@@ -120,12 +120,11 @@ function addNewGameLine(round) {
  */
 function addTargetListener(targets) {
     var _loop_1 = function (i) {
-        targets[i].addEventListener('dragover', function (e) {
-            dragover_handler(e);
-        });
+        targets[i].addEventListener('dragover', dragover_handler, true);
         targets[i].addEventListener('drop', function (e) {
             return drop_handler(e, targets[i]);
-        });
+        }),
+            true;
     };
     for (var i = 0; i < targets.length; i++) {
         _loop_1(i);
@@ -136,16 +135,8 @@ function addTargetListener(targets) {
  * @param target
  */
 function removeTargetListener(targets) {
-    var _loop_2 = function (i) {
-        targets[i].removeEventListener('dragover', function (e) {
-            dragover_handler(e);
-        });
-        targets[i].removeEventListener('drop', function (e) {
-            return drop_handler(e, targets[i]);
-        });
-    };
     for (var i = 0; i < targets.length; i++) {
-        _loop_2(i);
+        targets[i].removeEventListener('dragover', dragover_handler, true);
     }
 }
 /**
