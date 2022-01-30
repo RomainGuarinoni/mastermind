@@ -41,6 +41,14 @@ const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 // The button of the game
 const verifyButton = document.getElementById('verify')!;
 const restartButton = document.getElementById('restart')!;
+const winRestartButton = document.getElementById('win-restart')!;
+const looseRestartButton = document.getElementById('loose-restart')!;
+
+// Pop up
+
+const winPopup = document.getElementById('win')!;
+const loosePopup = document.getElementById('loose')!;
+
 // current game round
 // min : 1 | max : 12
 let currentRound: number;
@@ -213,7 +221,6 @@ function verifyCurrentCombination() {
       wrongPLacement++;
       return;
     }
-    console.log(`the color ${color} is not in the final combination`);
   });
 
   // Add indicator to the current line
@@ -227,6 +234,29 @@ function verifyCurrentCombination() {
     const whiteIndicator = document.createElement('div');
     whiteIndicator.classList.add('white-indicator');
     currentWhiteIndicatorsContainer.appendChild(whiteIndicator);
+  }
+
+  if (goodPlacement === 4) {
+    // win
+    document.getElementById(
+      'nb-round'
+    )!.innerHTML = `Tu as trouvé la combinaison en ${currentRound} tours`;
+    winPopup.style.display = 'flex';
+    return;
+  }
+
+  if (currentRound === 12) {
+    // loose
+    const solutionCombinaison = document.getElementById(
+      'solution-combination'
+    )!;
+    for (let i = 0; i < gameCombination.length; i++) {
+      const div = document.createElement('div');
+      div.classList.add(...['piece', gameCombination[i]]);
+      solutionCombinaison.appendChild(div);
+    }
+    loosePopup.style.display = 'flex';
+    return;
   }
 
   // Add a new line to the game
@@ -251,5 +281,17 @@ verifyButton.onclick = verifyCurrentCombination;
 
 // add restart event
 restartButton.onclick = startNewGame;
+
+winRestartButton.onclick = (e) => {
+  e.preventDefault();
+  winPopup.style.display = 'none';
+  startNewGame();
+};
+
+looseRestartButton.onclick = (e) => {
+  e.preventDefault();
+  loosePopup.style.display = 'none';
+  startNewGame();
+};
 
 startNewGame();

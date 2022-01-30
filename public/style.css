@@ -26,6 +26,10 @@ body {
   align-items: center;
 }
 
+.line {
+  margin: 2px 0;
+}
+
 .pieces {
   margin: 20px 0;
 }
@@ -142,4 +146,52 @@ button:hover {
 
 .maroon {
   background-color: maroon;
+}
+
+#win,
+#loose {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.493);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: none;
+}
+
+.win-popup,
+.loose-popup {
+  background-color: white;
+  padding: 30px 60px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#win h2 {
+  color: #65a30d;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#loose h2 {
+  color: #dc2626;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#solution {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+#solution-combination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }

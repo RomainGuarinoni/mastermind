@@ -45,6 +45,11 @@ var COLORS = pieces.map(function (piece) { return piece.id.split('-')[0]; });
 // The button of the game
 var verifyButton = document.getElementById('verify');
 var restartButton = document.getElementById('restart');
+var winRestartButton = document.getElementById('win-restart');
+var looseRestartButton = document.getElementById('loose-restart');
+// Pop up
+var winPopup = document.getElementById('win');
+var loosePopup = document.getElementById('loose');
 // current game round
 // min : 1 | max : 12
 var currentRound;
@@ -159,6 +164,7 @@ function startNewGame() {
     addTargetListener(currentTargets);
 }
 function verifyCurrentCombination() {
+    var _a;
     var goodPlacement = 0;
     var wrongPLacement = 0;
     // Get the current combination
@@ -184,7 +190,6 @@ function verifyCurrentCombination() {
             wrongPLacement++;
             return;
         }
-        console.log("the color ".concat(color, " is not in the final combination"));
     });
     // Add indicator to the current line
     for (var j = 0; j < goodPlacement; j++) {
@@ -196,6 +201,23 @@ function verifyCurrentCombination() {
         var whiteIndicator = document.createElement('div');
         whiteIndicator.classList.add('white-indicator');
         currentWhiteIndicatorsContainer.appendChild(whiteIndicator);
+    }
+    if (goodPlacement === 4) {
+        // win
+        document.getElementById('nb-round').innerHTML = "Tu as trouv\u00E9 la combinaison en ".concat(currentRound, " tours");
+        winPopup.style.display = 'flex';
+        return;
+    }
+    if (currentRound === 12) {
+        // loose
+        var solutionCombinaison = document.getElementById('solution-combination');
+        for (var i = 0; i < gameCombination.length; i++) {
+            var div = document.createElement('div');
+            (_a = div.classList).add.apply(_a, ['piece', gameCombination[i]]);
+            solutionCombinaison.appendChild(div);
+        }
+        loosePopup.style.display = 'flex';
+        return;
     }
     // Add a new line to the game
     removeTargetListener(currentTargets);
@@ -211,4 +233,14 @@ function verifyCurrentCombination() {
 verifyButton.onclick = verifyCurrentCombination;
 // add restart event
 restartButton.onclick = startNewGame;
+winRestartButton.onclick = function (e) {
+    e.preventDefault();
+    winPopup.style.display = 'none';
+    startNewGame();
+};
+looseRestartButton.onclick = function (e) {
+    e.preventDefault();
+    loosePopup.style.display = 'none';
+    startNewGame();
+};
 startNewGame();
