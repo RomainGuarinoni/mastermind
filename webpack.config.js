@@ -3,9 +3,9 @@ const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 require('@babel/register');
 
-module.exports = (env) => {
+module.exports = () => {
   return {
-    entry: ['./src/index.ts', './src/global.css'],
+    entry: ['./src/index.ts', './src/style/global.css'],
     output: {
       path: path.resolve(__dirname, 'dist/'),
       filename: 'bundle.js',

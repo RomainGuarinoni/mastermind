@@ -1,6 +1,6 @@
 node_modules/
 
-dist/
+/dist/
 
 # ignore js files created by tsc command
 
