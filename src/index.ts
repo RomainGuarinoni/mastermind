@@ -1,8 +1,4 @@
-/**
- * red indicator --> good color at the righrt place
- * white indicator --> good color at tre wrong place
- */
-
+import generateCombination from './test';
 // get the game container
 const gameContainer = document.getElementById('game-container')!;
 
@@ -92,15 +88,6 @@ function drop_handler(e: DragEvent, target: Element) {
   const color = e.dataTransfer!.getData('text/plain');
   target.classList.remove(...COLORS);
   target.classList.add(color);
-}
-
-/**
- * @returns a combination of 4 colors
- */
-function generateCombination(colors: string[]) {
-  return [...Array(4)].map(
-    () => colors[Math.floor(Math.random() * colors.length)]
-  );
 }
 
 /**

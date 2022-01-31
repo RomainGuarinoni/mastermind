@@ -10,6 +10,9 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'dist/'),
       filename: 'bundle.js',
     },
+    resolve: {
+      extensions: ['.ts', '.js'],
+    },
     devtool: 'source-map',
     module: {
       rules: [
