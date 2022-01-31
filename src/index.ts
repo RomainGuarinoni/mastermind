@@ -160,6 +160,26 @@ function removeTargetListener(targets: NodeListOf<Element>) {
 }
 
 /**
+ *
+ * @returns the current combination
+ */
+function getCurrentCombination(): Array<string | undefined> {
+  return Array.from(currentTargets).map(
+    (item) => item.className.split(' ').filter((e) => COLORS.includes(e))[0]
+  );
+}
+
+/**
+ *
+ * @param combination
+ * @param color
+ * @returns the number of time a color appear in a combination
+ */
+function getColorApparition(combination: string[], color: string) {
+  return combination.filter((e) => e === color).length;
+}
+
+/**
  * @description Reset all game variable and HTML and start the game
  */
 function startNewGame() {
@@ -189,17 +209,12 @@ function startNewGame() {
 }
 
 function verifyCurrentCombination() {
-  let goodPlacement = 0;
-  let wrongPLacement = 0;
+  let goodPlacement: string[] = [];
+  let wrongPLacement: string[] = [];
 
   // Get the current combination
-  const currentCombination: Array<string | undefined> = [];
-  for (let i = 0; i < currentTargets.length; i++) {
-    const color = currentTargets[i].className
-      .split(' ')
-      .filter((e) => COLORS.includes(e))[0];
-    currentCombination.push(color);
-  }
+  const currentCombination = getCurrentCombination();
+
   if (currentCombination.includes(undefined)) {
     alert('Mettez des pions dans chaque emplacement de la ligne');
     return;
@@ -210,33 +225,52 @@ function verifyCurrentCombination() {
       console.log(
         `the color ${color} at the place ${index + 1} is at the good place`
       );
-      goodPlacement++;
+
+      goodPlacement.push(color);
+
+      /**
+       * remove the color from the wrong emplacement if we already
+       * have all the good placement, it delete the duplicates
+       * indicator. see https://github.com/RomainGuarinoni/mastermind/issues/8
+       */
+      if (
+        goodPlacement.filter((e) => e === color).length ===
+        getColorApparition(gameCombination, color as string)
+      ) {
+        wrongPLacement = wrongPLacement.filter((e) => e !== color);
+      }
+
       return;
     }
-    if (gameCombination.includes(color as string)) {
+
+    if (
+      gameCombination.includes(color as string) &&
+      [...goodPlacement, ...wrongPLacement].filter((e) => e === color).length <
+        getColorApparition(gameCombination, color as string)
+    ) {
       console.log(
         `the color ${color} at the place ${index + 1} is not at the good place`
       );
 
-      wrongPLacement++;
+      wrongPLacement.push(color as string);
       return;
     }
   });
 
   // Add indicator to the current line
-  for (let j = 0; j < goodPlacement; j++) {
+  for (let j = 0; j < goodPlacement.length; j++) {
     const redIndicator = document.createElement('div');
     redIndicator.classList.add('red-indicator');
     currentRedIndicatorsContainer.appendChild(redIndicator);
   }
 
-  for (let k = 0; k < wrongPLacement; k++) {
+  for (let k = 0; k < wrongPLacement.length; k++) {
     const whiteIndicator = document.createElement('div');
     whiteIndicator.classList.add('white-indicator');
     currentWhiteIndicatorsContainer.appendChild(whiteIndicator);
   }
 
-  if (goodPlacement === 4) {
+  if (goodPlacement.length === 4) {
     // win
     document.getElementById(
       'nb-round'
