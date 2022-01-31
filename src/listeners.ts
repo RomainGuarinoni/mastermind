@@ -26,7 +26,18 @@ function setTargetBackgroundColor(e: DragEvent, colors: string[]) {
   e.preventDefault();
   const color = e.dataTransfer!.getData('text/plain');
   (e.target as Element).classList.remove(...colors);
-  (e.target as Element).classList.add(color);
+  (e.target as Element).classList.add(color, 'current-target');
+}
+
+/**
+ * @description remove the color of a target if the target is clicked
+ * @param e
+ */
+function removeColorFromTarget(e: Event) {
+  (e.target as Element).classList.remove(
+    ...(e.target as Element).classList.value.split(' ')
+  );
+  (e.target as Element).classList.add('target');
 }
 
 /**
@@ -45,6 +56,8 @@ export function addTargetListener(
       setTargetBackgroundColor(e as DragEvent, colors)
     ),
       true;
+
+    targets[i].addEventListener('mousedown', removeColorFromTarget);
   }
 }
 
@@ -55,5 +68,7 @@ export function addTargetListener(
 export function removeTargetListener(targets: NodeListOf<Element>) {
   for (let i = 0; i < targets.length; i++) {
     targets[i].removeEventListener('dragover', setTargetDropEffect, true);
+    targets[i].removeEventListener('mousedown', removeColorFromTarget);
+    targets[i].classList.remove('current-target');
   }
 }
