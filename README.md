@@ -1,4 +1,5 @@
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+[![codecov](https://codecov.io/gh/RomainGuarinoni/mastermind/branch/main/graph/badge.svg?token=LZUKNQGFTZ)](https://codecov.io/gh/RomainGuarinoni/mastermind)
 
 # Mastermind
 
