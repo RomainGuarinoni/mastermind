@@ -1,50 +1,91 @@
 # Mastermind
 
+> A mastermind game built with web technologies
+
+## Built with
+
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
+- [Typescript](https://www.typescriptlang.org/)
+- [Webpack](https://webpack.js.org/)
+- [Babeljs](https://babeljs.io/)
+
 ## Developement
 
-Follow these instructions to run the project under development mode :
+1. Clone the project
 
-1- install npm depedencies
+_Using hhtps_
+
+```sh
+git clone https://github.com/RomainGuarinoni/mastermind.git
+```
+
+_Using ssh_
+
+```sh
+git clone git@github.com:RomainGuarinoni/mastermind.git
+```
+
+2. Install npm dependencies
 
 ```sh
 npm install
-
 ```
 
-2- start the typescript compilator in watch mode
+3. Run the project in developement mode
 
-```sh
-npm run type
-
-```
-
-3- start the live server
+_This command will start the project and open a page in your web browser automatically with live reloading enabled_
 
 ```sh
 npm start
-
 ```
 
-> If you have trouble using live-server, you can install the Live Server VSCode extension
+## Build the project
+
+The project is built using webpack and babel.
+
+Run this command to build the project under the `dist` folder :
+
+```sh
+npm run build
+```
+
+### Babel
+
+Babel transposes typescript files into javascript supported by the major browsers. This allows us to use the latest typescript and javascript features without worrying about browser support.
+
+### Webpack
+
+Webpack is a module bundler, it builds the code by taking all the files and generate a single compiled file. It allows us to use `import/export` statements in our code. Moreover, it allows us to build our css and auto inject `<link>` tag in our html file.
 
 ## How to contribute
 
-If you want to contribute to the project, you need to create an issue describing your feature or bug or use an existing one for you Pull Request
+### Writing issue
 
-1- Create a new branche with an explicit name
+If you want to request a feature or report a bug, just write a [new issue](https://github.com/RomainGuarinoni/mastermind/issues/new/choose) and choose the best template to describe your request.
 
-2- Create directly a pull request and link the issue (The issue will go in the In Progress column of the project kanban)
+### Contribute as a developper
 
-3- When you finished the feature, add reviewers to your pull request (the issue will go in the Review In Progress of the project Kanban)
+If you want to write code in this project and make participate in its developement, follow these steps :
 
-4- make sure you rebased your branch to the main branch for branch conflict purpose :
+1. Create a new branche from the `main` one and give it an explicit name, E.g:
 
 ```sh
-
-git fetch --all
-
-git rebase origin/main
-
+git checkout -b "feat/myfeature"
 ```
 
-5- Wait the reviewers opinion and make changes if needed
+2. Open a pull request as soon as possible to tell the dev team what you're working on
+
+3. When you finished you finished your featuren, rebase your branch on the `main` one :
+
+```sh
+git fetch --all
+git rebase origin/main
+```
+
+4. Add reviewers to your pull request and wait for reviews
+
+## Authors
+
+- [Romain Guarinoni](https://github.com/RomainGuarinoni)
+- [Guillaume Faure](https://github.com/Guillaume-FAURE)
