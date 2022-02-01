@@ -92,6 +92,10 @@ body {
   cursor: pointer;
 }
 
+.current-target {
+  cursor: pointer;
+}
+
 .button-container {
   display: flex;
   flex-wrap: wrap;
