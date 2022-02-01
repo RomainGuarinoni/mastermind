@@ -108,14 +108,14 @@ let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
  * @description Return array with only the number of color wanted
- * @param nbColors
+ * @param nbColors number of colors wanted by the player
  */
 function getColorsArray(nbColors: number) {
   let colorsArray = new Array();
   let tmpColor;
   while (colorsArray.length < nbColors) {
     tmpColor = COLORS[Math.floor(Math.random() * COLORS.length)];
-    if (colorsArray.includes(tmpColor) == false) {
+    if (colorsArray.includes(tmpColor) === false) {
       colorsArray.push(tmpColor);
     }
   }
@@ -123,8 +123,7 @@ function getColorsArray(nbColors: number) {
     document.getElementById(`${COLORS[i]}-piece`)!.style.display = 'flex';
   }
   for (let i = 0; i < COLORS.length; i++) {
-    if (colorsArray.includes(COLORS[i]) == false) {
-      console.log(`${COLORS[i]}-piece`);
+    if (colorsArray.includes(COLORS[i]) === false) {
       document.getElementById(`${COLORS[i]}-piece`)!.style.display = 'none';
     }
   }
@@ -283,7 +282,6 @@ winRestartButton.onclick = (e) => {
 looseRestartButton.onclick = (e) => {
   e.preventDefault();
   loosePopup.style.display = 'none';
-
   startNewGame();
 };
 
