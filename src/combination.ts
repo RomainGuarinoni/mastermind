@@ -3,10 +3,23 @@
  * @param colors the available colors of the game
  * @returns a combination of 4 colors
  */
-export function generateCombination(colors: string[],nbPossibilities:number) {
-  return [...Array(nbPossibilities)].map(
-    () => colors[Math.floor(Math.random() * colors.length)]
-  );
+export function generateCombination(colors: string[],nbPossibilities:number, duplicate:boolean) {
+  if(duplicate==false){
+    let colorCombination = new Array();
+    let tmpColor;
+    while(colorCombination.length<nbPossibilities){
+      tmpColor=colors[Math.floor(Math.random()*colors.length)];
+      if (colorCombination.includes(tmpColor)==false){
+        colorCombination.push(tmpColor);
+      }
+    }
+    return colorCombination;
+  }
+  else{
+    return [...Array(nbPossibilities)].map(
+      () => colors[Math.floor(Math.random() * colors.length)]
+    );
+  }
 }
 
 /**

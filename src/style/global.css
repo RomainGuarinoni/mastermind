@@ -224,13 +224,13 @@ button:hover {
   height: 200px;
   position: absolute;
 }
-#nbTurns,#duplicate,#noColor,#nbPossibilities{
+#nbTurns,#duplicate,#nbColors,#nbPossibilities{
   display: flex;
   color: aliceblue;
   font-size: 20px;
   font-weight: bold;
 }
-#nbTurnsInput,#nbPossibilitiesInput{
+#nbTurnsValue,#nbPossibilitiesValue,#nbColorsValue{
   max-width: 40px;
   margin-left: 10px;
 }

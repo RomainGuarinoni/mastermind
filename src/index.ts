@@ -111,8 +111,8 @@ function startNewGame(duplicate: boolean, nbTurns: number, nbColors:number, nbPo
   currentRound = 1;
 
   // Reset game combination
-  gameCombination = generateCombination(COLORS,nbPossibilities);
-
+  gameCombination = generateCombination(COLORS,nbPossibilities,duplicate);
+  console.log(gameCombination);
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
