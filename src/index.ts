@@ -115,7 +115,6 @@ function startNewGame() {
 
   // Reset game combination
   gameCombination = generateCombination(COLORS, nbPossibilities, duplicate);
-  console.log(gameCombination);
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
