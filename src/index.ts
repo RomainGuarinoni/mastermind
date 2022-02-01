@@ -107,14 +107,47 @@ let nbColors = nbColorsValue.valueAsNumber;
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
- * @description Reset all game variable and HTML and start a new game
+ * @description Return array with only the number of color wanted
+ * @param nbColors
+ */
+function getColorsArray(nbColors: number) {
+  let colorsArray = new Array();
+  let tmpColor;
+  while (colorsArray.length < nbColors) {
+    tmpColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+    if (colorsArray.includes(tmpColor) == false) {
+      colorsArray.push(tmpColor);
+    }
+  }
+  for (let i = 0; i < COLORS.length; i++) {
+    document.getElementById(`${COLORS[i]}-piece`)!.style.display = 'flex';
+  }
+  for (let i = 0; i < COLORS.length; i++) {
+    if (colorsArray.includes(COLORS[i]) == false) {
+      console.log(`${COLORS[i]}-piece`);
+      document.getElementById(`${COLORS[i]}-piece`)!.style.display = 'none';
+    }
+  }
+  return colorsArray;
+}
+
+/**
+ * @description Set parametersPopup innerHtml
+ * @param duplicate
+ * @param nbTurns
+ * @param nbColors
+ * @param nbPossibilities
  */
 function startNewGame() {
   // Reset current round
   currentRound = 1;
-
+  let coloursAvailable = getColorsArray(nbColors);
   // Reset game combination
-  gameCombination = generateCombination(COLORS, nbPossibilities, duplicate);
+  gameCombination = generateCombination(
+    coloursAvailable,
+    nbPossibilities,
+    duplicate,
+  );
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
