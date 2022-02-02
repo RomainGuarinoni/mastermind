@@ -35,7 +35,7 @@ function setTargetBackgroundColor(e: DragEvent, colors: string[]) {
  */
 function removeColorFromTarget(e: Event) {
   (e.target as Element).classList.remove(
-    ...(e.target as Element).classList.value.split(' ')
+    ...(e.target as Element).classList.value.split(' '),
   );
   (e.target as Element).classList.add('target');
 }
@@ -47,13 +47,13 @@ function removeColorFromTarget(e: Event) {
  */
 export function addTargetListener(
   targets: NodeListOf<Element>,
-  colors: string[]
+  colors: string[],
 ) {
   for (let i = 0; i < targets.length; i++) {
     targets[i].addEventListener('dragover', setTargetDropEffect, true);
 
     targets[i].addEventListener('drop', (e) =>
-      setTargetBackgroundColor(e as DragEvent, colors)
+      setTargetBackgroundColor(e as DragEvent, colors),
     ),
       true;
 

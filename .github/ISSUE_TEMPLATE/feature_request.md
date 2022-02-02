@@ -4,7 +4,6 @@ about: Suggest an idea for this project
 title: ''
 labels: enhancement
 assignees: RomainGuarinoni
-
 ---
 
 ## Description
@@ -14,6 +13,7 @@ assignees: RomainGuarinoni
 ## Tasks
 
 ** describe the road map of the feature**
+
 - [ ] task 1
 - [ ] task 2
 

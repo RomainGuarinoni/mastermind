@@ -44,7 +44,7 @@ export function addNewGameLine(round: number, gameContainer: Element) {
 export function addIndicators(
   type: Indicators,
   container: Element,
-  number: number
+  number: number,
 ) {
   for (let i = 0; i < number; i++) {
     const indicator = document.createElement('div');
