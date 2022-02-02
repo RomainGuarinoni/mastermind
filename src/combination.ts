@@ -5,7 +5,7 @@
  */
 export function generateCombination(colors: string[]) {
   return [...Array(4)].map(
-    () => colors[Math.floor(Math.random() * colors.length)]
+    () => colors[Math.floor(Math.random() * colors.length)],
   );
 }
 
@@ -17,7 +17,7 @@ export function generateCombination(colors: string[]) {
  */
 export function getCurrentCombination(
   currentTargets: NodeListOf<Element>,
-  colors: string[]
+  colors: string[],
 ) {
   const combination = Array.from(currentTargets).map((item) => {
     const color = item.className
@@ -41,7 +41,7 @@ export function getCurrentCombination(
  */
 export function getCombinationPlacement(
   currentCombination: string[],
-  finalCombination: string[]
+  finalCombination: string[],
 ) {
   let goodPlacement: string[] = [];
   let wrongPlacement: string[] = [];

@@ -39,7 +39,7 @@ const pieces = [
 // Add drag event listener for each piece and setting the
 // data Transfer to the corresponding color
 pieces.forEach((piece) =>
-  piece.addEventListener('dragstart', setPieceDragData)
+  piece.addEventListener('dragstart', setPieceDragData),
 );
 
 // All the color available in the game based on the pieces id available
@@ -80,13 +80,13 @@ function startNewGame() {
   // Reset currentTarget and indicators
   currentLine = document.getElementById(`line-${currentRound}`)!;
   currentTargets = currentLine.querySelectorAll(
-    `div.targets-container > div.target`
+    `div.targets-container > div.target`,
   )!;
   currentRedIndicatorsContainer = currentLine.querySelector(
-    'div.red-indicator-container'
+    'div.red-indicator-container',
   )!;
   currentWhiteIndicatorsContainer = currentLine.querySelector(
-    'div.white-indicator-container'
+    'div.white-indicator-container',
   )!;
 
   addTargetListener(currentTargets, COLORS);
@@ -105,7 +105,7 @@ function verifyCurrentCombination() {
 
   const { goodPlacement, wrongPlacement } = getCombinationPlacement(
     currentCombination,
-    gameCombination
+    gameCombination,
   );
 
   addIndicators(Indicators.red, currentRedIndicatorsContainer, goodPlacement);
@@ -113,12 +113,12 @@ function verifyCurrentCombination() {
   addIndicators(
     Indicators.white,
     currentWhiteIndicatorsContainer,
-    wrongPlacement
+    wrongPlacement,
   );
 
   if (goodPlacement === 4) {
     document.getElementById(
-      'nb-round'
+      'nb-round',
     )!.innerHTML = `Tu as trouvé la combinaison en ${currentRound} tours`;
     winPopup.style.display = 'flex';
     return;
@@ -126,7 +126,7 @@ function verifyCurrentCombination() {
 
   if (currentRound === 12) {
     const solutionCombinaison = document.getElementById(
-      'solution-combination'
+      'solution-combination',
     )!;
     for (let i = 0; i < gameCombination.length; i++) {
       const div = document.createElement('div');
@@ -143,13 +143,13 @@ function verifyCurrentCombination() {
   addNewGameLine(currentRound, gameContainer);
   currentLine = document.getElementById(`line-${currentRound}`)!;
   currentTargets = currentLine.querySelectorAll(
-    `div.targets-container > div.target`
+    `div.targets-container > div.target`,
   )!;
   currentRedIndicatorsContainer = currentLine.querySelector(
-    'div.red-indicator-container'
+    'div.red-indicator-container',
   )!;
   currentWhiteIndicatorsContainer = currentLine.querySelector(
-    'div.white-indicator-container'
+    'div.white-indicator-container',
   )!;
   addTargetListener(currentTargets, COLORS);
 }
