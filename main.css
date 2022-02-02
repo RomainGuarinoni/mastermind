@@ -1,0 +1,204 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(243, 233, 217);
+}
+#game-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+  margin: 10px 0;
+}
+.line,
+.pieces,
+.targets-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.line {
+  margin: 2px 0;
+}
+
+.pieces {
+  margin: 20px 0;
+}
+
+.red-indicator-container,
+.white-indicator-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  width: calc(30px * 4);
+}
+
+.red-indicator-container {
+  justify-content: flex-end;
+}
+
+.white-indicator-container {
+  justify-content: flex-start;
+}
+
+.red-indicator,
+.white-indicator {
+  width: 20px;
+  height: 20px;
+  margin: 0 5px;
+  border-radius: 50%;
+}
+
+.red-indicator {
+  background-color: red;
+}
+
+.white-indicator {
+  background-color: white;
+}
+
+.targets-container {
+  border: 2px solid gray;
+  border-radius: 30px;
+  padding: 10px 20px;
+}
+
+.target,
+.piece {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.329);
+  margin: 0 10px;
+}
+
+.target,
+.piece,
+.red-indicator,
+.white-indicator {
+  filter: drop-shadow(0px 0px 5px rgba(49, 49, 49, 0.377));
+}
+
+.piece {
+  cursor: pointer;
+}
+
+.current-target {
+  cursor: pointer;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+button {
+  border: none;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all ease 200ms;
+  margin: 0 10px;
+}
+
+#restart {
+  background-color: red;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+.blue {
+  background-color: blue;
+}
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: rgb(240, 240, 36);
+}
+
+.white {
+  background-color: white;
+}
+
+.black {
+  background-color: black;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.maroon {
+  background-color: maroon;
+}
+
+#win,
+#loose {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.493);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  display: none;
+}
+
+.win-popup,
+.loose-popup {
+  background-color: white;
+  padding: 30px 60px;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+#win h2 {
+  color: #65a30d;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#loose h2 {
+  color: #dc2626;
+  font-weight: bold;
+  font-size: 40px;
+}
+
+#solution {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+#solution-combination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+
+/*# sourceMappingURL=main.css.map*/
