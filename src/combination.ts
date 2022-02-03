@@ -111,3 +111,13 @@ export function getCombinationPlacement(
 export function getColorApparition(combination: string[], color: string) {
   return combination.filter((e) => e === color).length;
 }
+
+/**
+ * @description Return array with only the number of colors wanted
+ * @param colors the initial array of colors
+ * @param nbColors number of colors wanted by the player
+ */
+export function getAvailableColors(colors: string[], nbColors: number) {
+  const shuffleArray = colors.sort(() => 0.5 - Math.random());
+  return shuffleArray.slice(0, nbColors);
+}

@@ -2,6 +2,7 @@ import {
   getCurrentCombination,
   getCombinationPlacement,
   generateCombination,
+  getAvailableColors,
 } from './combination';
 
 import {
@@ -10,7 +11,12 @@ import {
   removeTargetListener,
 } from './listeners';
 
-import { addNewGameLine, addIndicators, Indicators } from './dom-manipulation';
+import {
+  addNewGameLine,
+  addIndicators,
+  Indicators,
+  changePieceDisplay,
+} from './dom-manipulation';
 
 // get the game container
 const gameContainer = document.getElementById('game-container')!;
@@ -107,15 +113,32 @@ let nbColors = nbColorsValue.valueAsNumber;
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
- * @description Reset all game variable and HTML and start a new game
+ * @description Set parametersPopup innerHtml
+ * @param duplicate
+ * @param nbTurns
+ * @param nbColors
+ * @param nbPossibilities
  */
 function startNewGame() {
-  // Reset current round
   currentRound = 1;
 
-  // Reset game combination
-  gameCombination = generateCombination(COLORS, nbPossibilities, duplicate);
-  console.log(gameCombination);
+  let colorsAvailable = getAvailableColors(COLORS, nbColors);
+
+  gameCombination = generateCombination(
+    colorsAvailable,
+    nbPossibilities,
+    duplicate,
+  );
+
+  // Hide the unwanted piece
+  COLORS.forEach((color) => {
+    if (colorsAvailable.includes(color)) {
+      changePieceDisplay(color, 'block');
+    } else {
+      changePieceDisplay(color, 'none');
+    }
+  });
+
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
@@ -225,9 +248,7 @@ function applyParameters() {
 verifyButton.onclick = verifyCurrentCombination;
 
 // add restart event
-restartButton.onclick = () => {
-  startNewGame();
-};
+restartButton.onclick = startNewGame;
 
 //add apply parameters event
 applyButton.onclick = applyParameters;
@@ -251,7 +272,6 @@ winRestartButton.onclick = (e) => {
 looseRestartButton.onclick = (e) => {
   e.preventDefault();
   loosePopup.style.display = 'none';
-
   startNewGame();
 };
 

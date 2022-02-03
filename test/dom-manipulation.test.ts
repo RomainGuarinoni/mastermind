@@ -2,10 +2,12 @@
  * @jest-environment jsdom
  */
 
+import { doc } from 'prettier';
 import {
   addNewGameLine,
   addIndicators,
   Indicators,
+  changePieceDisplay,
 } from '../src/dom-manipulation';
 
 describe('Dom manipulation', () => {
@@ -101,6 +103,28 @@ describe('Dom manipulation', () => {
       expect(
         whiteContainer.getElementsByClassName('white-indicator').length,
       ).toStrictEqual(4);
+    });
+  });
+
+  describe('change piece display', () => {
+    it('change display to none', () => {
+      document.body.innerHTML = `
+      <div id="blue-piece"></div>
+      `;
+
+      const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
+      changePieceDisplay('blue', 'none');
+      expect(bluePiece.style.display).toStrictEqual('none');
+    });
+
+    it('change display to block', () => {
+      document.body.innerHTML = `
+      <div id="blue-piece"></div>
+      `;
+
+      const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
+      changePieceDisplay('blue', 'block');
+      expect(bluePiece.style.display).toStrictEqual('block');
     });
   });
 });
