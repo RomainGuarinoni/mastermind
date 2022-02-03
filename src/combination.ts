@@ -3,7 +3,7 @@
  * @param colors the available colors of the game
  * @returns a combination of 4 colors
  */
-export function generateCombination(colors: string[]) {
+export function generateCombination(colors: string[],nbPossibilities:number) {
   return [...Array(4)].map(
     () => colors[Math.floor(Math.random() * colors.length)],
   );

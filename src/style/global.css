@@ -199,3 +199,38 @@ button:hover {
   flex-wrap: wrap;
   align-items: center;
 }
+
+#parameters{
+  display: flex;
+  position: fixed;
+  top: 5%;
+  right: 5%;
+}
+
+#parameterLogo{
+  width: 50px;
+  height: 50px;
+}
+
+#parametersPopup{
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: rgb(51, 51, 51);
+  border-radius: 20px;
+  box-shadow: 2px 2px 2px 1px black;
+  width: 400px;
+  height: 200px;
+  position: absolute;
+}
+#nbTurns,#duplicate,#noColor,#nbPossibilities{
+  display: flex;
+  color: aliceblue;
+  font-size: 20px;
+  font-weight: bold;
+}
+#nbTurnsInput,#nbPossibilitiesInput{
+  max-width: 40px;
+  margin-left: 10px;
+}
