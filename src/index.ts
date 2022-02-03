@@ -16,14 +16,14 @@ import { addNewGameLine, addIndicators, Indicators } from './dom-manipulation';
 const gameContainer = document.getElementById('game-container')!;
 
 // Get all the piece of the game
-const bluePiece = document.getElementById('blue-piece')!;
-const redPiece = document.getElementById('red-piece')!;
-const greenPiece = document.getElementById('green-piece')!;
-const yellowPiece = document.getElementById('yellow-piece')!;
-const orangePiece = document.getElementById('orange-piece')!;
-const blackPiece = document.getElementById('black-piece')!;
-const whitePiece = document.getElementById('white-piece')!;
-const marronPiece = document.getElementById('maroon-piece')!;
+const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
+const redPiece = document.getElementById('red-piece') as HTMLDivElement;
+const greenPiece = document.getElementById('green-piece') as HTMLDivElement;
+const yellowPiece = document.getElementById('yellow-piece') as HTMLDivElement;
+const orangePiece = document.getElementById('orange-piece') as HTMLDivElement;
+const blackPiece = document.getElementById('black-piece') as HTMLDivElement;
+const whitePiece = document.getElementById('white-piece') as HTMLDivElement;
+const marronPiece = document.getElementById('maroon-piece') as HTMLDivElement;
 
 const pieces = [
   bluePiece,
@@ -45,33 +45,47 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 
 //Get all Popup
-const parametersPopup = document.getElementById('parametersPopup')!;
-const winPopup = document.getElementById('win')!;
-const loosePopup = document.getElementById('loose')!;
+const parametersPopup = document.getElementById(
+  'parametersPopup',
+) as HTMLDivElement;
+const winPopup = document.getElementById('win') as HTMLDivElement;
+const loosePopup = document.getElementById('loose') as HTMLDivElement;
 
 // All the color available in the game based on the pieces id available
 const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
 // The button of the game
-const applyButton = document.getElementById('applyParameters')!;
-const cancelButton = document.getElementById('cancelParameters')!;
-const verifyButton = document.getElementById('verify')!;
-const restartButton = document.getElementById('restart')!;
-const winRestartButton = document.getElementById('win-restart')!;
-const looseRestartButton = document.getElementById('loose-restart')!;
-const parameters = document.getElementById('parameters')!;
+const applyButton = document.getElementById(
+  'applyParameters',
+) as HTMLButtonElement;
+const cancelButton = document.getElementById(
+  'cancelParameters',
+) as HTMLButtonElement;
+const verifyButton = document.getElementById('verify') as HTMLButtonElement;
+const restartButton = document.getElementById('restart') as HTMLButtonElement;
+const winRestartButton = document.getElementById(
+  'win-restart',
+) as HTMLButtonElement;
+const looseRestartButton = document.getElementById(
+  'loose-restart',
+) as HTMLButtonElement;
+const parametersButton = document.getElementById(
+  'parameters',
+) as HTMLButtonElement;
 
 // Parameters Popup value from the DOM
-const duplicateCheckBox = <HTMLInputElement>(
-  document.getElementById('duplicateCheck')!
-);
-const nbColorsValue = <HTMLInputElement>(
-  document.getElementById('nbColorsValue')!
-);
-const nbTurnsValue = <HTMLInputElement>document.getElementById('nbTurnsValue')!;
-const nbPossibilitiesValue = <HTMLInputElement>(
-  document.getElementById('nbPossibilitiesValue')!
-);
+const duplicateCheckBox = document.getElementById(
+  'duplicateCheck',
+) as HTMLInputElement;
+const nbColorsValue = document.getElementById(
+  'nbColorsValue',
+) as HTMLInputElement;
+const nbTurnsValue = document.getElementById(
+  'nbTurnsValue',
+) as HTMLInputElement;
+const nbPossibilitiesValue = document.getElementById(
+  'nbPossibilitiesValue',
+) as HTMLInputElement;
 
 // current game round
 // min : 1 | max : nbTurns
@@ -227,7 +241,7 @@ cancelButton.onclick = () => {
 };
 
 //add show parametersPopup event
-parameters.onclick = () => {
+parametersButton.onclick = () => {
   parametersPopup.style.display = 'flex';
 };
 
