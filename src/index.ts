@@ -110,14 +110,6 @@ let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
  * @description Reset all game variable and HTML and start a new game
  */
 function startNewGame() {
-  if (duplicate === true) {
-    duplicateCheckBox.checked = true;
-  } else {
-    duplicateCheckBox.checked = false;
-  }
-  nbColorsValue.valueAsNumber = nbColors;
-  nbTurnsValue.valueAsNumber = nbTurns;
-  nbPossibilitiesValue.valueAsNumber = nbPossibilities;
   // Reset current round
   currentRound = 1;
 
