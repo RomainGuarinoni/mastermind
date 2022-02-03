@@ -14,15 +14,9 @@ export function generateCombination(
   }
 
   if (duplicate === false) {
-    const colorCombination: string[] = new Array();
-    let tmpColor: string;
-    while (colorCombination.length < nbPossibilities) {
-      tmpColor = colors[Math.floor(Math.random() * colors.length)];
-      if (colorCombination.includes(tmpColor) === false) {
-        colorCombination.push(tmpColor);
-      }
-    }
-    return colorCombination;
+    const shuffleColors = colors.sort(() => 0.5 - Math.random());
+
+    return Array.from(new Set(shuffleColors)).slice(0, nbPossibilities);
   }
 
   return [...Array(nbPossibilities)].map(
