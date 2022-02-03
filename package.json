@@ -16,7 +16,7 @@
     "game"
   ],
   "author": "Romain Guarinoni",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.16.8",
     "@babel/core": "^7.16.12",
