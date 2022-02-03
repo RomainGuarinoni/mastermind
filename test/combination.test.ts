@@ -29,7 +29,7 @@ describe('Combination', () => {
       const combinationSet = new Set(combination);
 
       expect(combination).toHaveLength(4);
-      expect(combinationSet.size).toStrictEqual(2);
+      expect(combinationSet.size <= 2).toStrictEqual(true);
     });
 
     it('throws error', () => {

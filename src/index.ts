@@ -15,7 +15,6 @@ import {
   addNewGameLine,
   addIndicators,
   Indicators,
-  changePieceDisplay,
   hideUnwantedColor,
 } from './dom-manipulation';
 
@@ -114,11 +113,23 @@ let nbColors = nbColorsValue.valueAsNumber;
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
+ * @description update the game variable related to DOM element
+ */
+function updateGameDOM() {
+  currentLine = document.getElementById(`line-${currentRound}`)!;
+  currentTargets = currentLine.querySelectorAll(
+    `div.targets-container > div.target`,
+  )!;
+  currentRedIndicatorsContainer = currentLine.querySelector(
+    'div.red-indicator-container',
+  )!;
+  currentWhiteIndicatorsContainer = currentLine.querySelector(
+    'div.white-indicator-container',
+  )!;
+}
+
+/**
  * @description Set parametersPopup innerHtml
- * @param duplicate
- * @param nbTurns
- * @param nbColors
- * @param nbPossibilities
  */
 function startNewGame() {
   currentRound = 1;
@@ -138,22 +149,53 @@ function startNewGame() {
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
 
   // Reset currentTarget and indicators
-  currentLine = document.getElementById(`line-${currentRound}`)!;
-  currentTargets = currentLine.querySelectorAll(
-    `div.targets-container > div.target`,
-  )!;
-  currentRedIndicatorsContainer = currentLine.querySelector(
-    'div.red-indicator-container',
-  )!;
-  currentWhiteIndicatorsContainer = currentLine.querySelector(
-    'div.white-indicator-container',
-  )!;
+  updateGameDOM();
 
   addTargetListener(currentTargets, COLORS);
 }
 
+/**
+ * @description remove all events of previous line, update game var and add new line
+ */
+function createNewRound() {
+  removeTargetListener(currentTargets);
+  currentRound++;
+  addNewGameLine(currentRound, gameContainer, nbPossibilities);
+  updateGameDOM();
+  addTargetListener(currentTargets, COLORS);
+}
+
+/**
+ * @description Add nbRound to win popup and display it
+ */
+function displayWinPopup() {
+  document.getElementById(
+    'nb-round',
+  )!.innerHTML = `Tu as trouvé la combinaison en ${currentRound} tours`;
+  winPopup.style.display = 'flex';
+}
+
+/**
+ * @description Add game combination to loose popup and display it
+ */
+function displayLoosePopup() {
+  const solutionCombinaison = document.getElementById('solution-combination')!;
+
+  // reset previous solution
+  solutionCombinaison.innerHTML = '';
+
+  for (let i = 0; i < gameCombination.length; i++) {
+    const div = document.createElement('div');
+    div.classList.add('piece', gameCombination[i]);
+    solutionCombinaison.appendChild(div);
+  }
+  loosePopup.style.display = 'flex';
+}
+
+/**
+ * @description verify the current combination, add indicators and a new line
+ */
 function verifyCurrentCombination() {
-  // Get the current combination
   let currentCombination: string[];
 
   try {
@@ -177,47 +219,16 @@ function verifyCurrentCombination() {
   );
 
   if (goodPlacement === nbPossibilities) {
-    // win
-    document.getElementById(
-      'nb-round',
-    )!.innerHTML = `Tu as trouvé la combinaison en ${currentRound} tours`;
-    winPopup.style.display = 'flex';
+    displayWinPopup();
     return;
   }
 
   if (currentRound === nbTurns) {
-    // loose
-    const solutionCombinaison = document.getElementById(
-      'solution-combination',
-    )!;
-
-    // reset previous solution
-    solutionCombinaison.innerHTML = '';
-
-    for (let i = 0; i < gameCombination.length; i++) {
-      const div = document.createElement('div');
-      div.classList.add('piece', gameCombination[i]);
-      solutionCombinaison.appendChild(div);
-    }
-    loosePopup.style.display = 'flex';
+    displayLoosePopup();
     return;
   }
 
-  // Add a new line to the game
-  removeTargetListener(currentTargets);
-  currentRound++;
-  addNewGameLine(currentRound, gameContainer, nbPossibilities);
-  currentLine = document.getElementById(`line-${currentRound}`)!;
-  currentTargets = currentLine.querySelectorAll(
-    `div.targets-container > div.target`,
-  )!;
-  currentRedIndicatorsContainer = currentLine.querySelector(
-    'div.red-indicator-container',
-  )!;
-  currentWhiteIndicatorsContainer = currentLine.querySelector(
-    'div.white-indicator-container',
-  )!;
-  addTargetListener(currentTargets, COLORS);
+  createNewRound();
 }
 
 /**
