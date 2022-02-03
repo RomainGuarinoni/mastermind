@@ -29,3 +29,9 @@ export declare function getCombinationPlacement(currentCombination: string[], fi
  * @returns the number of time a color appear in a combination
  */
 export declare function getColorApparition(combination: string[], color: string): number;
+/**
+ * @description Return array with only the number of colors wanted
+ * @param colors the initial array of colors
+ * @param nbColors number of colors wanted by the player
+ */
+export declare function getAvailableColors(colors: string[], nbColors: number): string[];

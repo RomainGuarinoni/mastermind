@@ -2,6 +2,7 @@ export declare enum Indicators {
     'white' = 0,
     'red' = 1
 }
+declare type Display = 'block' | 'flex' | 'none' | 'inline';
 /**
  * @description Add a new line to the game container
  * @param index the index for the line id
@@ -16,3 +17,10 @@ export declare function addNewGameLine(round: number, gameContainer: Element, nb
  * @param number the number of indicators to add
  */
 export declare function addIndicators(type: Indicators, container: Element, number: number): void;
+/**
+ * @description change the display of a specify piece
+ * @param color the color of the piece
+ * @param display the style of display to apply
+ */
+export declare function changePieceDisplay(color: string, display: Display): void;
+export {};
