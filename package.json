@@ -8,7 +8,8 @@
     "build": "npm run type && webpack --mode production",
     "type": "tsc",
     "format": "prettier --write .",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "keywords": [
     "mastermind",
