@@ -9,13 +9,25 @@
   <body>
     <div id="game-container"></div>
     <div id="parameters">
-      <img id="parameterLogo" src="public/pictures/parameterLogo.png" alt="parameters">
+      <img id="parameterLogo" src="pictures/parameterLogo.png" alt="parameters">
     </div>
     <div id="parametersPopup">
-      <div id="nbTurns"></div>
-      <div id="duplicate"></div>
-      <div id="noColor"></div>
-      <div id="nbPossibilities"></div>
+      <div id="duplicate">
+        <label for="duplicateCheck">Duplicate</label>
+        <input type="checkbox" id="duplicateCheck" name="duplicate">
+      </div>
+      <div id="nbColor">
+        <label for="nbColorsValue">Include NoColor</label>
+        <input type="number" id="nbColorsValue" name="nbColors">
+      </div>
+      <div id="nbTurns">
+        <label for="nbTurnsValue">Nombre de tours : </label>
+        <input type="number" name="nbTurns" value=12 id="nbTurnsValue" required>
+      </div>
+      <div id="nbPossibilities">
+        <label for="nbPossibilitiesValue">Nombre de possibilités par ligne : </label>
+        <input type="number" name="nbPossibilities" value=4 id="nbPossibilitiesValue" required>
+      </div>
       <div class="button-container">
         <button id="apply">Appliquer</button>
         <button id="cancel">Annuler</button>

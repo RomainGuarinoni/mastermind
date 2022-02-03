@@ -4,8 +4,8 @@
  * @returns a combination of 4 colors
  */
 export function generateCombination(colors: string[],nbPossibilities:number) {
-  return [...Array(4)].map(
-    () => colors[Math.floor(Math.random() * colors.length)],
+  return [...Array(nbPossibilities)].map(
+    () => colors[Math.floor(Math.random() * colors.length)]
   );
 }
 

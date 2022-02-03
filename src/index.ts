@@ -50,7 +50,7 @@ const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
 let duplicate = true;
 let nbTurns = 7;
-let noColor = false;
+let nbColors = 8;
 let nbPossibilities = 6;
 
 // The button of the game
@@ -64,6 +64,12 @@ const parameters = document.getElementById('parameters')!;
 
 const winPopup = document.getElementById('win')!;
 const loosePopup = document.getElementById('loose')!;
+
+// Parameters Popup value from the DOM
+const duplicateCheckBox = <HTMLInputElement> document.getElementById('duplicateCheck');
+const nbColorsValue = <HTMLInputElement> document.getElementById('nbColorsValue');
+const nbTurnsValue = <HTMLInputElement> document.getElementById('nbTurnsValue');
+const nbPossibilitiesValue = <HTMLInputElement> document.getElementById('nbPossibilitiesValue');
 
 // current game round
 // min : 1 | max : nbTurns
@@ -81,47 +87,26 @@ let gameCombination: string[];
  * @description Set parametersPopup innerHtml
  * @param duplicate 
  * @param nbTurns
- * @param noColor
+ * @param nbColors
  * @param nbPossibilities
  */
-function setParametersHtml(duplicate: boolean, nbTurns: number, noColor:boolean, nbPossibilities:number){
-  if (duplicate==true) {
-    document.getElementById('duplicate')!.innerHTML=
-    `<input type="checkbox" id="duplicateCheck" name="duplicate" checked>
-    <label for="duplicateCheck">Duplicate</label>`
-  }
-  else {
-    document.getElementById('duplicate')!.innerHTML=
-  `<input type="checkbox" id="duplicateCheck" name="duplicate">
-  <label for="duplicateCheck">Duplicate</label>`
-  }
-  if (noColor==true){
-    document.getElementById('noColor')!.innerHTML=
-  `<input type="checkbox" id="noColorCheck" name="noColor" checked>
-  <label for="noColorCheck">Include NoColor</label>`
-  }
-  else {
-    document.getElementById('noColor')!.innerHTML=
-  `<input type="checkbox" id="noColorCheck" name="noColor">
-  <label for="noColorCheck">Include NoColor</label>`
-  }
-  document.getElementById('nbTurns')!.innerHTML=
-  `<label for="nbTurnsInput">Nombre de tours : </label>
-  <input type="number" name="nbTour" value=${nbTurns} id="nbTurnsInput" required>`
-  document.getElementById('nbPossibilities')!.innerHTML=
-  `<label for="nbTurnsInput">Nombre de possibilités par ligne : </label>
-  <input type="number" name="nbPossibilities" value=${nbPossibilities} id="nbPossibilitiesInput" required>`
+function setParametersHtml(duplicate: boolean, nbTurns: number, nbColors:number, nbPossibilities:number){
+  if (duplicate==true) {duplicateCheckBox.checked=true;}
+  else {duplicateCheckBox.checked=false;}
+  nbColorsValue.valueAsNumber=nbColors;
+  nbTurnsValue.valueAsNumber=nbTurns;
+  nbPossibilitiesValue.valueAsNumber=nbPossibilities;
 }
 
 /**
  * @description Reset all game variable and HTML and start the game
  * @param duplicate boolean, true if there are duplicate in the game
- * @param noColor boolean, true if there is blank in combination
+ * @param nbColors boolean, true if there is blank in combination
  * @param nbTurns number of turn before you lose
  * @param nbPossibilities number of color by line
  */
-function startNewGame(duplicate: boolean, nbTurns: number, noColor:boolean, nbPossibilities:number){
-  setParametersHtml(duplicate,nbTurns,noColor,nbPossibilities);
+function startNewGame(duplicate: boolean, nbTurns: number, nbColors:number, nbPossibilities:number){
+  setParametersHtml(duplicate,nbTurns,nbColors,nbPossibilities);
   // Reset current round
   currentRound = 1;
 
@@ -224,14 +209,18 @@ function showPopup(){
 function applyParameters(){
   parametersPopup.style.display = "none";
   parameters.style.display = "flex";
-  startNewGame(duplicate,nbTurns,noColor,nbPossibilities); 
+  duplicate = duplicateCheckBox.checked;
+  nbColors = nbColorsValue.valueAsNumber;
+  nbTurns = nbTurnsValue.valueAsNumber;
+  nbPossibilities = nbPossibilitiesValue.valueAsNumber;
+  startNewGame(duplicate,nbTurns,nbColors,nbPossibilities); 
 }
 
 // Add the verify event
 verifyButton.onclick = verifyCurrentCombination;
 
 // add restart event
-restartButton.onclick = () => {startNewGame(duplicate,nbTurns,noColor,nbPossibilities)};
+restartButton.onclick = () => {startNewGame(duplicate,nbTurns,nbColors,nbPossibilities)};
 
 //add apply parameters event
 applyButton.onclick = applyParameters;
@@ -245,13 +234,13 @@ parameters.onclick = showPopup;
 winRestartButton.onclick = (e) => {
   e.preventDefault();
   winPopup.style.display = 'none';
-  startNewGame(duplicate,nbTurns,noColor,nbPossibilities);
+  startNewGame(duplicate,nbTurns,nbColors,nbPossibilities);
 };
 
 looseRestartButton.onclick = (e) => {
   e.preventDefault();
   loosePopup.style.display = 'none';
-  startNewGame(duplicate,nbTurns,noColor,nbPossibilities);
+  startNewGame(duplicate,nbTurns,nbColors,nbPossibilities);
 };
 
-startNewGame(duplicate,nbTurns,noColor,nbPossibilities);
+startNewGame(duplicate,nbTurns,nbColors,nbPossibilities);
