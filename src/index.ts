@@ -115,6 +115,7 @@ function startNewGame() {
 
   // Reset game combination
   gameCombination = generateCombination(COLORS, nbPossibilities, duplicate);
+  console.log(gameCombination);
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
@@ -172,6 +173,10 @@ function verifyCurrentCombination() {
     const solutionCombinaison = document.getElementById(
       'solution-combination',
     )!;
+
+    // reset previous solution
+    solutionCombinaison.innerHTML = '';
+
     for (let i = 0; i < gameCombination.length; i++) {
       const div = document.createElement('div');
       div.classList.add('piece', gameCombination[i]);
@@ -246,6 +251,7 @@ winRestartButton.onclick = (e) => {
 looseRestartButton.onclick = (e) => {
   e.preventDefault();
   loosePopup.style.display = 'none';
+
   startNewGame();
 };
 
