@@ -4,6 +4,7 @@
 
 import {
   generateCombination,
+  getAvailableColors,
   getColorApparition,
   getCombinationPlacement,
   getCurrentCombination,
@@ -168,6 +169,19 @@ describe('Combination', () => {
       expect(() => getCurrentCombination(targets, colors)).toThrow(
         'Combination is not complete',
       );
+    });
+  });
+  describe('get available colors', () => {
+    it('return an array of 3 colors', () => {
+      const colors = ['red', 'blue', 'yellow', 'maroon', 'green'];
+
+      const finalArray = getAvailableColors(colors, 3);
+
+      expect(new Set(finalArray).size).toStrictEqual(3);
+
+      finalArray.forEach((color) => {
+        expect(colors.includes(color)).toStrictEqual(true);
+      });
     });
   });
 });

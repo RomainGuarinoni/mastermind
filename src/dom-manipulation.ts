@@ -3,6 +3,8 @@ export enum Indicators {
   'red',
 }
 
+type Display = 'block' | 'flex' | 'none' | 'inline';
+
 /**
  * @description Add a new line to the game container
  * @param index the index for the line id
@@ -65,4 +67,14 @@ export function addIndicators(
 
     container.appendChild(indicator);
   }
+}
+
+/**
+ * @description change the display of a specify piece
+ * @param color the color of the piece
+ * @param display the style of display to apply
+ */
+export function changePieceDisplay(color: string, display: Display) {
+  const piece = document.getElementById(`${color}-piece`) as HTMLDivElement;
+  piece.style.display = display;
 }

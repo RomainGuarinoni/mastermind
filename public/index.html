@@ -34,21 +34,29 @@
     <div class="popup" id="parametersPopup">
       <div class="paramsPopUp">
         <div id="duplicate">
-          <label for="duplicateCheck">Duplicate</label>
+          <label for="duplicateCheck">Plusieurs fois la même couleur :</label>
           <input type="checkbox" id="duplicateCheck" name="duplicate" checked />
         </div>
         <div id="nbColors">
           <label for="nbColorsValue">Nombre de couleurs : </label>
-          <input type="number" id="nbColorsValue" value="8" name="nbColors" />
+          <input
+            type="number"
+            id="nbColorsValue"
+            name="nbColors"
+            value="8"
+            min="4"
+            max="8"
+          />
         </div>
         <div id="nbTurns">
           <label for="nbTurnsValue">Nombre de tours : </label>
           <input
             type="number"
+            id="nbTurnsValue"
             name="nbTurns"
             value="12"
             min="1"
-            id="nbTurnsValue"
+            max="15"
             required
           />
         </div>
@@ -58,9 +66,10 @@
           </label>
           <input
             type="number"
+            id="nbPossibilitiesValue"
             name="nbPossibilities"
             value="4"
-            id="nbPossibilitiesValue"
+            max="12"
             required
           />
         </div>

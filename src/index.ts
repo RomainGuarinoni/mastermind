@@ -2,6 +2,7 @@ import {
   getCurrentCombination,
   getCombinationPlacement,
   generateCombination,
+  getAvailableColors,
 } from './combination';
 
 import {
@@ -10,7 +11,12 @@ import {
   removeTargetListener,
 } from './listeners';
 
-import { addNewGameLine, addIndicators, Indicators } from './dom-manipulation';
+import {
+  addNewGameLine,
+  addIndicators,
+  Indicators,
+  changePieceDisplay,
+} from './dom-manipulation';
 
 // get the game container
 const gameContainer = document.getElementById('game-container')!;
@@ -107,30 +113,6 @@ let nbColors = nbColorsValue.valueAsNumber;
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
- * @description Return array with only the number of color wanted
- * @param nbColors number of colors wanted by the player
- */
-function getColorsArray(nbColors: number) {
-  let colorsArray = new Array();
-  let tmpColor;
-  while (colorsArray.length < nbColors) {
-    tmpColor = COLORS[Math.floor(Math.random() * COLORS.length)];
-    if (colorsArray.includes(tmpColor) === false) {
-      colorsArray.push(tmpColor);
-    }
-  }
-  for (let i = 0; i < COLORS.length; i++) {
-    document.getElementById(`${COLORS[i]}-piece`)!.style.display = 'flex';
-  }
-  for (let i = 0; i < COLORS.length; i++) {
-    if (colorsArray.includes(COLORS[i]) === false) {
-      document.getElementById(`${COLORS[i]}-piece`)!.style.display = 'none';
-    }
-  }
-  return colorsArray;
-}
-
-/**
  * @description Set parametersPopup innerHtml
  * @param duplicate
  * @param nbTurns
@@ -138,15 +120,25 @@ function getColorsArray(nbColors: number) {
  * @param nbPossibilities
  */
 function startNewGame() {
-  // Reset current round
   currentRound = 1;
-  let coloursAvailable = getColorsArray(nbColors);
-  // Reset game combination
+
+  let colorsAvailable = getAvailableColors(COLORS, nbColors);
+
   gameCombination = generateCombination(
-    coloursAvailable,
+    colorsAvailable,
     nbPossibilities,
     duplicate,
   );
+
+  // Hide the unwanted piece
+  COLORS.forEach((color) => {
+    if (colorsAvailable.includes(color)) {
+      changePieceDisplay(color, 'block');
+    } else {
+      changePieceDisplay(color, 'none');
+    }
+  });
+
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
@@ -256,9 +248,7 @@ function applyParameters() {
 verifyButton.onclick = verifyCurrentCombination;
 
 // add restart event
-restartButton.onclick = () => {
-  startNewGame();
-};
+restartButton.onclick = startNewGame;
 
 //add apply parameters event
 applyButton.onclick = applyParameters;
