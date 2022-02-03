@@ -6,8 +6,9 @@ export declare enum Indicators {
  * @description Add a new line to the game container
  * @param index the index for the line id
  * @param gameContainer the game container element wich contains the lines
+ * @param nbPossibilities the number of possibilities by line
  */
-export declare function addNewGameLine(round: number, gameContainer: Element): void;
+export declare function addNewGameLine(round: number, gameContainer: Element, nbPossibilities: number): void;
 /**
  * @description Add indicators to the game
  * @param type the type of indicators

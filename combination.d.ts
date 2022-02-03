@@ -1,9 +1,10 @@
 /**
- *
  * @param colors the available colors of the game
- * @returns a combination of 4 colors
+ * @param nbPossibilities the number of possibilities by line choose by the player
+ * @param duplicate boolean that indicate if there are duplicate colors in the combination
+ * @returns a combination of X colors, where X is the number of possibilities by line
  */
-export declare function generateCombination(colors: string[]): string[];
+export declare function generateCombination(colors: string[], nbPossibilities: number, duplicate: boolean): string[];
 /**
  *
  * @param currentTargets the targets which contains the current combination
