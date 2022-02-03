@@ -96,6 +96,20 @@ git rebase origin/main
 
 4. Add reviewers to your pull request and wait for reviews
 
+#### Git hooks
+
+We are using husky to run pre-commit and commit-msg hooks (to run test, linter,
+formatter etc...).
+
+If GitHub warn you that git hooks are skipper, run these command in the root of
+the project :
+
+```sh
+chmod ug+x .husky/*
+chmod ug+x .git/hooks/*
+
+```
+
 ## Authors
 
 - [Romain Guarinoni](https://github.com/RomainGuarinoni)

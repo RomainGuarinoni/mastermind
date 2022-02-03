@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --open --mode development --port 8081",
     "build": "npm run type && webpack --mode production",
     "type": "tsc",
-    "prettier": "prettier --write ."
+    "format": "prettier --write ."
   },
   "keywords": [
     "mastermind",
