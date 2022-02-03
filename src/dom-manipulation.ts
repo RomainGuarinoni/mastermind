@@ -7,8 +7,13 @@ export enum Indicators {
  * @description Add a new line to the game container
  * @param index the index for the line id
  * @param gameContainer the game container element wich contains the lines
+ * @param nbPossibilities the number of possibilities by line
  */
-export function addNewGameLine(round: number, gameContainer: Element, nbPossibilities:number) {
+export function addNewGameLine(
+  round: number,
+  gameContainer: Element,
+  nbPossibilities: number,
+) {
   const line = document.createElement('div');
   line.classList.add('line');
   line.id = `line-${round}`;

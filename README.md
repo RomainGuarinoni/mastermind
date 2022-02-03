@@ -12,7 +12,6 @@
 
 ## Developement
 
-<<<<<<< HEAD
 1. Clone the project
 
 _Using hhtps_
@@ -42,7 +41,6 @@ automatically with live reloading enabled_
 npm start
 ```
 
-<<<<<<< HEAD
 ## Build the project
 
 The project is built using webpack and babel.

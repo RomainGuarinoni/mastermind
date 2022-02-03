@@ -25,9 +25,6 @@ const blackPiece = document.getElementById('black-piece')!;
 const whitePiece = document.getElementById('white-piece')!;
 const marronPiece = document.getElementById('maroon-piece')!;
 
-//Get all Popup
-const parametersPopup = document.getElementById('parametersPopup')!;
-
 const pieces = [
   bluePiece,
   redPiece,
@@ -41,17 +38,19 @@ const pieces = [
 
 // Add drag event listener for each piece and setting the
 // data Transfer to the corresponding color
-pieces.forEach((piece) =>
-  piece.addEventListener('dragstart', setPieceDragData),
-);
+window.addEventListener('DOMContentLoaded', () => {
+  pieces.forEach((piece) =>
+    piece.addEventListener('dragstart', setPieceDragData),
+  );
+});
+
+//Get all Popup
+const parametersPopup = document.getElementById('parametersPopup')!;
+const winPopup = document.getElementById('win')!;
+const loosePopup = document.getElementById('loose')!;
 
 // All the color available in the game based on the pieces id available
 const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
-
-let duplicate = true;
-let nbTurns = 7;
-let nbColors = 8;
-let nbPossibilities = 6;
 
 // The button of the game
 const applyButton = document.getElementById('apply')!;
@@ -62,57 +61,54 @@ const winRestartButton = document.getElementById('win-restart')!;
 const looseRestartButton = document.getElementById('loose-restart')!;
 const parameters = document.getElementById('parameters')!;
 
-const winPopup = document.getElementById('win')!;
-const loosePopup = document.getElementById('loose')!;
-
 // Parameters Popup value from the DOM
-const duplicateCheckBox = <HTMLInputElement> document.getElementById('duplicateCheck');
-const nbColorsValue = <HTMLInputElement> document.getElementById('nbColorsValue');
-const nbTurnsValue = <HTMLInputElement> document.getElementById('nbTurnsValue');
-const nbPossibilitiesValue = <HTMLInputElement> document.getElementById('nbPossibilitiesValue');
+const duplicateCheckBox = <HTMLInputElement>(
+  document.getElementById('duplicateCheck')!
+);
+const nbColorsValue = <HTMLInputElement>(
+  document.getElementById('nbColorsValue')!
+);
+const nbTurnsValue = <HTMLInputElement>document.getElementById('nbTurnsValue')!;
+const nbPossibilitiesValue = <HTMLInputElement>(
+  document.getElementById('nbPossibilitiesValue')!
+);
 
 // current game round
 // min : 1 | max : nbTurns
 let currentRound: number;
 
+// DOM elements of the game
 let currentLine: HTMLElement;
 let currentTargets: NodeListOf<Element>;
 let currentRedIndicatorsContainer: Element;
 let currentWhiteIndicatorsContainer: Element;
 
+// Game variable
 let gameCombination: string[];
 
+// Game params
+let duplicate = true;
+let nbTurns = 7;
+let nbColors = 8;
+let nbPossibilities = 6;
 
 /**
- * @description Set parametersPopup innerHtml
- * @param duplicate 
- * @param nbTurns
- * @param nbColors
- * @param nbPossibilities
+ * @description Reset all game variable and HTML and start a new game
  */
-function setParametersHtml(duplicate: boolean, nbTurns: number, nbColors:number, nbPossibilities:number){
-  if (duplicate==true) {duplicateCheckBox.checked=true;}
-  else {duplicateCheckBox.checked=false;}
-  nbColorsValue.valueAsNumber=nbColors;
-  nbTurnsValue.valueAsNumber=nbTurns;
-  nbPossibilitiesValue.valueAsNumber=nbPossibilities;
-}
-
-/**
- * @description Reset all game variable and HTML and start the game
- * @param duplicate boolean, true if there are duplicate in the game
- * @param nbColors boolean, true if there is blank in combination
- * @param nbTurns number of turn before you lose
- * @param nbPossibilities number of color by line
- */
-function startNewGame(duplicate: boolean, nbTurns: number, nbColors:number, nbPossibilities:number){
-  setParametersHtml(duplicate,nbTurns,nbColors,nbPossibilities);
+function startNewGame() {
+  if (duplicate === true) {
+    duplicateCheckBox.checked = true;
+  } else {
+    duplicateCheckBox.checked = false;
+  }
+  nbColorsValue.valueAsNumber = nbColors;
+  nbTurnsValue.valueAsNumber = nbTurns;
+  nbPossibilitiesValue.valueAsNumber = nbPossibilities;
   // Reset current round
   currentRound = 1;
 
   // Reset game combination
-  gameCombination = generateCombination(COLORS,nbPossibilities,duplicate);
-  console.log(gameCombination);
+  gameCombination = generateCombination(COLORS, nbPossibilities, duplicate);
   // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
@@ -182,7 +178,7 @@ function verifyCurrentCombination() {
   // Add a new line to the game
   removeTargetListener(currentTargets);
   currentRound++;
-  addNewGameLine(currentRound,gameContainer,nbPossibilities);
+  addNewGameLine(currentRound, gameContainer, nbPossibilities);
   currentLine = document.getElementById(`line-${currentRound}`)!;
   currentTargets = currentLine.querySelectorAll(
     `div.targets-container > div.target`,
@@ -196,51 +192,55 @@ function verifyCurrentCombination() {
   addTargetListener(currentTargets, COLORS);
 }
 
-function cancelPopup(){
-  parametersPopup.style.display = "none";
-  parameters.style.display = "flex";
-}
-
-function showPopup(){
-  parametersPopup.style.display = "flex";
-  parameters.style.display = "none";
-}
-
-function applyParameters(){
-  parametersPopup.style.display = "none";
-  parameters.style.display = "flex";
+function applyParameters() {
+  parametersPopup.style.display = 'none';
+  parameters.style.display = 'flex';
   duplicate = duplicateCheckBox.checked;
   nbColors = nbColorsValue.valueAsNumber;
   nbTurns = nbTurnsValue.valueAsNumber;
   nbPossibilities = nbPossibilitiesValue.valueAsNumber;
-  startNewGame(duplicate,nbTurns,nbColors,nbPossibilities); 
+  if (duplicate === false && nbColors < nbPossibilities) {
+    alert(
+      'Attention, autorisez les doublons ou mettez plus de couleurs que de possibilités par ligne!',
+    );
+  } else {
+    startNewGame();
+  }
 }
 
 // Add the verify event
 verifyButton.onclick = verifyCurrentCombination;
 
 // add restart event
-restartButton.onclick = () => {startNewGame(duplicate,nbTurns,nbColors,nbPossibilities)};
+restartButton.onclick = () => {
+  startNewGame();
+};
 
 //add apply parameters event
 applyButton.onclick = applyParameters;
 
 //add cancel parameters event
-cancelButton.onclick = cancelPopup;
+cancelButton.onclick = () => {
+  parametersPopup.style.display = 'none';
+  parameters.style.display = 'flex';
+};
 
 //add show parametersPopup event
-parameters.onclick = showPopup;
+parameters.onclick = () => {
+  parametersPopup.style.display = 'flex';
+  parameters.style.display = 'none';
+};
 
 winRestartButton.onclick = (e) => {
   e.preventDefault();
   winPopup.style.display = 'none';
-  startNewGame(duplicate,nbTurns,nbColors,nbPossibilities);
+  startNewGame();
 };
 
 looseRestartButton.onclick = (e) => {
   e.preventDefault();
   loosePopup.style.display = 'none';
-  startNewGame(duplicate,nbTurns,nbColors,nbPossibilities);
+  startNewGame();
 };
 
-startNewGame(duplicate,nbTurns,nbColors,nbPossibilities);
+startNewGame();
