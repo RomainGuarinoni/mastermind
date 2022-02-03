@@ -9,6 +9,10 @@ export function generateCombination(
   nbPossibilities: number,
   duplicate: boolean,
 ) {
+  if (!duplicate && nbPossibilities > colors.length) {
+    throw new Error('Impossible to create a combination');
+  }
+
   if (duplicate === false) {
     const colorCombination: string[] = new Array();
     let tmpColor: string;

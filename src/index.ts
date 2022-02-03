@@ -53,8 +53,8 @@ const loosePopup = document.getElementById('loose')!;
 const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
 // The button of the game
-const applyButton = document.getElementById('apply')!;
-const cancelButton = document.getElementById('cancel')!;
+const applyButton = document.getElementById('applyParameters')!;
+const cancelButton = document.getElementById('cancelParameters')!;
 const verifyButton = document.getElementById('verify')!;
 const restartButton = document.getElementById('restart')!;
 const winRestartButton = document.getElementById('win-restart')!;
@@ -87,10 +87,10 @@ let currentWhiteIndicatorsContainer: Element;
 let gameCombination: string[];
 
 // Game params
-let duplicate = true;
-let nbTurns = 7;
-let nbColors = 8;
-let nbPossibilities = 6;
+let duplicate = duplicateCheckBox.checked;
+let nbTurns = nbTurnsValue.valueAsNumber;
+let nbColors = nbColorsValue.valueAsNumber;
+let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
  * @description Reset all game variable and HTML and start a new game
@@ -192,20 +192,22 @@ function verifyCurrentCombination() {
   addTargetListener(currentTargets, COLORS);
 }
 
+/**
+ * @description Set the params value and check if a new game can start with these params
+ */
 function applyParameters() {
-  parametersPopup.style.display = 'none';
-  parameters.style.display = 'flex';
   duplicate = duplicateCheckBox.checked;
   nbColors = nbColorsValue.valueAsNumber;
   nbTurns = nbTurnsValue.valueAsNumber;
   nbPossibilities = nbPossibilitiesValue.valueAsNumber;
   if (duplicate === false && nbColors < nbPossibilities) {
     alert(
-      'Attention, autorisez les doublons ou mettez plus de couleurs que de possibilités par ligne!',
+      `Attention, autorisez les doublons ou mettez un nombre de couleurs supérieur ou égal au nombre de possibilités par ligne`,
     );
-  } else {
-    startNewGame();
+    return;
   }
+  parametersPopup.style.display = 'none';
+  startNewGame();
 }
 
 // Add the verify event
@@ -222,13 +224,11 @@ applyButton.onclick = applyParameters;
 //add cancel parameters event
 cancelButton.onclick = () => {
   parametersPopup.style.display = 'none';
-  parameters.style.display = 'flex';
 };
 
 //add show parametersPopup event
 parameters.onclick = () => {
   parametersPopup.style.display = 'flex';
-  parameters.style.display = 'none';
 };
 
 winRestartButton.onclick = (e) => {
