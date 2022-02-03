@@ -78,3 +78,18 @@ export function changePieceDisplay(color: string, display: Display) {
   const piece = document.getElementById(`${color}-piece`) as HTMLDivElement;
   piece.style.display = display;
 }
+
+/**
+ *
+ * @param colors an array of all the colors
+ * @param finalColors an array of wanted colors
+ */
+export function hideUnwantedColor(colors: string[], finalColors: string[]) {
+  colors.forEach((color) => {
+    if (finalColors.includes(color)) {
+      changePieceDisplay(color, 'block');
+    } else {
+      changePieceDisplay(color, 'none');
+    }
+  });
+}

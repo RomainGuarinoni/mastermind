@@ -16,6 +16,7 @@ import {
   addIndicators,
   Indicators,
   changePieceDisplay,
+  hideUnwantedColor,
 } from './dom-manipulation';
 
 // get the game container
@@ -130,14 +131,7 @@ function startNewGame() {
     duplicate,
   );
 
-  // Hide the unwanted piece
-  COLORS.forEach((color) => {
-    if (colorsAvailable.includes(color)) {
-      changePieceDisplay(color, 'block');
-    } else {
-      changePieceDisplay(color, 'none');
-    }
-  });
+  hideUnwantedColor(COLORS, colorsAvailable);
 
   // reset HTML here
   gameContainer.innerHTML = '';

@@ -2,12 +2,12 @@
  * @jest-environment jsdom
  */
 
-import { doc } from 'prettier';
 import {
   addNewGameLine,
   addIndicators,
   Indicators,
   changePieceDisplay,
+  hideUnwantedColor,
 } from '../src/dom-manipulation';
 
 describe('Dom manipulation', () => {
@@ -125,6 +125,45 @@ describe('Dom manipulation', () => {
       const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
       changePieceDisplay('blue', 'block');
       expect(bluePiece.style.display).toStrictEqual('block');
+    });
+  });
+
+  describe('Hide unwanted colors', () => {
+    it('hide all the color', () => {
+      document.body.innerHTML = `
+      <div id="blue-piece"></div>
+      <div id="red-piece"></div>
+      <div id="yellow-piece"></div>
+      <div id="green-piece"></div>
+      `;
+      const colors = ['blue', 'red', 'yellow', 'green'];
+      hideUnwantedColor(colors, []);
+
+      colors.forEach((color) => {
+        const piece = document.getElementById(`${color}-piece`);
+        expect(piece.style.display).toStrictEqual('none');
+      });
+    });
+
+    it('hide unwanted color', () => {
+      document.body.innerHTML = `
+      <div id="blue-piece"></div>
+      <div id="red-piece"></div>
+      <div id="yellow-piece"></div>
+      <div id="green-piece"></div>
+      `;
+      const colors = ['blue', 'red', 'yellow', 'green'];
+      const availableColor = ['blue', 'red'];
+      hideUnwantedColor(colors, availableColor);
+
+      colors.forEach((color) => {
+        const piece = document.getElementById(`${color}-piece`);
+        if (availableColor.includes(color)) {
+          expect(piece.style.display).toStrictEqual('block');
+        } else {
+          expect(piece.style.display).toStrictEqual('none');
+        }
+      });
     });
   });
 });
