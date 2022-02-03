@@ -11,23 +11,34 @@ import {
 
 describe('Combination', () => {
   describe('Generate combination', () => {
-    it('Combination is an array of 4', () => {
-      const combination = generateCombination([
-        'blue',
-        'red',
-        'yellow',
-        'purple',
-        'gray',
-      ]);
-      expect(combination).toBeInstanceOf(Array);
-      expect(combination.length).toStrictEqual(4);
+    const colors = ['red', 'blue', 'green', 'yellow'];
+
+    it('Create a combination of 4 distinct colors', () => {
+      const combination = generateCombination(colors, 4, false);
+
+      const combinationSet = new Set(combination);
+
+      expect(combination).toHaveLength(4);
+      expect(combinationSet.size).toStrictEqual(4);
     });
 
-    it('Combination full of blue', () => {
-      const combination = generateCombination(['blue']);
-      combination.forEach((color) => {
-        expect(color).toStrictEqual('blue');
-      });
+    it('Create a combination of 4 with 2 distinct colors', () => {
+      const combination = generateCombination(colors.slice(0, 2), 4, true);
+
+      const combinationSet = new Set(combination);
+
+      expect(combination).toHaveLength(4);
+      expect(combinationSet.size).toStrictEqual(2);
+    });
+
+    it('throws error', () => {
+      expect(() => {
+        generateCombination(colors, 10, false);
+      }).toThrow(Error);
+
+      expect(() => {
+        generateCombination(colors, 10, false);
+      }).toThrow('Impossible to create a combination');
     });
   });
 
@@ -37,7 +48,7 @@ describe('Combination', () => {
     it('4 good placement', () => {
       const { goodPlacement, wrongPlacement } = getCombinationPlacement(
         finalCombination,
-        finalCombination
+        finalCombination,
       );
 
       expect(goodPlacement).toStrictEqual(4);
@@ -47,7 +58,7 @@ describe('Combination', () => {
     it('4 wrong placement', () => {
       const { goodPlacement, wrongPlacement } = getCombinationPlacement(
         ['green', 'white', 'red', 'blue'],
-        finalCombination
+        finalCombination,
       );
 
       expect(goodPlacement).toStrictEqual(0);
@@ -57,7 +68,7 @@ describe('Combination', () => {
     it('Only one good placement', () => {
       const { goodPlacement, wrongPlacement } = getCombinationPlacement(
         ['blue', 'blue', 'blue', 'blue'],
-        finalCombination
+        finalCombination,
       );
 
       expect(goodPlacement).toStrictEqual(1);
@@ -67,7 +78,7 @@ describe('Combination', () => {
     it('2 good 2 wrong', () => {
       const { goodPlacement, wrongPlacement } = getCombinationPlacement(
         ['blue', 'white', 'red', 'green'],
-        finalCombination
+        finalCombination,
       );
 
       expect(goodPlacement).toStrictEqual(2);
@@ -77,7 +88,7 @@ describe('Combination', () => {
     it('None of the color is in the final combination', () => {
       const { goodPlacement, wrongPlacement } = getCombinationPlacement(
         ['purple', 'yellow', 'maroon', 'black'],
-        finalCombination
+        finalCombination,
       );
 
       expect(goodPlacement).toStrictEqual(0);
@@ -125,7 +136,7 @@ describe('Combination', () => {
             </div>
           `;
       const targets = document.querySelectorAll(
-        `div.targets-container > div.target`
+        `div.targets-container > div.target`,
       )!;
 
       const combination = getCurrentCombination(targets, colors);
@@ -150,12 +161,12 @@ describe('Combination', () => {
           `;
 
       const targets = document.querySelectorAll(
-        `div.targets-container > div.target`
+        `div.targets-container > div.target`,
       )!;
 
       expect(() => getCurrentCombination(targets, colors)).toThrow(Error);
       expect(() => getCurrentCombination(targets, colors)).toThrow(
-        'Combination is not complete'
+        'Combination is not complete',
       );
     });
   });

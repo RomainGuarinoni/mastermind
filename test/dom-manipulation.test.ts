@@ -14,31 +14,60 @@ describe('Dom manipulation', () => {
   });
 
   describe('Add new game line', () => {
-    it('create a new line', () => {
+    it('Add new game line with 1 target', () => {
       document.body.innerHTML = `
         <div id="game-container"></div>
         `;
 
       const gameContainer = document.getElementById('game-container');
 
-      addNewGameLine(5, gameContainer);
+      addNewGameLine(5, gameContainer, 1);
 
-      expect(document.getElementById('line-5')).toBeInstanceOf(Element);
+      expect(document.getElementById('line-5')).toBeInstanceOf(HTMLDivElement);
       expect(
-        gameContainer.getElementsByClassName('red-indicator-container').length
+        gameContainer.getElementsByClassName('red-indicator-container').length,
       ).toStrictEqual(1);
       expect(
-        gameContainer.getElementsByClassName('white-indicator-container').length
+        gameContainer.getElementsByClassName('white-indicator-container')
+          .length,
       ).toStrictEqual(1);
 
       expect(
-        gameContainer.getElementsByClassName('targets-container').length
+        gameContainer.getElementsByClassName('targets-container').length,
       ).toStrictEqual(1);
 
       expect(
         gameContainer.querySelectorAll(`div.targets-container > div.target`)
-          .length
-      ).toStrictEqual(4);
+          .length,
+      ).toStrictEqual(1);
+    });
+
+    it('Add new game line with 10 target', () => {
+      document.body.innerHTML = `
+        <div id="game-container"></div>
+        `;
+
+      const gameContainer = document.getElementById('game-container');
+
+      addNewGameLine(5, gameContainer, 10);
+
+      expect(document.getElementById('line-5')).toBeInstanceOf(HTMLDivElement);
+      expect(
+        gameContainer.getElementsByClassName('red-indicator-container').length,
+      ).toStrictEqual(1);
+      expect(
+        gameContainer.getElementsByClassName('white-indicator-container')
+          .length,
+      ).toStrictEqual(1);
+
+      expect(
+        gameContainer.getElementsByClassName('targets-container').length,
+      ).toStrictEqual(1);
+
+      expect(
+        gameContainer.querySelectorAll(`div.targets-container > div.target`)
+          .length,
+      ).toStrictEqual(10);
     });
   });
 
@@ -51,18 +80,18 @@ describe('Dom manipulation', () => {
       </div>
       `;
     const redContainer = document.getElementsByClassName(
-      'red-indicator-container'
+      'red-indicator-container',
     )[0];
 
     const whiteContainer = document.getElementsByClassName(
-      'white-indicator-container'
+      'white-indicator-container',
     )[0];
 
     it('Add 4 red indicators', () => {
       addIndicators(Indicators.red, redContainer, 4);
 
       expect(
-        redContainer.getElementsByClassName('red-indicator').length
+        redContainer.getElementsByClassName('red-indicator').length,
       ).toStrictEqual(4);
     });
 
@@ -70,7 +99,7 @@ describe('Dom manipulation', () => {
       addIndicators(Indicators.white, whiteContainer, 4);
 
       expect(
-        whiteContainer.getElementsByClassName('white-indicator').length
+        whiteContainer.getElementsByClassName('white-indicator').length,
       ).toStrictEqual(4);
     });
   });
