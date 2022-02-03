@@ -23,4 +23,10 @@ export declare function addIndicators(type: Indicators, container: Element, numb
  * @param display the style of display to apply
  */
 export declare function changePieceDisplay(color: string, display: Display): void;
+/**
+ *
+ * @param colors an array of all the colors
+ * @param finalColors an array of wanted colors
+ */
+export declare function hideUnwantedColor(colors: string[], finalColors: string[]): void;
 export {};
