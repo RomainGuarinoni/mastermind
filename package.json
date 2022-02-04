@@ -5,7 +5,7 @@
   "main": "dist/index",
   "scripts": {
     "start": "webpack-dev-server --open --mode development --port 8081",
-    "build": "npm run type && webpack --mode production",
+    "build": "rm -rf dist/ && npm run type && webpack --mode production",
     "type": "tsc",
     "format": "prettier --write .",
     "test": "jest",
@@ -27,6 +27,7 @@
     "@commitlint/config-conventional": "^16.0.0",
     "@types/jest": "^27.4.0",
     "babel-loader": "^8.2.3",
+    "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.5.1",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",

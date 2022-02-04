@@ -1,6 +1,8 @@
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
 require('@babel/register');
 
 module.exports = () => {
@@ -34,6 +36,14 @@ module.exports = () => {
         hash: true,
       }),
       new MiniCssExtractPlugin(),
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(__dirname, 'assets'),
+            to: path.resolve(__dirname, 'dist/', 'assets'),
+          },
+        ],
+      }),
     ],
   };
 };
