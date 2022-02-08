@@ -29,4 +29,14 @@ export declare function changePieceDisplay(color: string, display: Display): voi
  * @param finalColors an array of wanted colors
  */
 export declare function hideUnwantedColor(colors: string[], finalColors: string[]): void;
+/**
+ *
+ * @param round the current round index needed to find DOM elements
+ * @returns An object containing the DOM elements of the game
+ */
+export declare function getGameDomElements(round: number): {
+    targets: NodeListOf<Element>;
+    redIndicatorsContainer: HTMLDivElement;
+    whiteIndicatorsContainer: HTMLDivElement;
+};
 export {};
