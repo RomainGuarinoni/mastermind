@@ -16,10 +16,13 @@ import {
   addIndicators,
   Indicators,
   hideUnwantedColor,
+  getGameDomElements,
 } from './dom-manipulation';
 
 // get the game container
-const gameContainer = document.getElementById('game-container')!;
+const gameContainer = document.getElementById(
+  'game-container',
+) as HTMLDivElement;
 
 // Get all the piece of the game
 const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
@@ -30,7 +33,6 @@ const orangePiece = document.getElementById('orange-piece') as HTMLDivElement;
 const blackPiece = document.getElementById('black-piece') as HTMLDivElement;
 const whitePiece = document.getElementById('white-piece') as HTMLDivElement;
 const marronPiece = document.getElementById('maroon-piece') as HTMLDivElement;
-
 const pieces = [
   bluePiece,
   redPiece,
@@ -94,11 +96,9 @@ const nbPossibilitiesValue = document.getElementById(
 ) as HTMLInputElement;
 
 // current game round
-// min : 1 | max : nbTurns
+// min : 1 | max : nbTurns
 let currentRound: number;
 
-// DOM elements of the game
-let currentLine: HTMLElement;
 let currentTargets: NodeListOf<Element>;
 let currentRedIndicatorsContainer: Element;
 let currentWhiteIndicatorsContainer: Element;
@@ -113,28 +113,12 @@ let nbColors = nbColorsValue.valueAsNumber;
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
- * @description update the game variable related to DOM element
- */
-function updateGameDOM() {
-  currentLine = document.getElementById(`line-${currentRound}`)!;
-  currentTargets = currentLine.querySelectorAll(
-    `div.targets-container > div.target`,
-  )!;
-  currentRedIndicatorsContainer = currentLine.querySelector(
-    'div.red-indicator-container',
-  )!;
-  currentWhiteIndicatorsContainer = currentLine.querySelector(
-    'div.white-indicator-container',
-  )!;
-}
-
-/**
  * @description Set parametersPopup innerHtml
  */
 function startNewGame() {
   currentRound = 1;
 
-  let colorsAvailable = getAvailableColors(COLORS, nbColors);
+  const colorsAvailable = getAvailableColors(COLORS, nbColors);
 
   gameCombination = generateCombination(
     colorsAvailable,
@@ -149,19 +133,29 @@ function startNewGame() {
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
 
   // Reset currentTarget and indicators
-  updateGameDOM();
+  const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
+    getGameDomElements(currentRound);
 
+  currentTargets = targets;
+  currentRedIndicatorsContainer = redIndicatorsContainer;
+  currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
   addTargetListener(currentTargets, COLORS);
 }
 
 /**
- * @description remove all events of previous line, update game var and add new line
+ * @description remove all events of the previous line, create a new line with the current index,
+ *  update the game DOM variables and add eventListeners to them
  */
 function createNewRound() {
   removeTargetListener(currentTargets);
   currentRound++;
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
-  updateGameDOM();
+  const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
+    getGameDomElements(currentRound);
+
+  currentTargets = targets;
+  currentRedIndicatorsContainer = redIndicatorsContainer;
+  currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
   addTargetListener(currentTargets, COLORS);
 }
 
@@ -169,9 +163,9 @@ function createNewRound() {
  * @description Add nbRound to win popup and display it
  */
 function displayWinPopup() {
-  document.getElementById(
-    'nb-round',
-  )!.innerHTML = `Tu as trouvé la combinaison en ${currentRound} tours`;
+  (
+    document.getElementById('nb-round') as HTMLParagraphElement
+  ).innerHTML = `Tu as trouvé la combinaison en ${currentRound} tours`;
   winPopup.style.display = 'flex';
 }
 
@@ -179,7 +173,9 @@ function displayWinPopup() {
  * @description Add game combination to loose popup and display it
  */
 function displayLoosePopup() {
-  const solutionCombinaison = document.getElementById('solution-combination')!;
+  const solutionCombinaison = document.getElementById(
+    'solution-combination',
+  ) as HTMLDivElement;
 
   // reset previous solution
   solutionCombinaison.innerHTML = '';

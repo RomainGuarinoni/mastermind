@@ -5,7 +5,7 @@
 export function setPieceDragData(e: DragEvent) {
   const color = (e.target as Element).id.split('-')[0];
   e.dataTransfer?.setData('text/plain', color);
-  e.dataTransfer!.effectAllowed = 'move';
+  (e.dataTransfer as DataTransfer).effectAllowed = 'move';
 }
 
 /**
@@ -14,7 +14,7 @@ export function setPieceDragData(e: DragEvent) {
  */
 function setTargetDropEffect(e: Event) {
   e.preventDefault();
-  (e as DragEvent).dataTransfer!.dropEffect = 'move';
+  ((e as DragEvent).dataTransfer as DataTransfer).dropEffect = 'move';
 }
 
 /**
@@ -24,7 +24,7 @@ function setTargetDropEffect(e: Event) {
  */
 function setTargetBackgroundColor(e: DragEvent, colors: string[]) {
   e.preventDefault();
-  const color = e.dataTransfer!.getData('text/plain');
+  const color = (e.dataTransfer as DataTransfer).getData('text/plain');
   (e.target as Element).classList.remove(...colors);
   (e.target as Element).classList.add(color, 'current-target');
 }

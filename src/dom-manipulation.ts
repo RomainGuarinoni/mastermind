@@ -93,3 +93,30 @@ export function hideUnwantedColor(colors: string[], finalColors: string[]) {
     }
   });
 }
+
+/**
+ *
+ * @param round the current round index needed to find DOM elements
+ * @returns An object containing the DOM elements of the game
+ */
+export function getGameDomElements(round: number) {
+  const line = document.getElementById(`line-${round}`);
+
+  if (!line) {
+    throw new Error('Line does not exist');
+  }
+
+  const targets = line.querySelectorAll(`div.targets-container > div.target`);
+  const redIndicatorsContainer = line.querySelector(
+    'div.red-indicator-container',
+  ) as HTMLDivElement;
+  const whiteIndicatorsContainer = line.querySelector(
+    'div.white-indicator-container',
+  ) as HTMLDivElement;
+
+  return {
+    targets,
+    redIndicatorsContainer,
+    whiteIndicatorsContainer,
+  };
+}

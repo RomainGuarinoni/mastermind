@@ -138,7 +138,7 @@ describe('Combination', () => {
           `;
       const targets = document.querySelectorAll(
         `div.targets-container > div.target`,
-      )!;
+      ) as NodeListOf<Element>;
 
       const combination = getCurrentCombination(targets, colors);
       expect(combination).toBeInstanceOf(Array);
@@ -163,7 +163,7 @@ describe('Combination', () => {
 
       const targets = document.querySelectorAll(
         `div.targets-container > div.target`,
-      )!;
+      ) as NodeListOf<Element>;
 
       expect(() => getCurrentCombination(targets, colors)).toThrow(Error);
       expect(() => getCurrentCombination(targets, colors)).toThrow(

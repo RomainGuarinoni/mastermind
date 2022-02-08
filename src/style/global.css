@@ -237,3 +237,16 @@ button:hover {
   max-width: 40px;
   margin-left: 10px;
 }
+
+/* Animation  */
+@keyframes line-enter {
+  from {
+    transform: translateY(5px);
+    opacity: 0.5;
+  }
+}
+
+.line {
+  animation: line-enter 300ms ease;
+  transition: all ease 200ms;
+}

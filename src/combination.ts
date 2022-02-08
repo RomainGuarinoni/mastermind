@@ -58,7 +58,7 @@ export function getCombinationPlacement(
   currentCombination: string[],
   finalCombination: string[],
 ) {
-  let goodPlacement: string[] = [];
+  const goodPlacement: string[] = [];
   let wrongPlacement: string[] = [];
 
   currentCombination.forEach((color, index) => {
