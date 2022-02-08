@@ -18,26 +18,33 @@ function setTargetDropEffect(e: Event) {
 }
 
 /**
- * @description get the color of the drag item and change the target background to this color
+ * @description get the color of the drag item and change the target piece
+ *  background to this color
  * @param e the drag event of the listener
  * @param colors the colors available in the game
  */
 function setTargetBackgroundColor(e: DragEvent, colors: string[]) {
   e.preventDefault();
   const color = (e.dataTransfer as DataTransfer).getData('text/plain');
-  (e.target as Element).classList.remove(...colors);
-  (e.target as Element).classList.add(color, 'current-target');
+  const targetPiece = (e.currentTarget as Element).querySelector(
+    'div.target-piece',
+  ) as HTMLDivElement;
+
+  targetPiece.classList.remove(...colors);
+  targetPiece.classList.add(color, 'current-target-piece');
 }
 
 /**
- * @description remove the color of a target if the target is clicked
+ * @description remove the color of a target piece if the target is clicked
  * @param e
  */
 function removeColorFromTarget(e: Event) {
-  (e.target as Element).classList.remove(
-    ...(e.target as Element).classList.value.split(' '),
-  );
-  (e.target as Element).classList.add('target');
+  const targetPiece = (e.currentTarget as Element).querySelector(
+    'div.target-piece',
+  ) as HTMLDivElement;
+
+  targetPiece.classList.remove(...targetPiece.classList.value.split(' '));
+  targetPiece.classList.add('target-piece');
 }
 
 /**
