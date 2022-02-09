@@ -56,11 +56,11 @@ const loosePopup = document.getElementById('loose') as HTMLDivElement;
 // All the color available in the game based on the pieces id available
 const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
-// The buttons of the game
-const applyButton = document.getElementById(
+// The button of the game
+const applyParametersButton = document.getElementById(
   'applyParameters',
 ) as HTMLButtonElement;
-const cancelButton = document.getElementById(
+const cancelParametersButton = document.getElementById(
   'cancelParameters',
 ) as HTMLButtonElement;
 const verifyButton = document.getElementById('verify') as HTMLButtonElement;
@@ -101,9 +101,26 @@ let currentWhiteIndicatorsContainer: HTMLDivElement;
 let gameCombination: string[];
 
 // Game params
+
+/**
+ * A boolean that indicates whether the combination can have
+ * duplicate colors or not
+ **/
 let duplicate = duplicateCheckBox.checked;
+
+/**
+ * The number of turns in the game
+ */
 let nbTurns = nbTurnsValue.valueAsNumber;
+
+/**
+ * The number of colors available for the player
+ */
 let nbColors = nbColorsValue.valueAsNumber;
+
+/**
+ * The number of colors in a line
+ */
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
@@ -251,9 +268,11 @@ verifyButton.onclick = verifyCurrentCombination;
 
 restartButton.onclick = startNewGame;
 
-applyButton.onclick = applyParameters;
+// add apply parameters event
+applyParametersButton.onclick = applyParameters;
 
-cancelButton.onclick = () => {
+// add cancel parameters event
+cancelParametersButton.onclick = () => {
   parametersPopup.style.display = 'none';
 };
 

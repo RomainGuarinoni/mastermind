@@ -35,6 +35,9 @@ export function addNewGameLine(
   const whiteIndicatorContainer = document.createElement('div');
   whiteIndicatorContainer.classList.add('white-indicator-container');
 
+  whiteIndicatorContainer.style.width = `${nbPossibilities * 30}px`;
+  redIndicatorContainer.style.width = `${nbPossibilities * 30}px`;
+
   line.appendChild(redIndicatorContainer);
   line.appendChild(targetContainer);
   line.appendChild(whiteIndicatorContainer);
