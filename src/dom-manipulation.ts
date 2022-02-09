@@ -106,7 +106,9 @@ export function getGameDomElements(round: number) {
     throw new Error('Line does not exist');
   }
 
-  const targets = line.querySelectorAll(`div.targets-container > div.target`);
+  const targets = line.querySelectorAll(
+    `div.targets-container > div.target`,
+  ) as NodeListOf<HTMLDivElement>;
   const redIndicatorsContainer = line.querySelector(
     'div.red-indicator-container',
   ) as HTMLDivElement;

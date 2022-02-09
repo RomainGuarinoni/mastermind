@@ -8,6 +8,7 @@ import {
   Indicators,
   changePieceDisplay,
   hideUnwantedColor,
+  getGameDomElements,
 } from '../src/dom-manipulation';
 
 describe('Dom manipulation', () => {
@@ -164,6 +165,81 @@ describe('Dom manipulation', () => {
           expect(piece.style.display).toStrictEqual('none');
         }
       });
+    });
+  });
+
+  describe('Get DOM elements', () => {
+    it('return the game DOM element', () => {
+      document.body.innerHTML = `
+      <div class="line" id="line-2">
+        <div class="red-indicator-container"></div>
+        <div class="targets-container">
+          <div class="target"></div>
+          <div class="target"></div>
+          <div class="target"></div>
+          <div class="target"></div>  
+        </div>
+        <div class="white-indicator-container"></div>
+      </div>
+      `;
+
+      const round = 2;
+
+      const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
+        getGameDomElements(round);
+
+      expect(redIndicatorsContainer).toBeInstanceOf(HTMLDivElement);
+      expect(whiteIndicatorsContainer).toBeInstanceOf(HTMLDivElement);
+
+      targets.forEach((element) => {
+        expect(element).toBeInstanceOf(HTMLDivElement);
+      });
+    });
+
+    it('return the right number of element', () => {
+      document.body.innerHTML = `
+      <div class="line" id="line-2">
+        <div class="red-indicator-container"></div>
+        <div class="targets-container">
+          <div class="target"></div>
+          <div class="target"></div>
+          <div class="target"></div>
+          <div class="target"></div>  
+        </div>
+        <div class="white-indicator-container"></div>
+      </div>
+      `;
+
+      const round = 2;
+
+      const { targets } = getGameDomElements(round);
+
+      expect(targets.length).toStrictEqual(4);
+    });
+
+    it('return an errror because no line found', () => {
+      document.body.innerHTML = `
+      <div class="line" id="line-3">
+        <div class="red-indicator-container"></div>
+        <div class="targets-container">
+          <div class="target"></div>
+          <div class="target"></div>
+          <div class="target"></div>
+          <div class="target"></div>  
+        </div>
+        <div class="white-indicator-container"></div>
+      </div>
+      `;
+
+      const round = 2;
+
+      expect(() => {
+        getGameDomElements(round);
+      }).toThrowError(Error);
+
+      expect(() => {
+        getGameDomElements(round);
+      }).toThrowError('Line does not exist');
     });
   });
 });

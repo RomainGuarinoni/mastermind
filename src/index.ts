@@ -99,9 +99,9 @@ const nbPossibilitiesValue = document.getElementById(
 // min : 1 | max : nbTurns
 let currentRound: number;
 
-let currentTargets: NodeListOf<Element>;
-let currentRedIndicatorsContainer: Element;
-let currentWhiteIndicatorsContainer: Element;
+let currentTargets: NodeListOf<HTMLDivElement>;
+let currentRedIndicatorsContainer: HTMLDivElement;
+let currentWhiteIndicatorsContainer: HTMLDivElement;
 
 // Game variable
 let gameCombination: string[];
