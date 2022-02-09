@@ -35,7 +35,7 @@ export declare function hideUnwantedColor(colors: string[], finalColors: string[
  * @returns An object containing the DOM elements of the game
  */
 export declare function getGameDomElements(round: number): {
-    targets: NodeListOf<Element>;
+    targets: NodeListOf<HTMLDivElement>;
     redIndicatorsContainer: HTMLDivElement;
     whiteIndicatorsContainer: HTMLDivElement;
 };
