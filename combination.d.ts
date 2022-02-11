@@ -30,7 +30,7 @@ export declare function getCombinationPlacement(currentCombination: string[], fi
  */
 export declare function getColorApparition(combination: string[], color: string): number;
 /**
- * @description Return array with only the number of colors wanted
+ * @description Return an array with only the number of colors wanted
  * @param colors the initial array of colors
  * @param nbColors number of colors wanted by the player
  */
