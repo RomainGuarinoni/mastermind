@@ -17,7 +17,9 @@
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
-    "spaced-comment": ["error", "always", { "markers": ["/"] }]
+    "spaced-comment": ["error", "always", { "markers": ["/"] }],
+    "no-console": "warn",
+    "no-else-return": "error"
   },
   "parser": "@typescript-eslint/parser",
   "ignorePatterns": ["*.d.ts"]
