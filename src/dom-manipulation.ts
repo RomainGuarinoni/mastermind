@@ -130,3 +130,36 @@ export function getGameDomElements(round: number) {
     whiteIndicatorsContainer,
   };
 }
+
+/**
+ * @description Update the value and the color of the tooltip when we hover the verify button
+ * @param tooltip the DOM tooltip wich contains a <p> with a <span> inside
+ * @param roundLeft the number of rounds left in the game
+ */
+export function updateTooltip(
+  tooltip: HTMLDivElement,
+  currentRound: number,
+  nbTurns: number,
+) {
+  const span = tooltip.querySelector('span');
+
+  const roundLeft = nbTurns + 1 - currentRound;
+
+  if (!span) {
+    throw new Error('No span found in the tooltip');
+  }
+
+  span.innerHTML = `${roundLeft}`;
+
+  if (roundLeft <= Math.floor(nbTurns / 3)) {
+    span.style.color = 'red';
+    return;
+  }
+
+  if (roundLeft <= Math.floor(nbTurns / 3) * 2) {
+    span.style.color = 'orange';
+    return;
+  }
+
+  span.style.color = 'green';
+}

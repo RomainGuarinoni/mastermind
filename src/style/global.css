@@ -117,7 +117,7 @@ body {
 .piece,
 .red-indicator,
 .white-indicator {
-  filter: drop-shadow(0px 0px 5px rgba(49, 49, 49, 0.377));
+  filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.25));
 }
 
 .piece {
@@ -148,6 +148,60 @@ button {
 
 #restart {
   background-color: red;
+}
+
+.verify-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#tooltip {
+  position: absolute;
+  color: black;
+  filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.25));
+  background-color: white;
+  bottom: 50px;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  z-index: 10;
+  height: 50px;
+  display: none;
+  animation: 450ms cubic-bezier(0.34, 1.61, 0.7, 1) tooltip-enter;
+  transition: opacity cubic-bezier(0.34, 1.61, 0.7, 1) 350ms;
+}
+
+#tooltip::after {
+  content: '';
+  position: absolute;
+  filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.25));
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 10px solid white;
+  top: 50px;
+}
+
+#tooltip span {
+  font-weight: bold;
+}
+
+@keyframes tooltip-enter {
+  from {
+    transform: translate(0, 1rem);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+#verify:hover ~ #tooltip {
+  display: flex;
 }
 
 button:hover {

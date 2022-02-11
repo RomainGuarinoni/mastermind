@@ -17,6 +17,7 @@ import {
   Indicators,
   hideUnwantedColor,
   getGameDomElements,
+  updateTooltip,
 } from './dom-manipulation';
 
 // get the game container
@@ -46,15 +47,15 @@ const pieces = [
 
 setDragListenerOnPieces(pieces);
 
+// All the color available in the game based on the pieces id available
+const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
+
 // Get all Popup
 const parametersPopup = document.getElementById(
   'parametersPopup',
 ) as HTMLDivElement;
 const winPopup = document.getElementById('win') as HTMLDivElement;
 const loosePopup = document.getElementById('loose') as HTMLDivElement;
-
-// All the color available in the game based on the pieces id available
-const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
 // The button of the game
 const applyParametersButton = document.getElementById(
@@ -74,6 +75,10 @@ const looseRestartButton = document.getElementById(
 const parametersButton = document.getElementById(
   'parameters',
 ) as HTMLButtonElement;
+
+// The tooltip of the verify button
+
+const verifyTooltip = document.getElementById('tooltip') as HTMLDivElement;
 
 // Parameters value from the DOM Popup
 const duplicateCheckBox = document.getElementById(
@@ -129,7 +134,7 @@ let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
  */
 function startNewGame() {
   currentRound = 1;
-
+  updateTooltip(verifyTooltip, currentRound, nbTurns);
   const colorsAvailable = getAvailableColors(COLORS, nbColors);
 
   hideUnwantedColor(COLORS, colorsAvailable);
@@ -160,6 +165,8 @@ function createNewRound() {
   removeTargetListener(currentTargets);
 
   currentRound++;
+
+  updateTooltip(verifyTooltip, currentRound, nbTurns);
 
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
   const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
