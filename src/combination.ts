@@ -67,8 +67,9 @@ export function getCombinationPlacement(
 
       /**
        * remove the color from the wrong emplacement if we already
-       * have all the good placement, it delete the duplicates
-       * indicator. see https://github.com/RomainGuarinoni/mastermind/issues/8
+       * have all the good placement. This verification allow to delete
+       * the duplicates indicators.
+       * see https://github.com/RomainGuarinoni/mastermind/issues/8
        */
       if (
         goodPlacement.filter((e) => e === color).length ===
@@ -107,7 +108,7 @@ export function getColorApparition(combination: string[], color: string) {
 }
 
 /**
- * @description Return array with only the number of colors wanted
+ * @description Return an array with only the number of colors wanted
  * @param colors the initial array of colors
  * @param nbColors number of colors wanted by the player
  */

@@ -6,9 +6,9 @@ import {
 } from './combination';
 
 import {
-  setPieceDragData,
   addTargetListener,
   removeTargetListener,
+  setDragListenerOnPieces,
 } from './listeners';
 
 import {
@@ -24,7 +24,7 @@ const gameContainer = document.getElementById(
   'game-container',
 ) as HTMLDivElement;
 
-// Get all the piece of the game
+// Get all the pieces of the game
 const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
 const redPiece = document.getElementById('red-piece') as HTMLDivElement;
 const greenPiece = document.getElementById('green-piece') as HTMLDivElement;
@@ -44,15 +44,9 @@ const pieces = [
   marronPiece,
 ];
 
-// Add drag event listener for each piece and setting the
-// data Transfer to the corresponding color
-window.addEventListener('DOMContentLoaded', () => {
-  pieces.forEach((piece) =>
-    piece.addEventListener('dragstart', setPieceDragData),
-  );
-});
+setDragListenerOnPieces(pieces);
 
-//Get all Popup
+// Get all Popup
 const parametersPopup = document.getElementById(
   'parametersPopup',
 ) as HTMLDivElement;
@@ -62,7 +56,7 @@ const loosePopup = document.getElementById('loose') as HTMLDivElement;
 // All the color available in the game based on the pieces id available
 const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 
-// The button of the game
+// The buttons of the game
 const applyButton = document.getElementById(
   'applyParameters',
 ) as HTMLButtonElement;
@@ -81,7 +75,7 @@ const parametersButton = document.getElementById(
   'parameters',
 ) as HTMLButtonElement;
 
-// Parameters Popup value from the DOM
+// Parameters value from the DOM Popup
 const duplicateCheckBox = document.getElementById(
   'duplicateCheck',
 ) as HTMLInputElement;
@@ -95,15 +89,15 @@ const nbPossibilitiesValue = document.getElementById(
   'nbPossibilitiesValue',
 ) as HTMLInputElement;
 
-// current game round
+// Current game round
 // min : 1 | max : nbTurns
 let currentRound: number;
 
+// Game DOM variables
 let currentTargets: NodeListOf<HTMLDivElement>;
 let currentRedIndicatorsContainer: HTMLDivElement;
 let currentWhiteIndicatorsContainer: HTMLDivElement;
 
-// Game variable
 let gameCombination: string[];
 
 // Game params
@@ -113,12 +107,15 @@ let nbColors = nbColorsValue.valueAsNumber;
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
 /**
- * @description Set parametersPopup innerHtml
+ * @description Reset all the HTML of the game container and start a new game
+ * by generating a new combination and reset game DOM variables
  */
 function startNewGame() {
   currentRound = 1;
 
   const colorsAvailable = getAvailableColors(COLORS, nbColors);
+
+  hideUnwantedColor(COLORS, colorsAvailable);
 
   gameCombination = generateCombination(
     colorsAvailable,
@@ -126,13 +123,9 @@ function startNewGame() {
     duplicate,
   );
 
-  hideUnwantedColor(COLORS, colorsAvailable);
-
-  // reset HTML here
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
 
-  // Reset currentTarget and indicators
   const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
     getGameDomElements(currentRound);
 
@@ -143,24 +136,28 @@ function startNewGame() {
 }
 
 /**
- * @description remove all events of the previous line, create a new line with the current index,
- *  update the game DOM variables and add eventListeners to them
+ * @description Remove all the events of the previous line, create a new line with the current index,
+ * update the game DOM variables and add eventListeners to them
  */
 function createNewRound() {
   removeTargetListener(currentTargets);
+
   currentRound++;
+
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
+
   const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
     getGameDomElements(currentRound);
 
   currentTargets = targets;
   currentRedIndicatorsContainer = redIndicatorsContainer;
   currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
+
   addTargetListener(currentTargets, COLORS);
 }
 
 /**
- * @description Add nbRound to win popup and display it
+ * @description Add the nbRound value to the win popup and display it
  */
 function displayWinPopup() {
   (
@@ -170,14 +167,14 @@ function displayWinPopup() {
 }
 
 /**
- * @description Add game combination to loose popup and display it
+ * @description Add the game combination to the loose popup and display it
  */
 function displayLoosePopup() {
   const solutionCombinaison = document.getElementById(
     'solution-combination',
   ) as HTMLDivElement;
 
-  // reset previous solution
+  // Reset previous solution
   solutionCombinaison.innerHTML = '';
 
   for (let i = 0; i < gameCombination.length; i++) {
@@ -189,7 +186,11 @@ function displayLoosePopup() {
 }
 
 /**
- * @description verify the current combination, add indicators and a new line
+ * @description Verify the current combination. It can either:
+ *  - display an error if the currentCombination is not complete
+ *  - add indicators to the current line and add a new line
+ *  - display win popup if the player find the gameCombination
+ *  - display loose popup if the player failed to find the gameCombination
  */
 function verifyCurrentCombination() {
   let currentCombination: string[];
@@ -228,7 +229,8 @@ function verifyCurrentCombination() {
 }
 
 /**
- * @description Set the params value and check if a new game can start with these params
+ * @description Set the params value and check if a new game can start with these params. If not,
+ * it display an error
  */
 function applyParameters() {
   duplicate = duplicateCheckBox.checked;
@@ -245,21 +247,16 @@ function applyParameters() {
   startNewGame();
 }
 
-// Add the verify event
 verifyButton.onclick = verifyCurrentCombination;
 
-// add restart event
 restartButton.onclick = startNewGame;
 
-//add apply parameters event
 applyButton.onclick = applyParameters;
 
-//add cancel parameters event
 cancelButton.onclick = () => {
   parametersPopup.style.display = 'none';
 };
 
-//add show parametersPopup event
 parametersButton.onclick = () => {
   parametersPopup.style.display = 'flex';
 };

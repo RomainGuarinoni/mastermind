@@ -2,7 +2,7 @@
  * @description Set the piece data transfer to its color
  * @param e the drag event of the listener
  */
-export function setPieceDragData(e: DragEvent) {
+function setPieceDragData(e: DragEvent) {
   const color = (e.target as Element).id.split('-')[0];
   e.dataTransfer?.setData('text/plain', color);
   (e.dataTransfer as DataTransfer).effectAllowed = 'move';
@@ -63,7 +63,7 @@ export function addTargetListener(
 
 /**
  * @description Remove the drag event listener of the targets
- * @param target
+ * @param target The targets to remove eventListeners
  */
 export function removeTargetListener(targets: NodeListOf<Element>) {
   for (let i = 0; i < targets.length; i++) {
@@ -71,4 +71,16 @@ export function removeTargetListener(targets: NodeListOf<Element>) {
     targets[i].removeEventListener('mousedown', removeColorFromTarget);
     targets[i].classList.remove('current-target');
   }
+}
+
+/**
+ * @description Add dragStart events on game pieces
+ * @param pieces All the pieces of the game
+ */
+export function setDragListenerOnPieces(pieces: Array<HTMLDivElement>) {
+  window.addEventListener('DOMContentLoaded', () => {
+    pieces.forEach((piece) =>
+      piece.addEventListener('dragstart', setPieceDragData),
+    );
+  });
 }
