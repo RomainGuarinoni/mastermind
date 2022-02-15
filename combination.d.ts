@@ -11,7 +11,7 @@ export declare function generateCombination(colors: string[], nbPossibilities: n
  * @param colors the available colors of the game
  * @returns an array containing the actual combination of colors or an error if the combination is not complete
  */
-export declare function getCurrentCombination(currentTargets: NodeListOf<Element>, colors: string[]): string[];
+export declare function getCurrentCombination(currentTargets: NodeListOf<HTMLDivElement>, colors: string[]): string[];
 /**
  *
  * @param currentCombination the current combination of colors

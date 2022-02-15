@@ -69,19 +69,34 @@ body {
 .targets-container {
   border: 2px solid gray;
   border-radius: 30px;
-  padding: 10px 20px;
 }
 
-.target,
 .piece {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.329);
-  margin: 0 10px;
+  margin: 0px 10px;
 }
 
-.target,
+.target {
+  width: 75px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.target-piece {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.329);
+}
+
+.current-target-piece {
+  cursor: pointer;
+}
+.target-piece,
 .piece,
 .red-indicator,
 .white-indicator {
@@ -89,10 +104,6 @@ body {
 }
 
 .piece {
-  cursor: pointer;
-}
-
-.current-target {
   cursor: pointer;
 }
 
