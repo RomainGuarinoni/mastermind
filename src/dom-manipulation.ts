@@ -40,6 +40,10 @@ export function addNewGameLine(
     targetContainer.appendChild(target);
   }
 
+
+  whiteIndicatorContainer.style.width = `${nbPossibilities * 30}px`;
+  redIndicatorContainer.style.width = `${nbPossibilities * 30}px`;
+  
   line.appendChild(redIndicatorContainer);
   line.appendChild(targetContainer);
   line.appendChild(whiteIndicatorContainer);
