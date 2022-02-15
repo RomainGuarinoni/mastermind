@@ -49,6 +49,22 @@ describe('Dom manipulation', () => {
           `div.targets-container > div.target > div.target-piece`,
         ).length,
       ).toStrictEqual(1);
+
+      expect(
+        (
+          gameContainer.getElementsByClassName(
+            'white-indicator-container',
+          )[0] as HTMLDivElement
+        ).style.width,
+      ).toStrictEqual('30px');
+
+      expect(
+        (
+          gameContainer.getElementsByClassName(
+            'red-indicator-container',
+          )[0] as HTMLDivElement
+        ).style.width,
+      ).toStrictEqual('30px');
     });
 
     it('Add new game line with 10 target', () => {
@@ -83,6 +99,22 @@ describe('Dom manipulation', () => {
           `div.targets-container > div.target > div.target-piece`,
         ).length,
       ).toStrictEqual(10);
+
+      expect(
+        (
+          gameContainer.getElementsByClassName(
+            'white-indicator-container',
+          )[0] as HTMLDivElement
+        ).style.width,
+      ).toStrictEqual('300px');
+
+      expect(
+        (
+          gameContainer.getElementsByClassName(
+            'red-indicator-container',
+          )[0] as HTMLDivElement
+        ).style.width,
+      ).toStrictEqual('300px');
     });
   });
 
