@@ -23,21 +23,27 @@ export function addNewGameLine(
   const redIndicatorContainer = document.createElement('div');
   redIndicatorContainer.classList.add('red-indicator-container');
 
+  const whiteIndicatorContainer = document.createElement('div');
+  whiteIndicatorContainer.classList.add('white-indicator-container');
+
   const targetContainer = document.createElement('div');
   targetContainer.classList.add('targets-container');
 
   for (let i = 0; i < nbPossibilities; i++) {
     const target = document.createElement('div');
     target.classList.add('target');
+
+    const targetPiece = document.createElement('div');
+    targetPiece.classList.add('target-piece');
+
+    target.appendChild(targetPiece);
     targetContainer.appendChild(target);
   }
 
-  const whiteIndicatorContainer = document.createElement('div');
-  whiteIndicatorContainer.classList.add('white-indicator-container');
 
   whiteIndicatorContainer.style.width = `${nbPossibilities * 30}px`;
   redIndicatorContainer.style.width = `${nbPossibilities * 30}px`;
-
+  
   line.appendChild(redIndicatorContainer);
   line.appendChild(targetContainer);
   line.appendChild(whiteIndicatorContainer);

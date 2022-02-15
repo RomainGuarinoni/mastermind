@@ -130,15 +130,23 @@ describe('Combination', () => {
 
       document.body.innerHTML = `
             <div class="targets-container">
-                <div class="target black"></div>
-                <div class="target red"></div>
-                <div class="target orange"></div>
-                <div class="target yellow"></div>
+                <div class="target">
+                  <div class="target-piece black"></div>
+                </div>
+                <div class="target">
+                  <div class="target-piece red"></div>
+                </div>
+                <div class="target">
+                  <div class="target-piece orange"></div>
+                </div>
+                <div class="target">
+                  <div class="target-piece yellow"></div>
+                </div>
             </div>
           `;
       const targets = document.querySelectorAll(
         `div.targets-container > div.target`,
-      ) as NodeListOf<Element>;
+      ) as NodeListOf<HTMLDivElement>;
 
       const combination = getCurrentCombination(targets, colors);
       expect(combination).toBeInstanceOf(Array);
@@ -153,17 +161,25 @@ describe('Combination', () => {
       const colors = ['black', 'red', 'orange', 'yellow'];
 
       document.body.innerHTML = `
-            <div class="targets-container">
-                <div class="target black"></div>
-                <div class="target red"></div>
-                <div class="target orange"></div>
-                <div class="target"></div>
-            </div>
+      <div class="targets-container">
+      <div class="target">
+        <div class="target-piece black"></div>
+      </div>
+      <div class="target">
+        <div class="target-piece red"></div>
+      </div>
+      <div class="target">
+        <div class="target-piece orange"></div>
+      </div>
+      <div class="target">
+        <div class="target-piece"></div>
+      </div>
+  </div>
           `;
 
       const targets = document.querySelectorAll(
         `div.targets-container > div.target`,
-      ) as NodeListOf<Element>;
+      ) as NodeListOf<HTMLDivElement>;
 
       expect(() => getCurrentCombination(targets, colors)).toThrow(Error);
       expect(() => getCurrentCombination(targets, colors)).toThrow(

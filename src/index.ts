@@ -162,14 +162,12 @@ function createNewRound() {
   currentRound++;
 
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
-
   const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
     getGameDomElements(currentRound);
 
   currentTargets = targets;
   currentRedIndicatorsContainer = redIndicatorsContainer;
   currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
-
   addTargetListener(currentTargets, COLORS);
 }
 
