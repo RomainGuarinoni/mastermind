@@ -43,6 +43,12 @@ describe('Dom manipulation', () => {
         gameContainer.querySelectorAll(`div.targets-container > div.target`)
           .length,
       ).toStrictEqual(1);
+
+      expect(
+        gameContainer.querySelectorAll(
+          `div.targets-container > div.target > div.target-piece`,
+        ).length,
+      ).toStrictEqual(1);
     });
 
     it('Add new game line with 10 target', () => {
@@ -70,6 +76,12 @@ describe('Dom manipulation', () => {
       expect(
         gameContainer.querySelectorAll(`div.targets-container > div.target`)
           .length,
+      ).toStrictEqual(10);
+
+      expect(
+        gameContainer.querySelectorAll(
+          `div.targets-container > div.target > div.target-piece`,
+        ).length,
       ).toStrictEqual(10);
     });
   });

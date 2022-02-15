@@ -31,19 +31,25 @@ export function generateCombination(
  * @returns an array containing the actual combination of colors or an error if the combination is not complete
  */
 export function getCurrentCombination(
-  currentTargets: NodeListOf<Element>,
+  currentTargets: NodeListOf<HTMLDivElement>,
   colors: string[],
 ) {
-  const combination = Array.from(currentTargets).map((item) => {
-    const color = item.className
+  const combination: string[] = [];
+
+  for (let i = 0; i < currentTargets.length; i++) {
+    const currentTargetPiece = currentTargets[i].querySelector(
+      'div.target-piece',
+    ) as HTMLDivElement;
+
+    const color = currentTargetPiece.className
       .split(' ')
       .filter((e) => colors.includes(e))[0];
     if (!color) {
       throw new Error('Combination is not complete');
     }
 
-    return color;
-  });
+    combination.push(color);
+  }
 
   return combination;
 }
