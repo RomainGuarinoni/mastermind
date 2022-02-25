@@ -1,8 +1,8 @@
 /**
- * @param colors the available colors of the game
- * @param nbPossibilities the number of possibilities by line choose by the player
- * @param duplicate boolean that indicate if there are duplicate colors in the combination
- * @returns a combination of X colors, where X is the number of possibilities by line
+ * @param {string[]} colors the available colors of the game
+ * @param {number} nbPossibilities the number of possibilities by line choose by the player
+ * @param {boolean} duplicate boolean that indicate if there are duplicate colors in the combination
+ * @returns {string[]} a combination of X colors, where X is the number of possibilities by line
  */
 export function generateCombination(
   colors: string[],
@@ -26,9 +26,9 @@ export function generateCombination(
 
 /**
  *
- * @param currentTargets the targets which contains the current combination
- * @param colors the available colors of the game
- * @returns an array containing the actual combination of colors or an error if the combination is not complete
+ * @param {NodeListOf<HTMLDivElement>} currentTargets the targets which contains the current combination
+ * @param {string[]} colors the available colors of the game
+ * @returns {string[]} an array containing the actual combination of colors or an error if the combination is not complete
  */
 export function getCurrentCombination(
   currentTargets: NodeListOf<HTMLDivElement>,
@@ -56,14 +56,14 @@ export function getCurrentCombination(
 
 /**
  *
- * @param currentCombination the current combination of colors
- * @param finalCombination the combination of colors to refer to
- * @returns an object containing the number of goodEmplament and wrongEmplacement of the current combination
+ * @param {string[]} currentCombination the current combination of colors
+ * @param {string[]} finalCombination the combination of colors to refer to
+ * @returns {{goodPlacement : number, wrongPlacement:number}} an object containing the number of goodEmplament and wrongEmplacement of the current combination
  */
 export function getCombinationPlacement(
   currentCombination: string[],
   finalCombination: string[],
-) {
+): { goodPlacement: number; wrongPlacement: number } {
   const goodPlacement: string[] = [];
   let wrongPlacement: string[] = [];
 
@@ -105,9 +105,9 @@ export function getCombinationPlacement(
 
 /**
  *
- * @param combination a combination of colors
- * @param color the available colors of the game
- * @returns the number of time a color appear in a combination
+ * @param {string[]} combination a combination of colors
+ * @param {string} color the available colors of the game
+ * @returns {number} the number of time a color appear in a combination
  */
 export function getColorApparition(combination: string[], color: string) {
   return combination.filter((e) => e === color).length;
