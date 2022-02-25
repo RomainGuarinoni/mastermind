@@ -239,6 +239,7 @@ button:hover {
   width: 40px;
   height: 40px;
   transition: transform ease-in-out 300ms;
+  user-select: none;
 }
 
 #parameters:hover {
