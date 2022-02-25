@@ -165,3 +165,40 @@ export function updateTooltip(
 
   span.style.color = 'green';
 }
+/**
+ *
+ * @returns {number} the index of the last game line
+ */
+export function getCurrentNumbersOfLine(): number {
+  return document.getElementsByClassName('line').length;
+}
+
+/**
+ * @description Change the content of the verify button
+ * @param {HTMLButtonElement} verifyButton
+ * @param {'Verify' | 'result'} content
+ */
+export function changeVerifyContent(
+  verifyButton: HTMLButtonElement,
+  content: 'Verify' | 'result',
+) {
+  switch (content) {
+    case 'Verify':
+      verifyButton.innerHTML = 'Vérifier';
+      break;
+    case 'result':
+      verifyButton.innerHTML = 'Voir le résultat';
+      break;
+  }
+}
+
+/**
+ * @description Return true if the game is finish
+ * @param {HTMLButtonElement} verifyButton the verify button of the game
+ * @returns {boolean} return a boolean that indict weither the game is finish or not
+ */
+export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
+  if (verifyButton.innerHTML == 'Voir le résultat') return true;
+
+  return false;
+}

@@ -9,6 +9,7 @@ import {
   addTargetListener,
   removeTargetListener,
   setDragListenerOnPieces,
+  addReducePopUpListener,
 } from './listeners';
 
 import {
@@ -18,6 +19,8 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
+  changeVerifyContent,
+  isGameFinish,
 } from './dom-manipulation';
 
 // get the game container
@@ -75,6 +78,11 @@ const looseRestartButton = document.getElementById(
 const parametersButton = document.getElementById(
   'parameters',
 ) as HTMLButtonElement;
+const reduceButtons = document.getElementsByClassName(
+  'reduce-popUp',
+) as HTMLCollectionOf<HTMLButtonElement>;
+
+addReducePopUpListener(reduceButtons);
 
 // The tooltip of the verify button
 
@@ -155,6 +163,8 @@ function startNewGame() {
   currentRedIndicatorsContainer = redIndicatorsContainer;
   currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
   addTargetListener(currentTargets, COLORS);
+
+  changeVerifyContent(verifyButton, 'Verify');
 }
 
 /**
@@ -229,21 +239,26 @@ function verifyCurrentCombination() {
     gameCombination,
   );
 
-  addIndicators(Indicators.red, currentRedIndicatorsContainer, goodPlacement);
+  // Add the indicators only if the game is not finish
+  if (!isGameFinish(verifyButton)) {
+    addIndicators(Indicators.red, currentRedIndicatorsContainer, goodPlacement);
 
-  addIndicators(
-    Indicators.white,
-    currentWhiteIndicatorsContainer,
-    wrongPlacement,
-  );
+    addIndicators(
+      Indicators.white,
+      currentWhiteIndicatorsContainer,
+      wrongPlacement,
+    );
+  }
 
   if (goodPlacement === nbPossibilities) {
     displayWinPopup();
+    changeVerifyContent(verifyButton, 'result');
     return;
   }
 
   if (currentRound === nbTurns) {
     displayLoosePopup();
+    changeVerifyContent(verifyButton, 'result');
     return;
   }
 

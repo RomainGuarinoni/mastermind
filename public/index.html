@@ -97,7 +97,10 @@
       <div class="win-popup">
         <h2>Bravo, tu as gagné</h2>
         <p id="nb-round"></p>
-        <button id="win-restart">Nouvelle partie</button>
+        <div class="button-container">
+          <button class="reduce-popUp" id="reduce-win">Revoir la partie</button>
+          <button id="win-restart">Nouvelle partie</button>
+        </div>
       </div>
     </div>
 
@@ -108,7 +111,12 @@
           <p>La combinaison était :</p>
           <div id="solution-combination"></div>
         </div>
-        <button id="loose-restart">Nouvelle partie</button>
+        <div class="button-container">
+          <button class="reduce-popUp" id="reduce-loose">
+            Revoir la partie
+          </button>
+          <button id="loose-restart">Nouvelle partie</button>
+        </div>
       </div>
     </div>
   </body>

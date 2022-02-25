@@ -1,3 +1,8 @@
+import {
+  getCurrentNumbersOfLine,
+  getGameDomElements,
+} from './dom-manipulation';
+
 /**
  * @description Set the piece data transfer to its color
  * @param {DragEvent} e the drag event of the listener
@@ -90,4 +95,31 @@ export function setDragListenerOnPieces(pieces: Array<HTMLDivElement>) {
       piece.addEventListener('dragstart', setPieceDragData),
     );
   });
+}
+
+/**
+ *
+ * @param {MouseEvent} e  The event thats created when tu user click on a reducePopup button
+ */
+function reduceButtonPopUp(e: MouseEvent) {
+  // Remove the target listeners of the last line
+  const { targets } = getGameDomElements(getCurrentNumbersOfLine());
+  removeTargetListener(targets);
+
+  const popUp = (e.target as HTMLButtonElement).closest(
+    '.popup',
+  ) as HTMLDivElement;
+  popUp.style.display = 'none';
+}
+
+/**
+ * @description Add a listener to reduce the popUp when it's reduce button is clicked
+ * @param {HTMLCollectionOf<HTMLButtonElement>} buttons The list of all the reducePopUp button
+ */
+export function addReducePopUpListener(
+  buttons: HTMLCollectionOf<HTMLButtonElement>,
+) {
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', reduceButtonPopUp);
+  }
 }

@@ -142,7 +142,9 @@ button {
   margin: 0 20px;
 }
 
-#verify {
+#verify,
+#win-restart,
+#loose-restart {
   background-color: var(--green);
 }
 

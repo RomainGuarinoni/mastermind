@@ -10,6 +10,9 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
+  changeVerifyContent,
+  getCurrentNumbersOfLine,
+  isGameFinish,
 } from '../src/dom-manipulation';
 
 describe('Dom manipulation', () => {
@@ -23,7 +26,9 @@ describe('Dom manipulation', () => {
         <div id="game-container"></div>
         `;
 
-      const gameContainer = document.getElementById('game-container');
+      const gameContainer = document.getElementById(
+        'game-container',
+      ) as HTMLDivElement;
 
       addNewGameLine(5, gameContainer, 1);
 
@@ -73,7 +78,9 @@ describe('Dom manipulation', () => {
         <div id="game-container"></div>
         `;
 
-      const gameContainer = document.getElementById('game-container');
+      const gameContainer = document.getElementById(
+        'game-container',
+      ) as HTMLDivElement;
 
       addNewGameLine(5, gameContainer, 10);
 
@@ -129,11 +136,11 @@ describe('Dom manipulation', () => {
       `;
     const redContainer = document.getElementsByClassName(
       'red-indicator-container',
-    )[0];
+    )[0] as HTMLDivElement;
 
     const whiteContainer = document.getElementsByClassName(
       'white-indicator-container',
-    )[0];
+    )[0] as HTMLDivElement;
 
     it('Add 4 red indicators', () => {
       addIndicators(Indicators.red, redContainer, 4);
@@ -346,6 +353,78 @@ describe('Dom manipulation', () => {
       expect(() => {
         updateTooltip(fakeTooltip, currentRound, nbTurns);
       }).toThrow('No span found in the tooltip');
+    });
+  });
+
+  describe('changeVerifyContent', () => {
+    it('change the content to Verify', () => {
+      document.body.innerHTML = `
+        <button id="verify"></button>
+      `;
+      const verifyButton = document.getElementById(
+        'verify',
+      ) as HTMLButtonElement;
+
+      changeVerifyContent(verifyButton, 'Verify');
+
+      expect(verifyButton.innerHTML).toStrictEqual('Vérifier');
+    });
+
+    it('change the content to result', () => {
+      document.body.innerHTML = `
+        <button id="verify"></button>
+      `;
+      const verifyButton = document.getElementById(
+        'verify',
+      ) as HTMLButtonElement;
+
+      changeVerifyContent(verifyButton, 'result');
+
+      expect(verifyButton.innerHTML).toStrictEqual('Voir le résultat');
+    });
+  });
+
+  describe('Get current number of line', () => {
+    it('return 0', () => {
+      document.body.innerHTML = '';
+
+      expect(getCurrentNumbersOfLine()).toStrictEqual(0);
+    });
+
+    it('return 10', () => {
+      for (let i = 0; i < 10; i++) {
+        const line = document.createElement('div');
+        line.classList.add('line');
+        document.body.appendChild(line);
+      }
+
+      expect(getCurrentNumbersOfLine()).toStrictEqual(10);
+    });
+  });
+
+  describe('Is game finish', () => {
+    it('return true', () => {
+      document.body.innerHTML = `
+        <button id="verify">Voir le résultat</button>
+      `;
+
+      const verifyButton = document.getElementById(
+        'verify',
+      ) as HTMLButtonElement;
+
+      expect(isGameFinish(verifyButton)).toStrictEqual(true);
+    });
+
+    it('return false', () => {
+      document.body.innerHTML = `
+        <button id="verify">Vérifier</button>
+      `;
+
+      const verifyButton = document.getElementById(
+        'verify',
+      ) as HTMLButtonElement;
+
+      expect(isGameFinish(verifyButton)).toStrictEqual(false);
     });
   });
 });
