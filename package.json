@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "babel-jest": "^27.4.6",
-    "jsdoc": "^3.6.10"
+    "jsdoc": "^3.6.10",
+    "date-fns": "^2.28.0"
   }
 }
