@@ -39,4 +39,10 @@ export declare function getGameDomElements(round: number): {
     redIndicatorsContainer: HTMLDivElement;
     whiteIndicatorsContainer: HTMLDivElement;
 };
+/**
+ * @description Update the value and the color of the tooltip when we hover the verify button
+ * @param tooltip the DOM tooltip wich contains a <p> with a <span> inside
+ * @param roundLeft the number of rounds left in the game
+ */
+export declare function updateTooltip(tooltip: HTMLDivElement, currentRound: number, nbTurns: number): void;
 export {};
