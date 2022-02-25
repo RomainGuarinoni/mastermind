@@ -9,6 +9,7 @@ import {
   changePieceDisplay,
   hideUnwantedColor,
   getGameDomElements,
+  updateTooltip,
 } from '../src/dom-manipulation';
 
 describe('Dom manipulation', () => {
@@ -284,6 +285,67 @@ describe('Dom manipulation', () => {
       expect(() => {
         getGameDomElements(round);
       }).toThrowError('Line does not exist');
+    });
+  });
+
+  describe('Update the tooltip', () => {
+    beforeEach(() => {
+      document.body.innerHTML = `
+        <div id="tooltip">
+          <p>Il vous reste <span>11</span> tours</p>
+        </div>
+      `;
+    });
+
+    it('Update the tooltip to 11 rounds left with green color', () => {
+      const nbTurns = 12;
+      const currentRound = 2;
+      const tooltip = document.getElementById('tooltip') as HTMLDivElement;
+      updateTooltip(tooltip, currentRound, nbTurns);
+
+      expect(tooltip.querySelector('span').innerHTML).toStrictEqual('11');
+      expect(tooltip.querySelector('span').style.color).toStrictEqual('green');
+    });
+
+    it('Update the tooltip to 3 rounds left with orange color', () => {
+      const nbTurns = 6;
+      const currentRound = 4;
+      const tooltip = document.getElementById('tooltip') as HTMLDivElement;
+      updateTooltip(tooltip, currentRound, nbTurns);
+
+      expect(tooltip.querySelector('span').innerHTML).toStrictEqual('3');
+      expect(tooltip.querySelector('span').style.color).toStrictEqual('orange');
+    });
+
+    it('Update the tooltip to 5 rounds left with red color', () => {
+      const nbTurns = 15;
+      const currentRound = 11;
+      const tooltip = document.getElementById('tooltip') as HTMLDivElement;
+      updateTooltip(tooltip, currentRound, nbTurns);
+
+      expect(tooltip.querySelector('span').innerHTML).toStrictEqual('5');
+      expect(tooltip.querySelector('span').style.color).toStrictEqual('red');
+    });
+
+    it('Return an error because no span has been find', () => {
+      document.body.innerHTML = `
+        <div id="fake-tooltip">
+          <p>Il vous reste  tours</p>
+        </div>
+      `;
+      const nbTurns = 6;
+      const currentRound = 5;
+      const fakeTooltip = document.getElementById(
+        'fake-tooltip',
+      ) as HTMLDivElement;
+
+      expect(() => {
+        updateTooltip(fakeTooltip, currentRound, nbTurns);
+      }).toThrow(Error);
+
+      expect(() => {
+        updateTooltip(fakeTooltip, currentRound, nbTurns);
+      }).toThrow('No span found in the tooltip');
     });
   });
 });
