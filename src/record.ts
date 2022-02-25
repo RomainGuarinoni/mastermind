@@ -5,11 +5,18 @@ type Category = {
   nbPossibilities: number;
 };
 
-type Run = {
+export type Run = {
   category: Category;
   time: number; // time in second to complete the game
 };
 
+/**
+ *
+ * @param {Category} category the category of a run
+ * @returns the string key representation of the category :
+ *  "duplicate-nbTurns-nbColros-nbPossibilities" with the respective
+ *  category value
+ */
 export function generateKey({
   nbPossibilities,
   nbColors,
