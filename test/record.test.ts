@@ -185,14 +185,14 @@ describe('Record', () => {
       runEnd = new Date('December 19, 1995 03:24:00');
     });
 
-    it('Return 50', () => {
+    it('Return 50000', () => {
       runEnd.setSeconds(runEnd.getSeconds() + 60);
-      expect(getDateDifference(runStart, runEnd)).toStrictEqual(60);
+      expect(getDateDifference(runStart, runEnd)).toStrictEqual(60 * 1000);
     });
 
-    it('Return 200', () => {
+    it('Return 200000', () => {
       runEnd.setSeconds(runEnd.getSeconds() + 200);
-      expect(getDateDifference(runStart, runEnd)).toStrictEqual(200);
+      expect(getDateDifference(runStart, runEnd)).toStrictEqual(200 * 1000);
     });
 
     it('throws an error', () => {

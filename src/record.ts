@@ -86,7 +86,7 @@ export function getDateDifference(runStart: Date, runEnd: Date): number {
     throw new Error('runStart should be before runEnd');
   }
 
-  return (runEnd.getTime() - runStart.getTime()) / 1000;
+  return runEnd.getTime() - runStart.getTime();
 }
 
 /**
