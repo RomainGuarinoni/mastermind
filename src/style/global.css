@@ -144,7 +144,7 @@ button {
 
 #verify,
 #win-restart,
-#loose-restart {
+#lose-restart {
   background-color: var(--green);
 }
 
@@ -254,7 +254,7 @@ button:hover {
 }
 
 .win-popup,
-.loose-popup {
+.lose-popup {
   background-color: white;
   padding: 30px 60px;
   border-radius: 30px;
@@ -269,7 +269,7 @@ button:hover {
   font-size: 40px;
 }
 
-#loose h2 {
+#lose h2 {
   color: #dc2626;
   font-weight: bold;
   font-size: 40px;

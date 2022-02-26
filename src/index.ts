@@ -58,7 +58,7 @@ const parametersPopup = document.getElementById(
   'parametersPopup',
 ) as HTMLDivElement;
 const winPopup = document.getElementById('win') as HTMLDivElement;
-const loosePopup = document.getElementById('loose') as HTMLDivElement;
+const losePopup = document.getElementById('lose') as HTMLDivElement;
 
 // The button of the game
 const applyParametersButton = document.getElementById(
@@ -72,8 +72,8 @@ const restartButton = document.getElementById('restart') as HTMLButtonElement;
 const winRestartButton = document.getElementById(
   'win-restart',
 ) as HTMLButtonElement;
-const looseRestartButton = document.getElementById(
-  'loose-restart',
+const loseRestartButton = document.getElementById(
+  'lose-restart',
 ) as HTMLButtonElement;
 const parametersButton = document.getElementById(
   'parameters',
@@ -199,9 +199,9 @@ function displayWinPopup() {
 }
 
 /**
- * @description Add the game combination to the loose popup and display it
+ * @description Add the game combination to the lose popup and display it
  */
-function displayLoosePopup() {
+function displaylosePopup() {
   const solutionCombinaison = document.getElementById(
     'solution-combination',
   ) as HTMLDivElement;
@@ -214,7 +214,7 @@ function displayLoosePopup() {
     div.classList.add('piece', gameCombination[i]);
     solutionCombinaison.appendChild(div);
   }
-  loosePopup.style.display = 'flex';
+  losePopup.style.display = 'flex';
 }
 
 /**
@@ -222,7 +222,7 @@ function displayLoosePopup() {
  *  - display an error if the currentCombination is not complete
  *  - add indicators to the current line and add a new line
  *  - display win popup if the player find the gameCombination
- *  - display loose popup if the player failed to find the gameCombination
+ *  - display lose popup if the player failed to find the gameCombination
  */
 function verifyCurrentCombination() {
   let currentCombination: string[];
@@ -257,7 +257,7 @@ function verifyCurrentCombination() {
   }
 
   if (currentRound === nbTurns) {
-    displayLoosePopup();
+    displaylosePopup();
     changeVerifyContent(verifyButton, 'result');
     return;
   }
@@ -306,9 +306,9 @@ winRestartButton.onclick = (e) => {
   startNewGame();
 };
 
-looseRestartButton.onclick = (e) => {
+loseRestartButton.onclick = (e) => {
   e.preventDefault();
-  loosePopup.style.display = 'none';
+  losePopup.style.display = 'none';
   startNewGame();
 };
 
