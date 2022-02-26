@@ -7,6 +7,7 @@ type Category = {
 
 export type Run = {
   category: Category;
+  date: Date;
   time: number; // time in second to complete the game
 };
 
@@ -32,28 +33,27 @@ export function generateKey({
  *  - value : the number in seconds
  * @param {Run} record the new record
  */
-export function setRecord({ category, time }: Run) {
-  localStorage.setItem(generateKey(category), time.toString());
+export function setRecord({ category, time, date }: Run) {
+  localStorage.setItem(generateKey(category), JSON.stringify({ time, date }));
 }
 
 /**
  *
  * @param {Category} category the category of the records
- * @returns {Run | null} Return the record of the category or null if no record has been set
+ * @returns {number | null} Return the record of the category or null if no record has been set
  */
 export function getRecord(category: Category): Run | null {
   const key = generateKey(category);
 
-  const time = localStorage.getItem(key);
+  const recordJson = localStorage.getItem(key);
 
-  if (!time) {
+  if (!recordJson) {
     return null;
   }
 
-  return {
-    time: parseInt(time),
-    category,
-  };
+  const record = JSON.parse(recordJson);
+
+  return { time: record.time, date: new Date(record.date), category };
 }
 
 /**
@@ -75,15 +75,18 @@ export function isNewRecord(run: Run): boolean {
   return false;
 }
 
-/**
- * @description Take the user run and determine if it is a new Record for the category. If yes,
- *              the record is saved
- * @param {Run} run the user run
- */
-export default function handleRun(run: Run) {
-  if (!isNewRecord(run)) {
-    return;
+export default function handleRun(run: Run): { isNew: boolean; record: Run } {
+  const response: { isNew: boolean; record: Run } = {
+    isNew: true,
+    record: run,
+  };
+
+  if (isNewRecord(run)) {
+    setRecord(run);
+  } else {
+    response.isNew = false;
+    response.record = getRecord(run.category) as Run;
   }
 
-  setRecord(run);
+  return response;
 }

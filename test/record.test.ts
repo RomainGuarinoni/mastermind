@@ -4,8 +4,9 @@ import handleRun, {
   isNewRecord,
   setRecord,
 } from '../src/record';
-import type { Run } from '../src/record';
 import localStorageMock from './mock/LocalStorageMock';
+import type { Run } from '../src/record';
+
 describe('Record', () => {
   beforeAll(() => {
     global.localStorage = new localStorageMock() as unknown as Storage;
@@ -18,6 +19,7 @@ describe('Record', () => {
       nbColors: 5,
       nbPossibilities: 6,
     },
+    date: new Date('December 17, 1995 03:24:00'),
     time: 254120,
   };
 
@@ -35,24 +37,47 @@ describe('Record', () => {
     it('Set a record in the localStorage', () => {
       setRecord(run);
 
-      const savedRecord = localStorage.getItem(generateKey(run.category));
+      const savedRecordJson = localStorage.getItem(generateKey(run.category));
 
-      expect(JSON.parse(savedRecord)).toStrictEqual(254120);
+      const savedRecord = JSON.parse(savedRecordJson);
+
+      expect({
+        time: savedRecord.time,
+        date: new Date(savedRecord.date),
+      }).toStrictEqual({
+        date: run.date,
+        time: run.time,
+      });
     });
 
     it('Re write an old record', () => {
-      localStorage.setItem(generateKey(run.category), run.time.toString());
+      localStorage.setItem(
+        generateKey(run.category),
+        JSON.stringify({
+          time: run.time,
+          date: run.date,
+        }),
+      );
 
       const newRecord = {
         ...run,
+        date: new Date('December 19, 1995 03:24:00'),
         time: 800,
       };
 
       setRecord(newRecord);
 
-      const savedRun = localStorage.getItem(generateKey(run.category));
+      const savedRecordJson = localStorage.getItem(generateKey(run.category));
 
-      expect(JSON.parse(savedRun)).toStrictEqual(800);
+      const savedRecord = JSON.parse(savedRecordJson);
+
+      expect({
+        time: savedRecord.time,
+        date: new Date(savedRecord.date),
+      }).toStrictEqual({
+        date: newRecord.date,
+        time: newRecord.time,
+      });
     });
   });
 
@@ -66,7 +91,13 @@ describe('Record', () => {
     });
 
     it('Return the record', () => {
-      localStorage.setItem(generateKey(run.category), run.time.toString());
+      localStorage.setItem(
+        generateKey(run.category),
+        JSON.stringify({
+          time: run.time,
+          date: run.date,
+        }),
+      );
 
       expect(getRecord(run.category)).toStrictEqual(run);
     });
@@ -82,13 +113,25 @@ describe('Record', () => {
     });
 
     it('The run is better than the record', () => {
-      localStorage.setItem(generateKey(run.category), run.time.toString());
+      localStorage.setItem(
+        generateKey(run.category),
+        JSON.stringify({
+          time: run.time,
+          date: run.date,
+        }),
+      );
 
       expect(isNewRecord({ ...run, time: run.time - 50 })).toStrictEqual(true);
     });
 
     it('The run is worst than the record', () => {
-      localStorage.setItem(generateKey(run.category), run.time.toString());
+      localStorage.setItem(
+        generateKey(run.category),
+        JSON.stringify({
+          time: run.time,
+          date: run.date,
+        }),
+      );
 
       expect(isNewRecord({ ...run, time: run.time + 50 })).toStrictEqual(false);
     });
@@ -100,23 +143,35 @@ describe('Record', () => {
     });
 
     it('It is a new record', () => {
-      localStorage.setItem(generateKey(run.category), run.time.toString());
+      localStorage.setItem(
+        generateKey(run.category),
+        JSON.stringify({
+          time: run.time,
+          date: run.date,
+        }),
+      );
 
-      handleRun({ ...run, time: run.time - 50 });
-
-      expect(
-        parseInt(localStorage.getItem(generateKey(run.category))),
-      ).toStrictEqual(run.time - 50);
+      expect(handleRun({ ...run, time: run.time - 50 })).toStrictEqual({
+        isNew: true,
+        record: { ...run, time: run.time - 50 },
+      });
     });
 
     it('Is not a new record', () => {
-      localStorage.setItem(generateKey(run.category), run.time.toString());
+      localStorage.setItem(
+        generateKey(run.category),
+        JSON.stringify({
+          time: run.time,
+          date: run.date,
+        }),
+      );
 
       handleRun({ ...run, time: run.time + 50 });
 
-      expect(
-        parseInt(localStorage.getItem(generateKey(run.category))),
-      ).toStrictEqual(run.time);
+      expect(handleRun({ ...run, time: run.time + 50 })).toStrictEqual({
+        isNew: false,
+        record: run,
+      });
     });
   });
 });
