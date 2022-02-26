@@ -24,6 +24,11 @@ import {
   GameStatus,
 } from './dom-manipulation';
 
+enum EndGameStatus {
+  win,
+  lose,
+}
+
 // get the game container
 const gameContainer = document.getElementById(
   'game-container',
@@ -219,6 +224,23 @@ function displaylosePopup() {
 }
 
 /**
+ * @description Update the tooltip and the verify content content and display the corresponding end game popUp
+ * @param {EndGameStatus} status The end game status, either win or lose
+ */
+function handleEndGame(status: EndGameStatus) {
+  if (status === EndGameStatus.win) {
+    displayWinPopup();
+  } else {
+    displaylosePopup();
+  }
+
+  changeGameStatus(verifyButton, GameStatus.finish);
+
+  // We set currentRound+1 so that the tooltip display 0 round left
+  updateTooltip(verifyTooltip, currentRound + 1, nbTurns);
+}
+
+/**
  * @description Verify the current combination. It can either:
  *  - display an error if the currentCombination is not complete
  *  - add indicators to the current line and add a new line
@@ -252,14 +274,12 @@ function verifyCurrentCombination() {
   }
 
   if (goodPlacement === nbPossibilities) {
-    displayWinPopup();
-    changeGameStatus(verifyButton, GameStatus.finish);
+    handleEndGame(EndGameStatus.win);
     return;
   }
 
   if (currentRound === nbTurns) {
-    displaylosePopup();
-    changeGameStatus(verifyButton, GameStatus.finish);
+    handleEndGame(EndGameStatus.lose);
     return;
   }
 

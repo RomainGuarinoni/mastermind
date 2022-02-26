@@ -140,8 +140,9 @@ export function getGameDomElements(round: number) {
 
 /**
  * @description Update the value and the color of the tooltip when we hover the verify button
- * @param tooltip the DOM tooltip wich contains a <p> with a <span> inside
- * @param roundLeft the number of rounds left in the game
+ * @param {HTMLDivElement} tooltip the DOM tooltip wich contains a <p> with a <span> inside
+ * @param {number} currentRound The current round of the game
+ * @param {number} nbTurns The total of turn possible in the current run
  */
 export function updateTooltip(
   tooltip: HTMLDivElement,
