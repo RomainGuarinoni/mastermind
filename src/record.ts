@@ -75,6 +75,11 @@ export function isNewRecord(run: Run): boolean {
   return false;
 }
 
+/**
+ *
+ * @param {Run} run the user run
+ * @returns {{isNew : boolean, record : Run}} return an object thats says if the run is a new record or not and return the actual record for the category
+ */
 export default function handleRun(run: Run): { isNew: boolean; record: Run } {
   const response: { isNew: boolean; record: Run } = {
     isNew: true,

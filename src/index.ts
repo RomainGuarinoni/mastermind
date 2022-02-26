@@ -25,6 +25,8 @@ import {
   GameStatus,
 } from './dom-manipulation';
 
+import handleRun from './record';
+
 enum EndGameStatus {
   win,
   lose,

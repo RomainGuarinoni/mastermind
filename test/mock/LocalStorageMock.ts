@@ -18,17 +18,4 @@ export default class LocalStorageMock {
   setItem(key: string, value: string) {
     this.store[key] = value;
   }
-
-  removeItem(key: string) {
-    delete this.store[key];
-  }
-
-  key(index: number) {
-    const keys = Object.keys(this.store);
-    if (index >= keys.length) {
-      return null;
-    }
-
-    return keys[index];
-  }
 }
