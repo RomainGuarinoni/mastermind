@@ -77,6 +77,33 @@ export function isNewRecord(run: Run): boolean {
 
 /**
  *
+ * @param {Date} runStart the date start of the run
+ * @param {Date} runEnd the date end of the run
+ * @returns Return the number of seconds the run took
+ */
+export function getDateDifference(runStart: Date, runEnd: Date): number {
+  if (runEnd < runStart) {
+    throw new Error('runStart should be before runEnd');
+  }
+
+  return (runEnd.getTime() - runStart.getTime()) / 1000;
+}
+
+/**
+ *
+ * @param {number} duration A duration in ms
+ * @returns an object containing the number of ms,s,m,h
+ */
+export function convertMsToTime(duration: number) {
+  const milliseconds = Math.floor(duration % 1000),
+    seconds = Math.floor((duration / 1000) % 60),
+    minutes = Math.floor((duration / (1000 * 60)) % 60),
+    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+  return { milliseconds, seconds, minutes, hours };
+}
+
+/**
+ *
  * @param {Run} run the user run
  * @returns {{isNew : boolean, record : Run}} return an object thats says if the run is a new record or not and return the actual record for the category
  */

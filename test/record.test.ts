@@ -1,8 +1,10 @@
 import handleRun, {
   generateKey,
   getRecord,
+  getDateDifference,
   isNewRecord,
   setRecord,
+  convertMsToTime,
 } from '../src/record';
 import localStorageMock from './mock/LocalStorageMock';
 import type { Run } from '../src/record';
@@ -171,6 +173,59 @@ describe('Record', () => {
       expect(handleRun({ ...run, time: run.time + 50 })).toStrictEqual({
         isNew: false,
         record: run,
+      });
+    });
+  });
+
+  describe('Get run duration', () => {
+    let runStart: Date;
+    let runEnd: Date;
+    beforeEach(() => {
+      runStart = new Date('December 19, 1995 03:24:00');
+      runEnd = new Date('December 19, 1995 03:24:00');
+    });
+
+    it('Return 50', () => {
+      runEnd.setSeconds(runEnd.getSeconds() + 60);
+      expect(getDateDifference(runStart, runEnd)).toStrictEqual(60);
+    });
+
+    it('Return 200', () => {
+      runEnd.setSeconds(runEnd.getSeconds() + 200);
+      expect(getDateDifference(runStart, runEnd)).toStrictEqual(200);
+    });
+
+    it('throws an error', () => {
+      runEnd.setSeconds(runEnd.getSeconds() + 200);
+
+      expect(() => {
+        getDateDifference(runEnd, runStart);
+      }).toThrow(Error);
+
+      expect(() => {
+        getDateDifference(runEnd, runStart);
+      }).toThrow('runStart should be before runEnd');
+    });
+  });
+
+  describe('Convert ms to time', () => {
+    it('return 59 s', () => {
+      const duration = 59 * 1000;
+      expect(convertMsToTime(duration)).toStrictEqual({
+        milliseconds: 0,
+        seconds: 59,
+        minutes: 0,
+        hours: 0,
+      });
+    });
+
+    it('return 1h 29m 40s 150ms', () => {
+      const duration = 60 * 60 * 1000 + 29 * 60 * 1000 + 40 * 1000 + 150;
+      expect(convertMsToTime(duration)).toStrictEqual({
+        milliseconds: 150,
+        seconds: 40,
+        minutes: 29,
+        hours: 1,
       });
     });
   });
