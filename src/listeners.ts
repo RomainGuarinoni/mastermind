@@ -1,6 +1,6 @@
 /**
  * @description Set the piece data transfer to its color
- * @param e the drag event of the listener
+ * @param {DragEvent} e the drag event of the listener
  */
 function setPieceDragData(e: DragEvent) {
   const color = (e.target as Element).id.split('-')[0];
@@ -10,7 +10,7 @@ function setPieceDragData(e: DragEvent) {
 
 /**
  * @description listener function on drag over event
- * @param e the event of the listener
+ * @param {Event} e the event of the listener
  */
 function setTargetDropEffect(e: Event) {
   e.preventDefault();
@@ -20,8 +20,8 @@ function setTargetDropEffect(e: Event) {
 /**
  * @description get the color of the drag item and change the target piece
  *  background to this color
- * @param e the drag event of the listener
- * @param colors the colors available in the game
+ * @param {DragEvent} e the drag event of the listener
+ * @param {string[]} colors the colors available in the game
  */
 function setTargetBackgroundColor(e: DragEvent, colors: string[]) {
   e.preventDefault();
@@ -36,7 +36,7 @@ function setTargetBackgroundColor(e: DragEvent, colors: string[]) {
 
 /**
  * @description remove the color of a target piece if the target is clicked
- * @param e
+ * @param {Event} e
  */
 function removeColorFromTarget(e: Event) {
   const targetPiece = (e.currentTarget as Element).querySelector(
@@ -49,11 +49,11 @@ function removeColorFromTarget(e: Event) {
 
 /**
  * @description Add the drag event listeners of the targets
- * @param targets the targets to add eventListeners
- * @param colors the colors available in the game
+ * @param {NodeListOf<HTMLDivElement>} targets the targets to add eventListeners
+ * @param {string[]} colors the colors available in the game
  */
 export function addTargetListener(
-  targets: NodeListOf<Element>,
+  targets: NodeListOf<HTMLDivElement>,
   colors: string[],
 ) {
   for (let i = 0; i < targets.length; i++) {
@@ -70,9 +70,9 @@ export function addTargetListener(
 
 /**
  * @description Remove the drag event listener of the targets
- * @param target The targets to remove eventListeners
+ * @param {NodeListOf<HTMLDivElement>} target The targets to remove eventListeners
  */
-export function removeTargetListener(targets: NodeListOf<Element>) {
+export function removeTargetListener(targets: NodeListOf<HTMLDivElement>) {
   for (let i = 0; i < targets.length; i++) {
     targets[i].removeEventListener('dragover', setTargetDropEffect, true);
     targets[i].removeEventListener('mousedown', removeColorFromTarget);
@@ -82,7 +82,7 @@ export function removeTargetListener(targets: NodeListOf<Element>) {
 
 /**
  * @description Add dragStart events on game pieces
- * @param pieces All the pieces of the game
+ * @param {Array<HTMLDivElement>} pieces All the pieces of the game
  */
 export function setDragListenerOnPieces(pieces: Array<HTMLDivElement>) {
   window.addEventListener('DOMContentLoaded', () => {

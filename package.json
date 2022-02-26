@@ -10,7 +10,8 @@
     "format": "prettier --write .",
     "lint": "eslint src/**/*.ts test/**/*.ts --fix",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "docs": "jsdoc -c jsdoc.json"
   },
   "keywords": [
     "mastermind",
@@ -30,6 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "babel-loader": "^8.2.3",
+    "better-docs": "^2.7.2",
     "copy-webpack-plugin": "^10.2.4",
     "css-loader": "^6.5.1",
     "eslint": "^8.8.0",
@@ -37,6 +39,7 @@
     "html-webpack-plugin": "^5.5.0",
     "husky": "^7.0.4",
     "jest": "^27.4.7",
+    "live-server": "^1.2.1",
     "mini-css-extract-plugin": "^2.5.3",
     "prettier": "^2.5.1",
     "typescript": "^4.5.5",
@@ -45,6 +48,7 @@
     "webpack-dev-server": "^4.7.3"
   },
   "dependencies": {
-    "babel-jest": "^27.4.6"
+    "babel-jest": "^27.4.6",
+    "jsdoc": "^3.6.10"
   }
 }

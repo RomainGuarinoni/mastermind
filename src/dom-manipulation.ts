@@ -7,13 +7,13 @@ type Display = 'block' | 'flex' | 'none' | 'inline';
 
 /**
  * @description Add a new line to the game container
- * @param index the index for the line id
- * @param gameContainer the game container element wich contains the lines
- * @param nbPossibilities the number of possibilities by line
+ * @param {number} index the index for the line id
+ * @param {HTMLDivElement} gameContainer the game container element wich contains the lines
+ * @param {number} nbPossibilities the number of possibilities by line
  */
 export function addNewGameLine(
   round: number,
-  gameContainer: Element,
+  gameContainer: HTMLDivElement,
   nbPossibilities: number,
 ) {
   const line = document.createElement('div');
@@ -52,13 +52,13 @@ export function addNewGameLine(
 
 /**
  * @description Add indicators to the game
- * @param type the type of indicators
- * @param container the container where to put indicators
- * @param number the number of indicators to add
+ * @param {Indicators} type the type of indicators
+ * @param {HTMLDivElement} container the container where to put indicators
+ * @param {number} number the number of indicators to add
  */
 export function addIndicators(
   type: Indicators,
-  container: Element,
+  container: HTMLDivElement,
   number: number,
 ) {
   for (let i = 0; i < number; i++) {
@@ -79,8 +79,8 @@ export function addIndicators(
 
 /**
  * @description change the display of a specify piece
- * @param color the color of the piece
- * @param display the style of display to apply
+ * @param {string} color the color of the piece
+ * @param {Display} display the style of display to apply
  */
 export function changePieceDisplay(color: string, display: Display) {
   const piece = document.getElementById(`${color}-piece`) as HTMLDivElement;
@@ -89,8 +89,8 @@ export function changePieceDisplay(color: string, display: Display) {
 
 /**
  *
- * @param colors an array of all the colors
- * @param finalColors an array of wanted colors
+ * @param {string[]} colors an array of all the colors
+ * @param {string[]} finalColors an array of wanted colors
  */
 export function hideUnwantedColor(colors: string[], finalColors: string[]) {
   colors.forEach((color) => {
@@ -104,8 +104,10 @@ export function hideUnwantedColor(colors: string[], finalColors: string[]) {
 
 /**
  *
- * @param round the current round index needed to find DOM elements
- * @returns An object containing the DOM elements of the game
+ * @param {number} round the current round index needed to find DOM elements
+ * @returns {{targets:NodeListOf<HTMLDivElement>,
+ * redIndicatorsContainer:HTMLDivElement,
+ * whiteIndicatorsContainer:HTMLDivElement}}  An object containing the DOM elements of the game
  */
 export function getGameDomElements(round: number) {
   const line = document.getElementById(`line-${round}`);
