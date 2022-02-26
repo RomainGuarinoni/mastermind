@@ -25,7 +25,7 @@ import {
   GameStatus,
 } from './dom-manipulation';
 
-import handleRun from './record';
+import handleRun, { convertMsToTime, getDateDifference } from './record';
 
 enum EndGameStatus {
   win,
@@ -120,6 +120,10 @@ let currentWhiteIndicatorsContainer: HTMLDivElement;
 
 let gameCombination: string[];
 
+// Game run date
+let runStart: Date;
+let runEnd: Date;
+
 // Game params
 
 /**
@@ -172,6 +176,10 @@ function startNewGame() {
   addTargetListener(currentTargets, COLORS);
 
   changeGameStatus(verifyButton, GameStatus.running);
+
+  console.log('Setting a new startDate');
+  runStart = new Date();
+  console.log(runStart);
 }
 
 /**
@@ -275,11 +283,21 @@ function verifyCurrentCombination() {
 
   if (goodPlacement === nbPossibilities) {
     handleEndGame(EndGameStatus.win);
+    console.log('setting a new runEnd');
+    runEnd = new Date();
+    console.log(runEnd);
+    console.log(runStart, runEnd);
+    console.log(convertMsToTime(getDateDifference(runStart, runEnd)));
     return;
   }
 
   if (currentRound === nbTurns) {
     handleEndGame(EndGameStatus.lose);
+    console.log('setting a new runEnd');
+    runEnd = new Date();
+    console.log(runEnd);
+    console.log(runStart, runEnd);
+    console.log(convertMsToTime(getDateDifference(runStart, runEnd)));
     return;
   }
 
