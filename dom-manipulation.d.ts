@@ -5,34 +5,36 @@ export declare enum Indicators {
 declare type Display = 'block' | 'flex' | 'none' | 'inline';
 /**
  * @description Add a new line to the game container
- * @param index the index for the line id
- * @param gameContainer the game container element wich contains the lines
- * @param nbPossibilities the number of possibilities by line
+ * @param {number} index the index for the line id
+ * @param {HTMLDivElement} gameContainer the game container element wich contains the lines
+ * @param {number} nbPossibilities the number of possibilities by line
  */
-export declare function addNewGameLine(round: number, gameContainer: Element, nbPossibilities: number): void;
+export declare function addNewGameLine(round: number, gameContainer: HTMLDivElement, nbPossibilities: number): void;
 /**
  * @description Add indicators to the game
- * @param type the type of indicators
- * @param container the container where to put indicators
- * @param number the number of indicators to add
+ * @param {Indicators} type the type of indicators
+ * @param {HTMLDivElement} container the container where to put indicators
+ * @param {number} number the number of indicators to add
  */
-export declare function addIndicators(type: Indicators, container: Element, number: number): void;
+export declare function addIndicators(type: Indicators, container: HTMLDivElement, number: number): void;
 /**
  * @description change the display of a specify piece
- * @param color the color of the piece
- * @param display the style of display to apply
+ * @param {string} color the color of the piece
+ * @param {Display} display the style of display to apply
  */
 export declare function changePieceDisplay(color: string, display: Display): void;
 /**
  *
- * @param colors an array of all the colors
- * @param finalColors an array of wanted colors
+ * @param {string[]} colors an array of all the colors
+ * @param {string[]} finalColors an array of wanted colors
  */
 export declare function hideUnwantedColor(colors: string[], finalColors: string[]): void;
 /**
  *
- * @param round the current round index needed to find DOM elements
- * @returns An object containing the DOM elements of the game
+ * @param {number} round the current round index needed to find DOM elements
+ * @returns {{targets:NodeListOf<HTMLDivElement>,
+ * redIndicatorsContainer:HTMLDivElement,
+ * whiteIndicatorsContainer:HTMLDivElement}}  An object containing the DOM elements of the game
  */
 export declare function getGameDomElements(round: number): {
     targets: NodeListOf<HTMLDivElement>;
