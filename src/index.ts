@@ -19,8 +19,9 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
-  changeVerifyContent,
+  changeGameStatus,
   isGameFinish,
+  GameStatus,
 } from './dom-manipulation';
 
 // get the game container
@@ -164,7 +165,7 @@ function startNewGame() {
   currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
   addTargetListener(currentTargets, COLORS);
 
-  changeVerifyContent(verifyButton, 'Verify');
+  changeGameStatus(verifyButton, GameStatus.running);
 }
 
 /**
@@ -252,13 +253,13 @@ function verifyCurrentCombination() {
 
   if (goodPlacement === nbPossibilities) {
     displayWinPopup();
-    changeVerifyContent(verifyButton, 'result');
+    changeGameStatus(verifyButton, GameStatus.finish);
     return;
   }
 
   if (currentRound === nbTurns) {
     displaylosePopup();
-    changeVerifyContent(verifyButton, 'result');
+    changeGameStatus(verifyButton, GameStatus.finish);
     return;
   }
 

@@ -3,6 +3,11 @@ export enum Indicators {
   'red',
 }
 
+export enum GameStatus {
+  running = 'Vérifier',
+  finish = 'Voir le résultat',
+}
+
 type Display = 'block' | 'flex' | 'none' | 'inline';
 
 /**
@@ -178,16 +183,16 @@ export function getCurrentNumbersOfLine(): number {
  * @param {HTMLButtonElement} verifyButton
  * @param {'Verify' | 'result'} content
  */
-export function changeVerifyContent(
+export function changeGameStatus(
   verifyButton: HTMLButtonElement,
-  content: 'Verify' | 'result',
+  status: GameStatus,
 ) {
-  switch (content) {
-    case 'Verify':
-      verifyButton.innerHTML = 'Vérifier';
+  switch (status) {
+    case GameStatus.running:
+      verifyButton.innerHTML = GameStatus.running;
       break;
-    case 'result':
-      verifyButton.innerHTML = 'Voir le résultat';
+    case GameStatus.finish:
+      verifyButton.innerHTML = GameStatus.finish;
       break;
   }
 }
@@ -198,7 +203,7 @@ export function changeVerifyContent(
  * @returns {boolean} return a boolean that indict weither the game is finish or not
  */
 export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
-  if (verifyButton.innerHTML == 'Voir le résultat') return true;
+  if (verifyButton.innerHTML == GameStatus.finish) return true;
 
   return false;
 }

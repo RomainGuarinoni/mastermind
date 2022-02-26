@@ -10,9 +10,10 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
-  changeVerifyContent,
+  changeGameStatus,
   getCurrentNumbersOfLine,
   isGameFinish,
+  GameStatus,
 } from '../src/dom-manipulation';
 
 describe('Dom manipulation', () => {
@@ -365,7 +366,7 @@ describe('Dom manipulation', () => {
         'verify',
       ) as HTMLButtonElement;
 
-      changeVerifyContent(verifyButton, 'Verify');
+      changeGameStatus(verifyButton, GameStatus.running);
 
       expect(verifyButton.innerHTML).toStrictEqual('Vérifier');
     });
@@ -378,7 +379,7 @@ describe('Dom manipulation', () => {
         'verify',
       ) as HTMLButtonElement;
 
-      changeVerifyContent(verifyButton, 'result');
+      changeGameStatus(verifyButton, GameStatus.finish);
 
       expect(verifyButton.innerHTML).toStrictEqual('Voir le résultat');
     });
