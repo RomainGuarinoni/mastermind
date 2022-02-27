@@ -3,6 +3,11 @@ export enum Indicators {
   'red',
 }
 
+export enum GameStatus {
+  running = 'Vérifier',
+  finish = 'Voir le résultat',
+}
+
 type Display = 'block' | 'flex' | 'none' | 'inline';
 
 /**
@@ -135,8 +140,9 @@ export function getGameDomElements(round: number) {
 
 /**
  * @description Update the value and the color of the tooltip when we hover the verify button
- * @param tooltip the DOM tooltip wich contains a <p> with a <span> inside
- * @param roundLeft the number of rounds left in the game
+ * @param {HTMLDivElement} tooltip the DOM tooltip wich contains a <p> with a <span> inside
+ * @param {number} currentRound The current round of the game
+ * @param {number} nbTurns The total of turn possible in the current run
  */
 export function updateTooltip(
   tooltip: HTMLDivElement,
@@ -164,4 +170,41 @@ export function updateTooltip(
   }
 
   span.style.color = 'green';
+}
+/**
+ *
+ * @returns {number} the index of the last game line
+ */
+export function getCurrentNumbersOfLine(): number {
+  return document.getElementsByClassName('line').length;
+}
+
+/**
+ * @description Change the content of the verify button
+ * @param {HTMLButtonElement} verifyButton
+ * @param {'Verify' | 'result'} content
+ */
+export function changeGameStatus(
+  verifyButton: HTMLButtonElement,
+  status: GameStatus,
+) {
+  switch (status) {
+    case GameStatus.running:
+      verifyButton.innerHTML = GameStatus.running;
+      break;
+    case GameStatus.finish:
+      verifyButton.innerHTML = GameStatus.finish;
+      break;
+  }
+}
+
+/**
+ * @description Return true if the game is finish
+ * @param {HTMLButtonElement} verifyButton the verify button of the game
+ * @returns {boolean} return a boolean that indict weither the game is finish or not
+ */
+export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
+  if (verifyButton.innerHTML == GameStatus.finish) return true;
+
+  return false;
 }

@@ -9,6 +9,7 @@ import {
   addTargetListener,
   removeTargetListener,
   setDragListenerOnPieces,
+  addReducePopUpListener,
 } from './listeners';
 
 import {
@@ -18,7 +19,15 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
+  changeGameStatus,
+  isGameFinish,
+  GameStatus,
 } from './dom-manipulation';
+
+enum EndGameStatus {
+  win,
+  lose,
+}
 
 // get the game container
 const gameContainer = document.getElementById(
@@ -55,7 +64,7 @@ const parametersPopup = document.getElementById(
   'parametersPopup',
 ) as HTMLDivElement;
 const winPopup = document.getElementById('win') as HTMLDivElement;
-const loosePopup = document.getElementById('loose') as HTMLDivElement;
+const losePopup = document.getElementById('lose') as HTMLDivElement;
 
 // The button of the game
 const applyParametersButton = document.getElementById(
@@ -69,12 +78,17 @@ const restartButton = document.getElementById('restart') as HTMLButtonElement;
 const winRestartButton = document.getElementById(
   'win-restart',
 ) as HTMLButtonElement;
-const looseRestartButton = document.getElementById(
-  'loose-restart',
+const loseRestartButton = document.getElementById(
+  'lose-restart',
 ) as HTMLButtonElement;
 const parametersButton = document.getElementById(
   'parameters',
 ) as HTMLButtonElement;
+const reduceButtons = document.getElementsByClassName(
+  'reduce-popUp',
+) as HTMLCollectionOf<HTMLButtonElement>;
+
+addReducePopUpListener(reduceButtons);
 
 // The tooltip of the verify button
 
@@ -155,6 +169,8 @@ function startNewGame() {
   currentRedIndicatorsContainer = redIndicatorsContainer;
   currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
   addTargetListener(currentTargets, COLORS);
+
+  changeGameStatus(verifyButton, GameStatus.running);
 }
 
 /**
@@ -189,9 +205,9 @@ function displayWinPopup() {
 }
 
 /**
- * @description Add the game combination to the loose popup and display it
+ * @description Add the game combination to the lose popup and display it
  */
-function displayLoosePopup() {
+function displaylosePopup() {
   const solutionCombinaison = document.getElementById(
     'solution-combination',
   ) as HTMLDivElement;
@@ -204,7 +220,24 @@ function displayLoosePopup() {
     div.classList.add('piece', gameCombination[i]);
     solutionCombinaison.appendChild(div);
   }
-  loosePopup.style.display = 'flex';
+  losePopup.style.display = 'flex';
+}
+
+/**
+ * @description Update the tooltip and the verify content content and display the corresponding end game popUp
+ * @param {EndGameStatus} status The end game status, either win or lose
+ */
+function handleEndGame(status: EndGameStatus) {
+  if (status === EndGameStatus.win) {
+    displayWinPopup();
+  } else {
+    displaylosePopup();
+  }
+
+  changeGameStatus(verifyButton, GameStatus.finish);
+
+  // We set currentRound+1 so that the tooltip display 0 round left
+  updateTooltip(verifyTooltip, currentRound + 1, nbTurns);
 }
 
 /**
@@ -212,7 +245,7 @@ function displayLoosePopup() {
  *  - display an error if the currentCombination is not complete
  *  - add indicators to the current line and add a new line
  *  - display win popup if the player find the gameCombination
- *  - display loose popup if the player failed to find the gameCombination
+ *  - display lose popup if the player failed to find the gameCombination
  */
 function verifyCurrentCombination() {
   let currentCombination: string[];
@@ -229,21 +262,24 @@ function verifyCurrentCombination() {
     gameCombination,
   );
 
-  addIndicators(Indicators.red, currentRedIndicatorsContainer, goodPlacement);
+  // Add the indicators only if the game is not finish
+  if (!isGameFinish(verifyButton)) {
+    addIndicators(Indicators.red, currentRedIndicatorsContainer, goodPlacement);
 
-  addIndicators(
-    Indicators.white,
-    currentWhiteIndicatorsContainer,
-    wrongPlacement,
-  );
+    addIndicators(
+      Indicators.white,
+      currentWhiteIndicatorsContainer,
+      wrongPlacement,
+    );
+  }
 
   if (goodPlacement === nbPossibilities) {
-    displayWinPopup();
+    handleEndGame(EndGameStatus.win);
     return;
   }
 
   if (currentRound === nbTurns) {
-    displayLoosePopup();
+    handleEndGame(EndGameStatus.lose);
     return;
   }
 
@@ -291,9 +327,9 @@ winRestartButton.onclick = (e) => {
   startNewGame();
 };
 
-looseRestartButton.onclick = (e) => {
+loseRestartButton.onclick = (e) => {
   e.preventDefault();
-  loosePopup.style.display = 'none';
+  losePopup.style.display = 'none';
   startNewGame();
 };
 
