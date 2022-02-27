@@ -14,3 +14,8 @@ export declare function removeTargetListener(targets: NodeListOf<HTMLDivElement>
  * @param {Array<HTMLDivElement>} pieces All the pieces of the game
  */
 export declare function setDragListenerOnPieces(pieces: Array<HTMLDivElement>): void;
+/**
+ * @description Add a listener to reduce the popUp when it's reduce button is clicked
+ * @param {HTMLCollectionOf<HTMLButtonElement>} buttons The list of all the reducePopUp button
+ */
+export declare function addReducePopUpListener(buttons: HTMLCollectionOf<HTMLButtonElement>): void;
