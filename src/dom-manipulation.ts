@@ -1,3 +1,5 @@
+import { convertMsToTime, convertTimeToString } from './time';
+import { Run } from './record';
 export enum Indicators {
   'white',
   'red',
@@ -207,4 +209,20 @@ export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
   if (verifyButton.innerHTML == GameStatus.finish) return true;
 
   return false;
+}
+
+/**
+ *
+ * @param p The p element to add the record description
+ * @param record The record of the category
+ * @param run The current run in the same category
+ */
+export function displayRecord(p: HTMLParagraphElement, record: Run, run: Run) {
+  const timeString = convertTimeToString(convertMsToTime(record.time));
+  const runDiff = convertTimeToString(convertMsToTime(run.time - record.time));
+
+  p.innerHTML = `Votre meilleur score dans cette catégorie est de :<br>
+<strong>${timeString}</strong> effectué le
+<strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>
+Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
 }

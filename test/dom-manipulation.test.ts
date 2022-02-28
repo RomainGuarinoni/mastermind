@@ -14,7 +14,9 @@ import {
   getCurrentNumbersOfLine,
   isGameFinish,
   GameStatus,
+  displayRecord,
 } from '../src/dom-manipulation';
+import { Run } from '../src/record';
 
 describe('Dom manipulation', () => {
   beforeEach(() => {
@@ -426,6 +428,40 @@ describe('Dom manipulation', () => {
       ) as HTMLButtonElement;
 
       expect(isGameFinish(verifyButton)).toStrictEqual(false);
+    });
+  });
+
+  describe('Display record', () => {
+    it('Display the record', () => {
+      document.body.innerHTML = `<p id="record"></p>`;
+      const p = document.getElementById('record') as HTMLParagraphElement;
+      const record: Run = {
+        category: {
+          duplicate: false,
+          nbColors: 5,
+          nbPossibilities: 10,
+          nbTurns: 12,
+        },
+        time: 60 * 60 * 1000 + 60 * 1000 + 33 * 1000 + 582,
+        date: new Date('2022-02-28T17:29:19'),
+      };
+      const run: Run = {
+        category: {
+          duplicate: false,
+          nbColors: 5,
+          nbPossibilities: 10,
+          nbTurns: 12,
+        },
+        time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
+        date: new Date('2022-02-28T17:29:19'),
+      };
+      displayRecord(p, record, run);
+      expect(p.innerHTML).toStrictEqual(
+        `Votre meilleur score dans cette catégorie est de :<br>
+<strong>1h 1m 33s 582ms</strong> effectué le
+<strong>28/02/2022</strong> à <strong>17:29:19</strong><br>
+Vous avez mis <strong style="color:var(--red)">7s 10ms</strong> de plus`,
+      );
     });
   });
 });
