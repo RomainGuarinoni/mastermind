@@ -217,7 +217,16 @@ export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
  * @param record The record of the category
  * @param run The current run in the same category
  */
-export function displayRecord(p: HTMLParagraphElement, record: Run, run: Run) {
+export function displayRecord(
+  p: HTMLParagraphElement,
+  record: Run | null,
+  run: Run,
+) {
+  if (!record) {
+    p.innerHTML = "Vous n'avez pas encore de record dans cette catégorie.";
+    return;
+  }
+
   const timeString = convertTimeToString(convertMsToTime(record.time));
   const runDiff = convertTimeToString(convertMsToTime(run.time - record.time));
 
@@ -225,4 +234,5 @@ export function displayRecord(p: HTMLParagraphElement, record: Run, run: Run) {
 <strong>${timeString}</strong> effectué le
 <strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>
 Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
+  return;
 }

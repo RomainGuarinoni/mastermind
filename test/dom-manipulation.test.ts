@@ -432,7 +432,7 @@ describe('Dom manipulation', () => {
   });
 
   describe('Display record', () => {
-    it('Display the record', () => {
+    it('Display the record compare to the current run', () => {
       document.body.innerHTML = `<p id="record"></p>`;
       const p = document.getElementById('record') as HTMLParagraphElement;
       const record: Run = {
@@ -461,6 +461,26 @@ describe('Dom manipulation', () => {
 <strong>1h 1m 33s 582ms</strong> effectué le
 <strong>28/02/2022</strong> à <strong>17:29:19</strong><br>
 Vous avez mis <strong style="color:var(--red)">7s 10ms</strong> de plus`,
+      );
+    });
+
+    it('No record set yet', () => {
+      document.body.innerHTML = `<p id="record"></p>`;
+      const p = document.getElementById('record') as HTMLParagraphElement;
+      const record = null;
+      const run: Run = {
+        category: {
+          duplicate: false,
+          nbColors: 5,
+          nbPossibilities: 10,
+          nbTurns: 12,
+        },
+        time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
+        date: new Date('2022-02-28T17:29:19'),
+      };
+      displayRecord(p, record, run);
+      expect(p.innerHTML).toStrictEqual(
+        "Vous n'avez pas encore de record dans cette catégorie.",
       );
     });
   });
