@@ -142,7 +142,7 @@ describe('Record', () => {
       localStorage.clear();
     });
 
-    it('It is a new record', () => {
+    it('It is a new record with a previous record set', () => {
       localStorage.setItem(
         generateKey(run.category),
         JSON.stringify({
@@ -154,6 +154,15 @@ describe('Record', () => {
       expect(handleRun({ ...run, time: run.time - 50 })).toStrictEqual({
         isNew: true,
         record: { ...run, time: run.time - 50 },
+        previousRecord: run,
+      });
+    });
+
+    it('It is a new record with no previous record set', () => {
+      expect(handleRun({ ...run, time: run.time - 50 })).toStrictEqual({
+        isNew: true,
+        record: { ...run, time: run.time - 50 },
+        previousRecord: null,
       });
     });
 

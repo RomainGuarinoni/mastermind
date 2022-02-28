@@ -59,7 +59,8 @@ export function getRecord(category: Category): Run | null {
 /**
  *
  * @param {Run} run The user run
- * @returns return a boolean that indicates whether the run is a new record or not
+ * @returns Compare the run pass in param to the actual record of the categort and return true
+ * if the run pass in param is better. If no record is set, it return true too.
  */
 export function isNewRecord(run: Run): boolean {
   const previousRecord = getRecord(run.category);
@@ -78,15 +79,21 @@ export function isNewRecord(run: Run): boolean {
 /**
  *
  * @param {Run} run the user run
- * @returns {{isNew : boolean, record : Run}} return an object thats says if the run is a new record or not and return the actual record for the category
+ * @returns {{isNew : boolean, record : Run,previousRecord?: Run | null}} return an object thats says if the run is a new record or not and return the actual record for the category
  */
-export default function handleRun(run: Run): { isNew: boolean; record: Run } {
-  const response: { isNew: boolean; record: Run } = {
-    isNew: true,
-    record: run,
-  };
+export default function handleRun(run: Run): {
+  isNew: boolean;
+  record: Run;
+  previousRecord?: Run | null;
+} {
+  const response: { isNew: boolean; record: Run; previousRecord?: Run | null } =
+    {
+      isNew: true,
+      record: run,
+    };
 
   if (isNewRecord(run)) {
+    response.previousRecord = getRecord(run.category);
     setRecord(run);
   } else {
     response.isNew = false;
