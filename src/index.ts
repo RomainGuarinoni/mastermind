@@ -10,6 +10,7 @@ import {
   removeTargetListener,
   setDragListenerOnPieces,
   addReducePopUpListener,
+  addFormEvent,
 } from './listeners';
 
 import {
@@ -62,14 +63,13 @@ const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 // Get all Popup
 const parametersPopup = document.getElementById(
   'parametersPopup',
-) as HTMLDivElement;
+) as HTMLFormElement;
 const winPopup = document.getElementById('win') as HTMLDivElement;
 const losePopup = document.getElementById('lose') as HTMLDivElement;
 
+addFormEvent(parametersPopup, applyParameters);
+
 // The button of the game
-const applyParametersButton = document.getElementById(
-  'applyParameters',
-) as HTMLButtonElement;
 const cancelParametersButton = document.getElementById(
   'cancelParameters',
 ) as HTMLButtonElement;
@@ -91,7 +91,6 @@ const reduceButtons = document.getElementsByClassName(
 addReducePopUpListener(reduceButtons);
 
 // The tooltip of the verify button
-
 const verifyTooltip = document.getElementById('tooltip') as HTMLDivElement;
 
 // Parameters value from the DOM Popup
@@ -253,7 +252,6 @@ function verifyCurrentCombination() {
   try {
     currentCombination = getCurrentCombination(currentTargets, COLORS);
   } catch (err) {
-    alert('Mettez des pions dans chaque emplacement de la ligne');
     return;
   }
 
@@ -308,9 +306,6 @@ function applyParameters() {
 verifyButton.onclick = verifyCurrentCombination;
 
 restartButton.onclick = startNewGame;
-
-// add apply parameters event
-applyParametersButton.onclick = applyParameters;
 
 // add cancel parameters event
 cancelParametersButton.onclick = () => {

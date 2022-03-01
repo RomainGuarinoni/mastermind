@@ -41,14 +41,25 @@ export function getCurrentCombination(
       'div.target-piece',
     ) as HTMLDivElement;
 
+    // remove all alert class
+    currentTargetPiece.classList.remove('alert');
+
     const color = currentTargetPiece.className
       .split(' ')
       .filter((e) => colors.includes(e))[0];
-    if (!color) {
-      throw new Error('Combination is not complete');
-    }
 
-    combination.push(color);
+    if (!color) {
+      // Hack to make the animation restart. See: https://stackoverflow.com/questions/16050914/css-animation-doesnt-restart-when-resetting-class
+      setTimeout(() => {
+        currentTargetPiece.classList.add('alert');
+      }, 1);
+    } else {
+      combination.push(color);
+    }
+  }
+
+  if (combination.length !== currentTargets.length) {
+    throw new Error('Combination is not complete');
   }
 
   return combination;
