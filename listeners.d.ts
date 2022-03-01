@@ -19,3 +19,9 @@ export declare function setDragListenerOnPieces(pieces: Array<HTMLDivElement>): 
  * @param {HTMLCollectionOf<HTMLButtonElement>} buttons The list of all the reducePopUp button
  */
 export declare function addReducePopUpListener(buttons: HTMLCollectionOf<HTMLButtonElement>): void;
+/**
+ * @description Add a callback to the submit event of a form
+ * @param form The form
+ * @param action  the callback
+ */
+export declare function addFormEvent(form: HTMLFormElement, action: () => void): void;
