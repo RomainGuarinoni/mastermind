@@ -167,8 +167,6 @@ function startNewGame() {
     duplicate,
   );
 
-  console.log(gameCombination);
-
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
 

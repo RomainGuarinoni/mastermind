@@ -9,8 +9,9 @@ import handleRun from '../../src/record';
 import {
   displayNewRecord,
   displayPreviousRecord,
-  EndGameStatus,
 } from '../../src/dom-manipulation';
+
+import GameState from '../../src/game-state';
 
 describe('Record integration test', () => {
   const date = new Date('2022-03-01T16:39:06.736Z');
@@ -44,7 +45,7 @@ describe('Record integration test', () => {
 
     record = getRecord(category);
 
-    displayPreviousRecord(p, record, currentRun, EndGameStatus.lose);
+    displayPreviousRecord(p, record, currentRun, GameState.lose);
     expect(p.innerHTML).toStrictEqual(
       "Vous n'avez pas encore de record dans cette catégorie.",
     );
@@ -90,7 +91,7 @@ describe('Record integration test', () => {
   });
 
   it('Display the previous record and the difference with the current run', () => {
-    displayPreviousRecord(p, record, currentRun, EndGameStatus.win);
+    displayPreviousRecord(p, record, currentRun, GameState.win);
     expect(p.innerHTML).toStrictEqual(
       'Votre meilleur score dans cette catégorie est de :<br><strong>2m </strong> effectué le <strong>01/03/2022</strong> à <strong>17:39:06</strong><br>Vous avez mis <strong style="color:var(--red)">10s </strong> de plus',
     );
@@ -99,7 +100,7 @@ describe('Record integration test', () => {
   it('Make a new run but lose', () => {
     record = getRecord(category);
 
-    displayPreviousRecord(p, record, currentRun, EndGameStatus.lose);
+    displayPreviousRecord(p, record, currentRun, GameState.lose);
 
     expect(p.innerHTML).toStrictEqual(
       'Votre meilleur score dans cette catégorie est de :<br><strong>2m </strong> effectué le <strong>01/03/2022</strong> à <strong>17:39:06</strong><br>',
