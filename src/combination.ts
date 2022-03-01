@@ -35,6 +35,15 @@ export function getCurrentCombination(
   colors: string[],
 ) {
   const combination: string[] = [];
+
+  // remove all alert class
+  for (let i = 0; i < currentTargets.length; i++) {
+    const currentTargetPiece = currentTargets[i].querySelector(
+      'div.target-piece',
+    ) as HTMLDivElement;
+    currentTargetPiece.classList.remove('alert');
+  }
+
   for (let i = 0; i < currentTargets.length; i++) {
     const currentTargetPiece = currentTargets[i].querySelector(
       'div.target-piece',
@@ -43,20 +52,18 @@ export function getCurrentCombination(
     const color = currentTargetPiece.className
       .split(' ')
       .filter((e) => colors.includes(e))[0];
+
     if (!color) {
-      currentTargetPiece.classList.add('alert');
+      setTimeout(() => {
+        currentTargetPiece.classList.add('alert');
+      }, 1);
     } else {
       combination.push(color);
     }
   }
+
   if (combination.length !== currentTargets.length) {
-    const alerted = document.getElementsByClassName('alert');
-    setTimeout(() => {
-      for (let i = 0; i < alerted.length; i++) {
-        alerted[i].classList.remove('alert');
-      }
-    }, 1500);
-    throw new Error('Incomplete combination !');
+    throw new Error('Combination is not complete');
   }
   return combination;
 }

@@ -135,8 +135,29 @@ body {
   }
 }
 
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(4px);
+  }
+
+  50% {
+    transform: translateX(0px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  100% {
+    transform: translateX(0px);
+  }
+}
+
 .alert {
-  animation: glowing 500ms 3 ease-in-out;
+  animation: glowing 500ms 1 ease-in-out, vibrate 100ms 2 ease-in-out;
 }
 
 .piece {
