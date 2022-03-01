@@ -1,7 +1,9 @@
+/* eslint-disable */
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+/* eslint-enable */
 
 require('@babel/register');
 
