@@ -9,7 +9,7 @@ export type Time = {
  *
  * @param {Date} runStart the date start of the run
  * @param {Date} runEnd the date end of the run
- * @returns Return the number of seconds the run took
+ * @returns Return the number of milliseconds the run took
  */
 export function getDateDifference(runStart: Date, runEnd: Date): number {
   if (runEnd < runStart) {

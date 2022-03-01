@@ -23,14 +23,14 @@ import {
   changeGameStatus,
   isGameFinish,
   GameStatus,
+  EndGameStatus,
+  displayPreviousRecord,
+  displayNewRecord,
 } from './dom-manipulation';
 
-import handleRun, { convertMsToTime, getDateDifference } from './record';
+import handleRun, { Category, getRecord, Run } from './record';
 
-enum EndGameStatus {
-  win,
-  lose,
-}
+import { getDateDifference } from './time';
 
 // get the game container
 const gameContainer = document.getElementById(
@@ -177,9 +177,7 @@ function startNewGame() {
 
   changeGameStatus(verifyButton, GameStatus.running);
 
-  console.log('Setting a new startDate');
   runStart = new Date();
-  console.log(runStart);
 }
 
 /**
@@ -233,13 +231,49 @@ function displaylosePopup() {
 }
 
 /**
- * @description Update the tooltip and the verify content content and display the corresponding end game popUp
+ * @description Update the tooltip and the verify content and display the corresponding end game popUp. It also
+ * get the record of the caategory and display a message accroding to if the currentRun is a new record in the
+ * category or not
  * @param {EndGameStatus} status The end game status, either win or lose
  */
 function handleEndGame(status: EndGameStatus) {
+  runEnd = new Date();
+
+  const currentCategory: Category = {
+    nbTurns,
+    nbColors,
+    nbPossibilities,
+    duplicate,
+  };
+
+  const currentRun: Run = {
+    category: currentCategory,
+    time: getDateDifference(runStart, runEnd),
+    date: new Date(),
+  };
+
   if (status === EndGameStatus.win) {
+    const p = document.querySelector('#win-record p') as HTMLParagraphElement;
+
+    const { isNew, record, previousRecord } = handleRun(currentRun);
+
+    if (isNew && previousRecord !== undefined) {
+      displayNewRecord(p, record, previousRecord);
+    } else if (previousRecord !== undefined) {
+      displayPreviousRecord(p, previousRecord, currentRun, EndGameStatus.win);
+    }
+
     displayWinPopup();
   } else {
+    const p = document.querySelector('#lose-record p') as HTMLParagraphElement;
+
+    displayPreviousRecord(
+      p,
+      getRecord(currentCategory),
+      currentRun,
+      EndGameStatus.lose,
+    );
+
     displaylosePopup();
   }
 
@@ -283,21 +317,13 @@ function verifyCurrentCombination() {
 
   if (goodPlacement === nbPossibilities) {
     handleEndGame(EndGameStatus.win);
-    console.log('setting a new runEnd');
-    runEnd = new Date();
-    console.log(runEnd);
-    console.log(runStart, runEnd);
-    console.log(convertMsToTime(getDateDifference(runStart, runEnd)));
+
     return;
   }
 
   if (currentRound === nbTurns) {
     handleEndGame(EndGameStatus.lose);
-    console.log('setting a new runEnd');
-    runEnd = new Date();
-    console.log(runEnd);
-    console.log(runStart, runEnd);
-    console.log(convertMsToTime(getDateDifference(runStart, runEnd)));
+
     return;
   }
 
