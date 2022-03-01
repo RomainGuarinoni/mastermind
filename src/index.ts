@@ -10,6 +10,7 @@ import {
   removeTargetListener,
   setDragListenerOnPieces,
   addReducePopUpListener,
+  addFormEvent,
 } from './listeners';
 
 import {
@@ -306,10 +307,7 @@ verifyButton.onclick = verifyCurrentCombination;
 restartButton.onclick = startNewGame;
 
 // add apply parameters event, usable with enter key to submit the form
-parametersPopup.addEventListener('submit', (e) => {
-  e.preventDefault();
-  applyParameters();
-});
+addFormEvent(parametersPopup, applyParameters());
 
 // add cancel parameters event
 cancelParametersButton.onclick = () => {

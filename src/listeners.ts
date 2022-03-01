@@ -123,3 +123,10 @@ export function addReducePopUpListener(
     buttons[i].addEventListener('click', reduceButtonPopUp);
   }
 }
+
+export function addFormEvent(form: HTMLFormElement, action: void) {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault;
+    action;
+  });
+}
