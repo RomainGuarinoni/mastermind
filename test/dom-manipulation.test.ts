@@ -464,14 +464,14 @@ describe('Dom manipulation', () => {
     it('Display the record compare in win game', () => {
       displayPreviousRecord(p, record, run, EndGameStatus.win);
       expect(p.innerHTML).toStrictEqual(
-        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le<strong>28/02/2022</strong> à <strong>17:29:19</strong><br>Vous avez mis <strong style="color:var(--red)">7s 10ms </strong> de plus`,
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>28/02/2022</strong> à <strong>17:29:19</strong><br>Vous avez mis <strong style="color:var(--red)">7s 10ms </strong> de plus`,
       );
     });
 
     it('Display the record compare in lose game', () => {
       displayPreviousRecord(p, record, run, EndGameStatus.lose);
       expect(p.innerHTML).toStrictEqual(
-        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le<strong>28/02/2022</strong> à <strong>17:29:19</strong><br>`,
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>28/02/2022</strong> à <strong>17:29:19</strong><br>`,
       );
     });
 

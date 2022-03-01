@@ -92,7 +92,7 @@ describe('Record integration test', () => {
   it('Display the previous record and the difference with the current run', () => {
     displayPreviousRecord(p, record, currentRun, EndGameStatus.win);
     expect(p.innerHTML).toStrictEqual(
-      'Votre meilleur score dans cette catégorie est de :<br><strong>2m </strong> effectué le<strong>01/03/2022</strong> à <strong>17:39:06</strong><br>Vous avez mis <strong style="color:var(--red)">10s </strong> de plus',
+      'Votre meilleur score dans cette catégorie est de :<br><strong>2m </strong> effectué le <strong>01/03/2022</strong> à <strong>17:39:06</strong><br>Vous avez mis <strong style="color:var(--red)">10s </strong> de plus',
     );
   });
 
@@ -102,7 +102,7 @@ describe('Record integration test', () => {
     displayPreviousRecord(p, record, currentRun, EndGameStatus.lose);
 
     expect(p.innerHTML).toStrictEqual(
-      'Votre meilleur score dans cette catégorie est de :<br><strong>2m </strong> effectué le<strong>01/03/2022</strong> à <strong>17:39:06</strong><br>',
+      'Votre meilleur score dans cette catégorie est de :<br><strong>2m </strong> effectué le <strong>01/03/2022</strong> à <strong>17:39:06</strong><br>',
     );
   });
 

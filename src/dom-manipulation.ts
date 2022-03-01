@@ -240,7 +240,7 @@ export function displayPreviousRecord(
       convertMsToTime(run.time - record.time),
     );
 
-    text = `Votre meilleur score dans cette catégorie est de :<br><strong>${timeString}</strong> effectué le<strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>`;
+    text = `Votre meilleur score dans cette catégorie est de :<br><strong>${timeString}</strong> effectué le <strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>`;
 
     if (endGameStatus == EndGameStatus.win) {
       text += `Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
