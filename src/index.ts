@@ -256,11 +256,10 @@ function handleEndGame(status: EndGameStatus) {
     const p = document.querySelector('#win-record p') as HTMLParagraphElement;
 
     const { isNew, record, previousRecord } = handleRun(currentRun);
-
     if (isNew) {
       displayNewRecord(p, record, previousRecord);
     } else {
-      displayPreviousRecord(p, previousRecord, currentRun, EndGameStatus.win);
+      displayPreviousRecord(p, record, currentRun, EndGameStatus.win);
     }
 
     displayWinPopup();
@@ -350,7 +349,6 @@ function applyParameters() {
 }
 
 verifyButton.onclick = verifyCurrentCombination;
-
 restartButton.onclick = startNewGame;
 
 // add cancel parameters event
