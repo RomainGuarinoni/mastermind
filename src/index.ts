@@ -67,6 +67,8 @@ const parametersPopup = document.getElementById(
 const winPopup = document.getElementById('win') as HTMLDivElement;
 const losePopup = document.getElementById('lose') as HTMLDivElement;
 
+addFormEvent(parametersPopup, applyParameters);
+
 // The button of the game
 const cancelParametersButton = document.getElementById(
   'cancelParameters',
@@ -89,7 +91,6 @@ const reduceButtons = document.getElementsByClassName(
 addReducePopUpListener(reduceButtons);
 
 // The tooltip of the verify button
-
 const verifyTooltip = document.getElementById('tooltip') as HTMLDivElement;
 
 // Parameters value from the DOM Popup
@@ -305,9 +306,6 @@ function applyParameters() {
 verifyButton.onclick = verifyCurrentCombination;
 
 restartButton.onclick = startNewGame;
-
-// add apply parameters event, usable with enter key to submit the form
-addFormEvent(parametersPopup, applyParameters());
 
 // add cancel parameters event
 cancelParametersButton.onclick = () => {

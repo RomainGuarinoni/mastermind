@@ -124,9 +124,14 @@ export function addReducePopUpListener(
   }
 }
 
-export function addFormEvent(form: HTMLFormElement, action: void) {
+/**
+ * @description Add a callback to the submit event of a form
+ * @param form The form
+ * @param action  the callback
+ */
+export function addFormEvent(form: HTMLFormElement, action: () => void) {
   form.addEventListener('submit', (e) => {
-    e.preventDefault;
-    action;
+    e.preventDefault();
+    action();
   });
 }
