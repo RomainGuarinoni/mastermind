@@ -142,14 +142,12 @@ let nbColors = nbColorsValue.valueAsNumber;
  */
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
-const property = [duplicate, nbColors, nbTurns, nbPossibilities];
 /**
  * @description Reset all the HTML of the game container and start a new game
  * by generating a new combination and reset game DOM variables
  */
 function startNewGame() {
   currentRound = 1;
-  console.log(property);
   updateTooltip(verifyTooltip, currentRound, nbTurns);
   const colorsAvailable = getAvailableColors(COLORS, nbColors);
 
@@ -312,7 +310,10 @@ verifyButton.onclick = verifyCurrentCombination;
 restartButton.onclick = startNewGame;
 
 // add apply parameters event
-applyParametersButton.onclick = applyParameters;
+parametersPopup.addEventListener('submit', (e) => {
+  e.preventDefault();
+  applyParameters();
+});
 
 // add cancel parameters event
 cancelParametersButton.onclick = () => {
