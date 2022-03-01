@@ -55,10 +55,9 @@ export function convertTimeToString(time: Time) {
   }
   if (time.milliseconds) {
     result += `${time.milliseconds}ms `;
-  } else {
-    if (result == '') {
-      result += '0ms ';
-    }
+  }
+  if (result == '') {
+    result += '0ms ';
   }
   return result;
 }

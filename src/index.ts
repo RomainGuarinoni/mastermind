@@ -25,7 +25,7 @@ import {
   displayNewRecord,
 } from './dom-manipulation';
 
-import handleRun, { Category, getRecord, Run } from './record';
+import handleRun, { getRecord, Run } from './record';
 
 import { getDateDifference } from './time';
 
@@ -242,15 +242,18 @@ function displaylosePopup() {
 function handleEndGame() {
   runEnd = new Date();
 
-  const currentCategory: Category = {
-    nbTurns,
-    nbColors,
-    nbPossibilities,
-    duplicate,
-  };
+  changeVerifyContent(verifyButton, gameState);
+
+  // We set currentRound+1 so that the tooltip display 0 round left
+  updateTooltip(verifyTooltip, currentRound + 1, nbTurns);
 
   const currentRun: Run = {
-    category: currentCategory,
+    category: {
+      nbTurns,
+      nbColors,
+      nbPossibilities,
+      duplicate,
+    },
     time: getDateDifference(runStart, runEnd),
     date: new Date(),
   };
@@ -266,18 +269,19 @@ function handleEndGame() {
     }
 
     displayWinPopup();
-  } else {
-    const p = document.querySelector('#lose-record p') as HTMLParagraphElement;
-
-    displayPreviousRecord(p, getRecord(currentCategory), currentRun, gameState);
-
-    displaylosePopup();
+    return;
   }
 
-  changeVerifyContent(verifyButton, gameState);
+  const p = document.querySelector('#lose-record p') as HTMLParagraphElement;
 
-  // We set currentRound+1 so that the tooltip display 0 round left
-  updateTooltip(verifyTooltip, currentRound + 1, nbTurns);
+  displayPreviousRecord(
+    p,
+    getRecord(currentRun.category),
+    currentRun,
+    gameState,
+  );
+
+  displaylosePopup();
 }
 
 /**
