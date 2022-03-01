@@ -14,7 +14,9 @@ import {
   getCurrentNumbersOfLine,
   isGameFinish,
   GameStatus,
-  displayRecord,
+  displayPreviousRecord,
+  EndGameStatus,
+  displayNewRecord,
 } from '../src/dom-manipulation';
 import { Run } from '../src/record';
 
@@ -432,55 +434,96 @@ describe('Dom manipulation', () => {
   });
 
   describe('Display record', () => {
-    it('Display the record compare to the current run', () => {
+    let p: HTMLParagraphElement;
+    const record: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 33 * 1000 + 582,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+    const run: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+    beforeEach(() => {
+      document.body.innerHTML = '';
       document.body.innerHTML = `<p id="record"></p>`;
-      const p = document.getElementById('record') as HTMLParagraphElement;
-      const record: Run = {
-        category: {
-          duplicate: false,
-          nbColors: 5,
-          nbPossibilities: 10,
-          nbTurns: 12,
-        },
-        time: 60 * 60 * 1000 + 60 * 1000 + 33 * 1000 + 582,
-        date: new Date('2022-02-28T17:29:19'),
-      };
-      const run: Run = {
-        category: {
-          duplicate: false,
-          nbColors: 5,
-          nbPossibilities: 10,
-          nbTurns: 12,
-        },
-        time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
-        date: new Date('2022-02-28T17:29:19'),
-      };
-      displayRecord(p, record, run);
+      p = document.getElementById('record') as HTMLParagraphElement;
+    });
+
+    it('Display the record compare in win game', () => {
+      displayPreviousRecord(p, record, run, EndGameStatus.win);
       expect(p.innerHTML).toStrictEqual(
-        `Votre meilleur score dans cette catégorie est de :<br>
-<strong>1h 1m 33s 582ms</strong> effectué le
-<strong>28/02/2022</strong> à <strong>17:29:19</strong><br>
-Vous avez mis <strong style="color:var(--red)">7s 10ms</strong> de plus`,
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms</strong> effectué le<strong>28/02/2022</strong> à <strong>17:29:19</strong><br>Vous avez mis <strong style="color:var(--red)">7s 10ms</strong> de plus`,
+      );
+    });
+
+    it('Display the record compare in lose game', () => {
+      displayPreviousRecord(p, record, run, EndGameStatus.lose);
+      expect(p.innerHTML).toStrictEqual(
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms</strong> effectué le<strong>28/02/2022</strong> à <strong>17:29:19</strong><br>`,
       );
     });
 
     it('No record set yet', () => {
-      document.body.innerHTML = `<p id="record"></p>`;
-      const p = document.getElementById('record') as HTMLParagraphElement;
-      const record = null;
-      const run: Run = {
-        category: {
-          duplicate: false,
-          nbColors: 5,
-          nbPossibilities: 10,
-          nbTurns: 12,
-        },
-        time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
-        date: new Date('2022-02-28T17:29:19'),
-      };
-      displayRecord(p, record, run);
+      displayPreviousRecord(p, null, run, EndGameStatus.lose);
       expect(p.innerHTML).toStrictEqual(
         "Vous n'avez pas encore de record dans cette catégorie.",
+      );
+    });
+  });
+
+  describe('Display new record', () => {
+    let p: HTMLParagraphElement;
+    const previousRecord: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+    const newRecord: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 33 * 1000 + 582,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+    beforeEach(() => {
+      document.body.innerHTML = '';
+      document.body.innerHTML = `<p id="record"></p>`;
+      p = document.getElementById('record') as HTMLParagraphElement;
+    });
+
+    it('Display the new record with the diff of the previous one', () => {
+      displayNewRecord(p, newRecord, previousRecord);
+
+      expect(p.innerHTML).toStrictEqual(
+        'Bravo, vous venez de créer un nouveau record pour cette catégorie !<br>Vous avez mis <strong style="color:var(--green)">7s 10ms</strong> de moins que votre précédent record',
+      );
+    });
+
+    it('Display the new record without the diff of the previous one', () => {
+      displayNewRecord(p, newRecord, null);
+
+      expect(p.innerHTML).toStrictEqual(
+        'Bravo, vous venez de créer un nouveau record pour cette catégorie !<br>',
       );
     });
   });

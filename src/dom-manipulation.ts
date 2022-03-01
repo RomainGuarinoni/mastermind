@@ -211,28 +211,67 @@ export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
   return false;
 }
 
+export enum EndGameStatus {
+  win,
+  lose,
+}
+
 /**
- *
+ * @description Add to the p pass in param the description of the previousRecord and the comparaison to the currentRun.
+ * The useCase of this function is to be called when the user loose a game or win a game without beating his record
+ * and the win / loose popUp has to show what is the current record in this category
  * @param p The p element to add the record description
  * @param record The record of the category
  * @param run The current run in the same category
+ * @param endGameStatus The game status, if set to win, we display the diff of time between run and record, otherwise not
  */
-export function displayRecord(
+export function displayPreviousRecord(
   p: HTMLParagraphElement,
   record: Run | null,
   run: Run,
+  endGameStatus: EndGameStatus,
 ) {
+  let text = '';
   if (!record) {
-    p.innerHTML = "Vous n'avez pas encore de record dans cette catégorie.";
-    return;
+    text = "Vous n'avez pas encore de record dans cette catégorie.";
+  } else {
+    const timeString = convertTimeToString(convertMsToTime(record.time));
+    const runDiff = convertTimeToString(
+      convertMsToTime(run.time - record.time),
+    );
+
+    text = `Votre meilleur score dans cette catégorie est de :<br><strong>${timeString}</strong> effectué le<strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>`;
+
+    if (endGameStatus == EndGameStatus.win) {
+      text += `Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
+    }
   }
 
-  const timeString = convertTimeToString(convertMsToTime(record.time));
-  const runDiff = convertTimeToString(convertMsToTime(run.time - record.time));
+  p.innerHTML = text;
+}
 
-  p.innerHTML = `Votre meilleur score dans cette catégorie est de :<br>
-<strong>${timeString}</strong> effectué le
-<strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>
-Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
-  return;
+/**
+ * @description Add to the p pass in param the description of the new Record that the user just made in the current Run.
+ * If there is a previous record, it will show the differencee.
+ * @param p The p element to add the record description
+ * @param newRecord The new record of the category, the current run
+ * @param previousRecord The previous recorrd of this category
+ *
+ */
+export function displayNewRecord(
+  p: HTMLParagraphElement,
+  newRecord: Run,
+  previousRecord: Run | null,
+) {
+  let text =
+    'Bravo, vous venez de créer un nouveau record pour cette catégorie !<br>';
+
+  if (previousRecord) {
+    const timeDiff = convertTimeToString(
+      convertMsToTime(previousRecord.time - newRecord.time),
+    );
+    text += `Vous avez mis <strong style="color:var(--green)">${timeDiff}</strong> de moins que votre précédent record`;
+  }
+
+  p.innerHTML = text;
 }
