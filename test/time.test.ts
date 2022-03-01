@@ -2,6 +2,7 @@ import {
   getDateDifference,
   convertMsToTime,
   convertTimeToString,
+  convertTimeToMs,
 } from '../src/time';
 import type { Time } from '../src/time';
 
@@ -66,7 +67,7 @@ describe('Convert ms to time', () => {
         milliseconds: 500,
       };
 
-      expect(convertTimeToString(time)).toStrictEqual('2h 54m 23s 500ms');
+      expect(convertTimeToString(time)).toStrictEqual('2h 54m 23s 500ms ');
     });
 
     it('convert a partial time to string', () => {
@@ -77,7 +78,7 @@ describe('Convert ms to time', () => {
         milliseconds: 50,
       };
 
-      expect(convertTimeToString(time)).toStrictEqual('52m 50ms');
+      expect(convertTimeToString(time)).toStrictEqual('52m 50ms ');
     });
 
     it('convert a null time to string', () => {
@@ -88,7 +89,43 @@ describe('Convert ms to time', () => {
         milliseconds: 0,
       };
 
-      expect(convertTimeToString(time)).toStrictEqual('0ms');
+      expect(convertTimeToString(time)).toStrictEqual('0ms ');
+    });
+
+    it('convert a time to string with 0ms', () => {
+      const time: Time = {
+        hours: 0,
+        minutes: 52,
+        seconds: 50,
+        milliseconds: 0,
+      };
+
+      expect(convertTimeToString(time)).toStrictEqual('52m 50s ');
+    });
+  });
+
+  describe('Convert time to ms', () => {
+    it('Return the ms from a full time', () => {
+      const time: Time = {
+        hours: 1,
+        minutes: 20,
+        seconds: 59,
+        milliseconds: 4020,
+      };
+      expect(convertTimeToMs(time)).toStrictEqual(
+        1 * 60 * 60 * 1000 + 20 * 60 * 1000 + 59 * 1000 + 4020,
+      );
+    });
+
+    it('Return the ms from a partial time', () => {
+      const time: Partial<Time> = {
+        hours: 1,
+        minutes: 20,
+      };
+
+      expect(convertTimeToMs(time)).toStrictEqual(
+        1 * 60 * 60 * 1000 + 20 * 60 * 1000,
+      );
     });
   });
 });

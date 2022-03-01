@@ -84,12 +84,13 @@ export function isNewRecord(run: Run): boolean {
 export default function handleRun(run: Run): {
   isNew: boolean;
   record: Run;
-  previousRecord?: Run | null;
+  previousRecord: Run | null;
 } {
-  const response: { isNew: boolean; record: Run; previousRecord?: Run | null } =
+  const response: { isNew: boolean; record: Run; previousRecord: Run | null } =
     {
       isNew: true,
       record: run,
+      previousRecord: null,
     };
 
   if (isNewRecord(run)) {

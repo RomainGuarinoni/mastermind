@@ -32,6 +32,16 @@ export function convertMsToTime(duration: number): Time {
   return { milliseconds, seconds, minutes, hours };
 }
 
+export function convertTimeToMs(time: Partial<Time>) {
+  let result = 0;
+
+  if (time.hours) result += time.hours * 60 * 60 * 1000;
+  if (time.minutes) result += time.minutes * 60 * 1000;
+  if (time.seconds) result += time.seconds * 1000;
+  if (time.milliseconds) result += time.milliseconds;
+  return result;
+}
+
 export function convertTimeToString(time: Time) {
   let result = '';
   if (time.hours) {
@@ -44,9 +54,11 @@ export function convertTimeToString(time: Time) {
     result += `${time.seconds}s `;
   }
   if (time.milliseconds) {
-    result += `${time.milliseconds}ms`;
+    result += `${time.milliseconds}ms `;
   } else {
-    result += `0ms`;
+    if (result == '') {
+      result += '0ms ';
+    }
   }
   return result;
 }

@@ -257,9 +257,9 @@ function handleEndGame(status: EndGameStatus) {
 
     const { isNew, record, previousRecord } = handleRun(currentRun);
 
-    if (isNew && previousRecord !== undefined) {
+    if (isNew) {
       displayNewRecord(p, record, previousRecord);
-    } else if (previousRecord !== undefined) {
+    } else {
       displayPreviousRecord(p, previousRecord, currentRun, EndGameStatus.win);
     }
 

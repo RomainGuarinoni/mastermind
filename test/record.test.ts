@@ -180,6 +180,7 @@ describe('Record', () => {
       expect(handleRun({ ...run, time: run.time + 50 })).toStrictEqual({
         isNew: false,
         record: run,
+        previousRecord: null,
       });
     });
   });
