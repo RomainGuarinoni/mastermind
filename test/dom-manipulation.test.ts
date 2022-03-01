@@ -395,6 +395,9 @@ describe('Dom manipulation', () => {
       date: new Date('2022-02-28T17:29:19'),
     };
 
+    const localDate = record.date.toLocaleDateString();
+    const localTime = record.date.toLocaleTimeString();
+
     beforeEach(() => {
       document.body.innerHTML = '';
       document.body.innerHTML = `<p id="record"></p>`;
@@ -404,14 +407,14 @@ describe('Dom manipulation', () => {
     it('Display the record compare in win game', () => {
       displayPreviousRecord(p, record, run, GameState.win);
       expect(p.innerHTML).toStrictEqual(
-        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>28/02/2022</strong> à <strong>17:29:19</strong><br>Vous avez mis <strong style="color:var(--red)">7s 10ms </strong> de plus`,
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>${localDate}</strong> à <strong>${localTime}</strong><br>Vous avez mis <strong style="color:var(--red)">7s 10ms </strong> de plus`,
       );
     });
 
     it('Display the record compare in lose game', () => {
       displayPreviousRecord(p, record, run, GameState.lose);
       expect(p.innerHTML).toStrictEqual(
-        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>28/02/2022</strong> à <strong>17:29:19</strong><br>`,
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>${localDate}</strong> à <strong>${localTime}</strong><br>`,
       );
     });
 
