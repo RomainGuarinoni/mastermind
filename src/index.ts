@@ -20,10 +20,7 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
-  changeGameStatus,
-  isGameFinish,
-  GameStatus,
-  EndGameStatus,
+  changeVerifyContent,
   displayPreviousRecord,
   displayNewRecord,
 } from './dom-manipulation';
@@ -31,6 +28,8 @@ import {
 import handleRun, { Category, getRecord, Run } from './record';
 
 import { getDateDifference } from './time';
+
+import GameState from './game-state';
 
 // get the game container
 const gameContainer = document.getElementById(
@@ -120,6 +119,8 @@ let currentWhiteIndicatorsContainer: HTMLDivElement;
 
 let gameCombination: string[];
 
+let gameState: GameState;
+
 // Game run date
 let runStart: Date;
 let runEnd: Date;
@@ -152,6 +153,8 @@ let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
  * by generating a new combination and reset game DOM variables
  */
 function startNewGame() {
+  gameState = GameState.running;
+
   currentRound = 1;
   updateTooltip(verifyTooltip, currentRound, nbTurns);
   const colorsAvailable = getAvailableColors(COLORS, nbColors);
@@ -164,6 +167,8 @@ function startNewGame() {
     duplicate,
   );
 
+  console.log(gameCombination);
+
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
 
@@ -175,7 +180,7 @@ function startNewGame() {
   currentWhiteIndicatorsContainer = whiteIndicatorsContainer;
   addTargetListener(currentTargets, COLORS);
 
-  changeGameStatus(verifyButton, GameStatus.running);
+  changeVerifyContent(verifyButton, gameState);
 
   runStart = new Date();
 }
@@ -236,7 +241,7 @@ function displaylosePopup() {
  * category or not
  * @param {EndGameStatus} status The end game status, either win or lose
  */
-function handleEndGame(status: EndGameStatus) {
+function handleEndGame() {
   runEnd = new Date();
 
   const currentCategory: Category = {
@@ -252,31 +257,26 @@ function handleEndGame(status: EndGameStatus) {
     date: new Date(),
   };
 
-  if (status === EndGameStatus.win) {
+  if (gameState === GameState.win) {
     const p = document.querySelector('#win-record p') as HTMLParagraphElement;
 
     const { isNew, record, previousRecord } = handleRun(currentRun);
     if (isNew) {
       displayNewRecord(p, record, previousRecord);
     } else {
-      displayPreviousRecord(p, record, currentRun, EndGameStatus.win);
+      displayPreviousRecord(p, record, currentRun, gameState);
     }
 
     displayWinPopup();
   } else {
     const p = document.querySelector('#lose-record p') as HTMLParagraphElement;
 
-    displayPreviousRecord(
-      p,
-      getRecord(currentCategory),
-      currentRun,
-      EndGameStatus.lose,
-    );
+    displayPreviousRecord(p, getRecord(currentCategory), currentRun, gameState);
 
     displaylosePopup();
   }
 
-  changeGameStatus(verifyButton, GameStatus.finish);
+  changeVerifyContent(verifyButton, gameState);
 
   // We set currentRound+1 so that the tooltip display 0 round left
   updateTooltip(verifyTooltip, currentRound + 1, nbTurns);
@@ -304,7 +304,7 @@ function verifyCurrentCombination() {
   );
 
   // Add the indicators only if the game is not finish
-  if (!isGameFinish(verifyButton)) {
+  if (gameState === GameState.running) {
     addIndicators(Indicators.red, currentRedIndicatorsContainer, goodPlacement);
 
     addIndicators(
@@ -315,13 +315,17 @@ function verifyCurrentCombination() {
   }
 
   if (goodPlacement === nbPossibilities) {
-    handleEndGame(EndGameStatus.win);
+    gameState = GameState.win;
+
+    handleEndGame();
 
     return;
   }
 
   if (currentRound === nbTurns) {
-    handleEndGame(EndGameStatus.lose);
+    gameState = GameState.lose;
+
+    handleEndGame();
 
     return;
   }
@@ -348,7 +352,21 @@ function applyParameters() {
   startNewGame();
 }
 
-verifyButton.onclick = verifyCurrentCombination;
+verifyButton.onclick = (e) => {
+  e.preventDefault();
+  if (gameState === GameState.running) {
+    verifyCurrentCombination();
+    return;
+  }
+
+  if (gameState === GameState.win) {
+    displayWinPopup();
+    return;
+  }
+
+  displaylosePopup();
+};
+
 restartButton.onclick = startNewGame;
 
 // add cancel parameters event

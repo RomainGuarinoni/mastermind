@@ -1,13 +1,10 @@
 import { convertMsToTime, convertTimeToString } from './time';
 import { Run } from './record';
+import GameState from './game-state';
+
 export enum Indicators {
   'white',
   'red',
-}
-
-export enum GameStatus {
-  running = 'Vérifier',
-  finish = 'Voir le résultat',
 }
 
 type Display = 'block' | 'flex' | 'none' | 'inline';
@@ -186,34 +183,15 @@ export function getCurrentNumbersOfLine(): number {
  * @param {HTMLButtonElement} verifyButton
  * @param {'Verify' | 'result'} content
  */
-export function changeGameStatus(
+export function changeVerifyContent(
   verifyButton: HTMLButtonElement,
-  status: GameStatus,
+  gameState: GameState,
 ) {
-  switch (status) {
-    case GameStatus.running:
-      verifyButton.innerHTML = GameStatus.running;
-      break;
-    case GameStatus.finish:
-      verifyButton.innerHTML = GameStatus.finish;
-      break;
+  if (gameState === GameState.running) {
+    verifyButton.innerHTML = 'Vérifier';
+  } else {
+    verifyButton.innerHTML = 'Voir le résultat';
   }
-}
-
-/**
- * @description Return true if the game is finish
- * @param {HTMLButtonElement} verifyButton the verify button of the game
- * @returns {boolean} return a boolean that indict weither the game is finish or not
- */
-export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
-  if (verifyButton.innerHTML == GameStatus.finish) return true;
-
-  return false;
-}
-
-export enum EndGameStatus {
-  win,
-  lose,
 }
 
 /**
@@ -229,7 +207,7 @@ export function displayPreviousRecord(
   p: HTMLParagraphElement,
   record: Run | null,
   run: Run,
-  endGameStatus: EndGameStatus,
+  gameState: GameState,
 ) {
   let text = '';
   if (!record) {
@@ -242,7 +220,7 @@ export function displayPreviousRecord(
 
     text = `Votre meilleur score dans cette catégorie est de :<br><strong>${timeString}</strong> effectué le <strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>`;
 
-    if (endGameStatus == EndGameStatus.win) {
+    if (gameState == GameState.win) {
       text += `Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
     }
   }
