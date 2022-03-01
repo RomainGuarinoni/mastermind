@@ -233,7 +233,7 @@ function handleEndGame(status: EndGameStatus) {
 
   changeGameStatus(verifyButton, GameStatus.finish);
 
-  // We set currentRound+1 so that the tooltip display 0 round left
+  // We set currentRound+1 so that the tooltip dispWatchOutlinedlay 0 round left
   updateTooltip(verifyTooltip, currentRound + 1, nbTurns);
 }
 
@@ -250,7 +250,6 @@ function verifyCurrentCombination() {
   try {
     currentCombination = getCurrentCombination(currentTargets, COLORS);
   } catch (err) {
-    alert('Mettez des pions dans chaque emplacement de la ligne');
     return;
   }
 

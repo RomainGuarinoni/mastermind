@@ -35,7 +35,6 @@ export function getCurrentCombination(
   colors: string[],
 ) {
   const combination: string[] = [];
-
   for (let i = 0; i < currentTargets.length; i++) {
     const currentTargetPiece = currentTargets[i].querySelector(
       'div.target-piece',
@@ -45,12 +44,20 @@ export function getCurrentCombination(
       .split(' ')
       .filter((e) => colors.includes(e))[0];
     if (!color) {
-      throw new Error('Combination is not complete');
+      currentTargetPiece.classList.add('alert');
+    } else {
+      combination.push(color);
     }
-
-    combination.push(color);
   }
-
+  if (combination.length !== currentTargets.length) {
+    const alerted = document.getElementsByClassName('alert');
+    setTimeout(() => {
+      for (let i = 0; i < alerted.length; i++) {
+        alerted[i].classList.remove('alert');
+      }
+    }, 1500);
+    throw new Error('Incomplete combination !');
+  }
   return combination;
 }
 
