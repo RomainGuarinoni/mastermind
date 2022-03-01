@@ -67,9 +67,6 @@ const winPopup = document.getElementById('win') as HTMLDivElement;
 const losePopup = document.getElementById('lose') as HTMLDivElement;
 
 // The button of the game
-const applyParametersButton = document.getElementById(
-  'applyParameters',
-) as HTMLButtonElement;
 const cancelParametersButton = document.getElementById(
   'cancelParameters',
 ) as HTMLButtonElement;
@@ -309,7 +306,7 @@ verifyButton.onclick = verifyCurrentCombination;
 
 restartButton.onclick = startNewGame;
 
-// add apply parameters event
+// add apply parameters event, usable with enter key to submit the form
 parametersPopup.addEventListener('submit', (e) => {
   e.preventDefault();
   applyParameters();
