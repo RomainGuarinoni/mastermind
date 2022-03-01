@@ -62,7 +62,7 @@ const COLORS = pieces.map((piece) => piece.id.split('-')[0]);
 // Get all Popup
 const parametersPopup = document.getElementById(
   'parametersPopup',
-) as HTMLDivElement;
+) as HTMLFormElement;
 const winPopup = document.getElementById('win') as HTMLDivElement;
 const losePopup = document.getElementById('lose') as HTMLDivElement;
 
@@ -142,12 +142,14 @@ let nbColors = nbColorsValue.valueAsNumber;
  */
 let nbPossibilities = nbPossibilitiesValue.valueAsNumber;
 
+const property = [duplicate, nbColors, nbTurns, nbPossibilities];
 /**
  * @description Reset all the HTML of the game container and start a new game
  * by generating a new combination and reset game DOM variables
  */
 function startNewGame() {
   currentRound = 1;
+  console.log(property);
   updateTooltip(verifyTooltip, currentRound, nbTurns);
   const colorsAvailable = getAvailableColors(COLORS, nbColors);
 

@@ -29,14 +29,14 @@
     <div class="button-container">
       <button id="restart">Nouvelle partie</button>
       <div class="verify-container">
-        <button id="verify">Vérifier</button>
+        <button id="verify" type="submit">Vérifier</button>
         <div id="tooltip">
           <p>Il vous reste <span>11</span> tours</p>
         </div>
       </div>
     </div>
 
-    <div class="popup" id="parametersPopup">
+    <form class="popup" id="parametersPopup">
       <div id="paramsPopUp">
         <h2>Paramètres</h2>
         <div class="list-params">
@@ -90,10 +90,10 @@
         </div>
         <div class="button-container">
           <button id="cancelParameters">Annuler</button>
-          <button id="applyParameters">Appliquer</button>
+          <button id="applyParameters" type="submit" value="Enter">Appliquer</button>
         </div>
       </div>
-    </div>
+    </form>
 
     <div class="popup" id="win">
       <div class="win-popup">

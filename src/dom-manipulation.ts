@@ -93,7 +93,7 @@ export function changePieceDisplay(color: string, display: Display) {
 }
 
 /**
- *
+ * @description Pick the colors available and make disappear the others
  * @param {string[]} colors an array of all the colors
  * @param {string[]} finalColors an array of wanted colors
  */
