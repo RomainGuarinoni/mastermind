@@ -44,6 +44,10 @@ module.exports = () => {
             from: path.resolve(__dirname, 'assets'),
             to: path.resolve(__dirname, 'dist/', 'assets'),
           },
+          {
+            from: path.resolve(__dirname, 'site.webmanifest'),
+            to: path.resolve(__dirname, 'dist/'),
+          },
         ],
       }),
     ],

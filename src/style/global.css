@@ -4,13 +4,13 @@
 }
 
 :root {
-  --main: rgb(245, 236, 224);
-  --blue: blue;
-  --red: red;
-  --green: green;
+  --main: #f5ece0;
+  --blue: #0000ff;
+  --red: #ff0000;
+  --green: #008000;
   --yellow: rgb(240, 240, 36);
   --black: black;
-  --orange: orange;
+  --orange: #ffa500;
   --maroon: maroon;
   --white: white;
 }
