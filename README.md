@@ -9,10 +9,28 @@
 <div align="center">
    <h1> Mastermind</ha>
 </div>
+<div align="center">
+   <img src="./assets/logo.png" alt="mastermind logo" />
+   <h3> <strong>A mastermind game built with web technologies</strong> </h3>
+</div>
 
-> A mastermind game built with web technologies
+  <p align="center">
+    <br />
+    <a href="https://github.com/alexandrelam/ilog"><strong>User documentation</strong></a>
+    ·
+     <a href="https://github.com/alexandrelam/ilog"><strong>Developper documentation</strong></a>
+    <br />
+    <br />
+    <a href="https://romainguarinoni.github.io/mastermind/">Website</a>
+    ·
+    <a href="https://github.com/RomainGuarinoni/mastermind/issues/new/choose">Report Bug</a>
+    ·
+    <a href="https://github.com/RomainGuarinoni/mastermind/issues/new/choose">Request Feature</a>
+  </p>
 
-![mastermind-demo](https://user-images.githubusercontent.com/72984755/152392996-c8c0b742-bba7-4cce-b799-3637af75380b.gif)
+>
+
+![mastermind-demo](./docs/assets/demo.gif)
 
 ## Built with
 
