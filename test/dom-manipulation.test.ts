@@ -10,11 +10,14 @@ import {
   hideUnwantedColor,
   getGameDomElements,
   updateTooltip,
-  changeGameStatus,
+  changeVerifyContent,
   getCurrentNumbersOfLine,
-  isGameFinish,
-  GameStatus,
+  displayPreviousRecord,
+  displayNewRecord,
 } from '../src/dom-manipulation';
+
+import GameState from '../src/game-state';
+import { Run } from '../src/record';
 
 describe('Dom manipulation', () => {
   beforeEach(() => {
@@ -22,15 +25,17 @@ describe('Dom manipulation', () => {
   });
 
   describe('Add new game line', () => {
-    it('Add new game line with 1 target', () => {
+    let gameContainer: HTMLDivElement;
+    beforeEach(() => {
       document.body.innerHTML = `
-        <div id="game-container"></div>
-        `;
-
-      const gameContainer = document.getElementById(
+      <div id="game-container"></div>
+      `;
+      gameContainer = document.getElementById(
         'game-container',
       ) as HTMLDivElement;
+    });
 
+    it('Add new game line with 1 target', () => {
       addNewGameLine(5, gameContainer, 1);
 
       expect(document.getElementById('line-5')).toBeInstanceOf(HTMLDivElement);
@@ -75,14 +80,6 @@ describe('Dom manipulation', () => {
     });
 
     it('Add new game line with 10 target', () => {
-      document.body.innerHTML = `
-        <div id="game-container"></div>
-        `;
-
-      const gameContainer = document.getElementById(
-        'game-container',
-      ) as HTMLDivElement;
-
       addNewGameLine(5, gameContainer, 10);
 
       expect(document.getElementById('line-5')).toBeInstanceOf(HTMLDivElement);
@@ -161,36 +158,39 @@ describe('Dom manipulation', () => {
   });
 
   describe('change piece display', () => {
-    it('change display to none', () => {
+    let bluePiece: HTMLDivElement;
+    beforeEach(() => {
       document.body.innerHTML = `
       <div id="blue-piece"></div>
       `;
 
-      const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
+      bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
+    });
+
+    it('change display to none', () => {
       changePieceDisplay('blue', 'none');
       expect(bluePiece.style.display).toStrictEqual('none');
     });
 
     it('change display to block', () => {
-      document.body.innerHTML = `
-      <div id="blue-piece"></div>
-      `;
-
-      const bluePiece = document.getElementById('blue-piece') as HTMLDivElement;
       changePieceDisplay('blue', 'block');
       expect(bluePiece.style.display).toStrictEqual('block');
     });
   });
 
   describe('Hide unwanted colors', () => {
-    it('hide all the color', () => {
+    const colors = ['blue', 'red', 'yellow', 'green'];
+
+    beforeEach(() => {
       document.body.innerHTML = `
       <div id="blue-piece"></div>
       <div id="red-piece"></div>
       <div id="yellow-piece"></div>
       <div id="green-piece"></div>
       `;
-      const colors = ['blue', 'red', 'yellow', 'green'];
+    });
+
+    it('hide all the color', () => {
       hideUnwantedColor(colors, []);
 
       colors.forEach((color) => {
@@ -200,13 +200,6 @@ describe('Dom manipulation', () => {
     });
 
     it('hide unwanted color', () => {
-      document.body.innerHTML = `
-      <div id="blue-piece"></div>
-      <div id="red-piece"></div>
-      <div id="yellow-piece"></div>
-      <div id="green-piece"></div>
-      `;
-      const colors = ['blue', 'red', 'yellow', 'green'];
       const availableColor = ['blue', 'red'];
       hideUnwantedColor(colors, availableColor);
 
@@ -222,7 +215,7 @@ describe('Dom manipulation', () => {
   });
 
   describe('Get DOM elements', () => {
-    it('return the game DOM element', () => {
+    beforeEach(() => {
       document.body.innerHTML = `
       <div class="line" id="line-2">
         <div class="red-indicator-container"></div>
@@ -235,7 +228,9 @@ describe('Dom manipulation', () => {
         <div class="white-indicator-container"></div>
       </div>
       `;
+    });
 
+    it('return the game DOM element', () => {
       const round = 2;
 
       const { targets, redIndicatorsContainer, whiteIndicatorsContainer } =
@@ -250,19 +245,6 @@ describe('Dom manipulation', () => {
     });
 
     it('return the right number of element', () => {
-      document.body.innerHTML = `
-      <div class="line" id="line-2">
-        <div class="red-indicator-container"></div>
-        <div class="targets-container">
-          <div class="target"></div>
-          <div class="target"></div>
-          <div class="target"></div>
-          <div class="target"></div>  
-        </div>
-        <div class="white-indicator-container"></div>
-      </div>
-      `;
-
       const round = 2;
 
       const { targets } = getGameDomElements(round);
@@ -270,21 +252,8 @@ describe('Dom manipulation', () => {
       expect(targets.length).toStrictEqual(4);
     });
 
-    it('return an errror because no line found', () => {
-      document.body.innerHTML = `
-      <div class="line" id="line-3">
-        <div class="red-indicator-container"></div>
-        <div class="targets-container">
-          <div class="target"></div>
-          <div class="target"></div>
-          <div class="target"></div>
-          <div class="target"></div>  
-        </div>
-        <div class="white-indicator-container"></div>
-      </div>
-      `;
-
-      const round = 2;
+    it('return an error because no line found', () => {
+      const round = 3;
 
       expect(() => {
         getGameDomElements(round);
@@ -358,28 +327,28 @@ describe('Dom manipulation', () => {
   });
 
   describe('changeVerifyContent', () => {
-    it('change the content to Verify', () => {
+    let verifyButton: HTMLButtonElement;
+    beforeEach(() => {
       document.body.innerHTML = `
         <button id="verify"></button>
       `;
-      const verifyButton = document.getElementById(
-        'verify',
-      ) as HTMLButtonElement;
+      verifyButton = document.getElementById('verify') as HTMLButtonElement;
+    });
 
-      changeGameStatus(verifyButton, GameStatus.running);
+    it('change the content to Verify', () => {
+      changeVerifyContent(verifyButton, GameState.running);
 
       expect(verifyButton.innerHTML).toStrictEqual('Vérifier');
     });
 
-    it('change the content to result', () => {
-      document.body.innerHTML = `
-        <button id="verify"></button>
-      `;
-      const verifyButton = document.getElementById(
-        'verify',
-      ) as HTMLButtonElement;
+    it('change the content to result when lose', () => {
+      changeVerifyContent(verifyButton, GameState.lose);
 
-      changeGameStatus(verifyButton, GameStatus.finish);
+      expect(verifyButton.innerHTML).toStrictEqual('Voir le résultat');
+    });
+
+    it('change the content to result when win', () => {
+      changeVerifyContent(verifyButton, GameState.win);
 
       expect(verifyButton.innerHTML).toStrictEqual('Voir le résultat');
     });
@@ -403,29 +372,103 @@ describe('Dom manipulation', () => {
     });
   });
 
-  describe('Is game finish', () => {
-    it('return true', () => {
-      document.body.innerHTML = `
-        <button id="verify">Voir le résultat</button>
-      `;
+  describe('Display record', () => {
+    let p: HTMLParagraphElement;
+    const record: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 33 * 1000 + 582,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+    const run: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
+      date: new Date('2022-02-28T17:29:19'),
+    };
 
-      const verifyButton = document.getElementById(
-        'verify',
-      ) as HTMLButtonElement;
+    const localDate = record.date.toLocaleDateString();
+    const localTime = record.date.toLocaleTimeString();
 
-      expect(isGameFinish(verifyButton)).toStrictEqual(true);
+    beforeEach(() => {
+      document.body.innerHTML = '';
+      document.body.innerHTML = `<p id="record"></p>`;
+      p = document.getElementById('record') as HTMLParagraphElement;
     });
 
-    it('return false', () => {
-      document.body.innerHTML = `
-        <button id="verify">Vérifier</button>
-      `;
+    it('Display the record compare in win game', () => {
+      displayPreviousRecord(p, record, run, GameState.win);
+      expect(p.innerHTML).toStrictEqual(
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>${localDate}</strong> à <strong>${localTime}</strong><br>Vous avez mis <strong style="color:var(--red)">7s 10ms </strong> de plus`,
+      );
+    });
 
-      const verifyButton = document.getElementById(
-        'verify',
-      ) as HTMLButtonElement;
+    it('Display the record compare in lose game', () => {
+      displayPreviousRecord(p, record, run, GameState.lose);
+      expect(p.innerHTML).toStrictEqual(
+        `Votre meilleur score dans cette catégorie est de :<br><strong>1h 1m 33s 582ms </strong> effectué le <strong>${localDate}</strong> à <strong>${localTime}</strong><br>`,
+      );
+    });
 
-      expect(isGameFinish(verifyButton)).toStrictEqual(false);
+    it('No record set yet', () => {
+      displayPreviousRecord(p, null, run, GameState.lose);
+      expect(p.innerHTML).toStrictEqual(
+        "Vous n'avez pas encore de record dans cette catégorie.",
+      );
+    });
+  });
+
+  describe('Display new record', () => {
+    let p: HTMLParagraphElement;
+    const previousRecord: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 40 * 1000 + 592,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+    const newRecord: Run = {
+      category: {
+        duplicate: false,
+        nbColors: 5,
+        nbPossibilities: 10,
+        nbTurns: 12,
+      },
+      time: 60 * 60 * 1000 + 60 * 1000 + 33 * 1000 + 582,
+      date: new Date('2022-02-28T17:29:19'),
+    };
+
+    beforeEach(() => {
+      document.body.innerHTML = '';
+      document.body.innerHTML = `<p id="record"></p>`;
+      p = document.getElementById('record') as HTMLParagraphElement;
+    });
+
+    it('Display the new record with the diff of the previous one', () => {
+      displayNewRecord(p, newRecord, previousRecord);
+
+      expect(p.innerHTML).toStrictEqual(
+        'Bravo, vous venez de créer un nouveau record pour cette catégorie !<br>Vous avez mis <strong style="color:var(--green)">7s 10ms </strong> de moins que votre précédent record',
+      );
+    });
+
+    it('Display the new record without the diff of the previous one', () => {
+      displayNewRecord(p, newRecord, null);
+
+      expect(p.innerHTML).toStrictEqual(
+        'Bravo, vous venez de créer un nouveau record pour cette catégorie !<br>',
+      );
     });
   });
 });

@@ -1,11 +1,10 @@
+import { convertMsToTime, convertTimeToString } from './time';
+import { Run } from './record';
+import GameState from './game-state';
+
 export enum Indicators {
   'white',
   'red',
-}
-
-export enum GameStatus {
-  running = 'Vérifier',
-  finish = 'Voir le résultat',
 }
 
 type Display = 'block' | 'flex' | 'none' | 'inline';
@@ -184,27 +183,73 @@ export function getCurrentNumbersOfLine(): number {
  * @param {HTMLButtonElement} verifyButton
  * @param {'Verify' | 'result'} content
  */
-export function changeGameStatus(
+export function changeVerifyContent(
   verifyButton: HTMLButtonElement,
-  status: GameStatus,
+  gameState: GameState,
 ) {
-  switch (status) {
-    case GameStatus.running:
-      verifyButton.innerHTML = GameStatus.running;
-      break;
-    case GameStatus.finish:
-      verifyButton.innerHTML = GameStatus.finish;
-      break;
+  if (gameState === GameState.running) {
+    verifyButton.innerHTML = 'Vérifier';
+  } else {
+    verifyButton.innerHTML = 'Voir le résultat';
   }
 }
 
 /**
- * @description Return true if the game is finish
- * @param {HTMLButtonElement} verifyButton the verify button of the game
- * @returns {boolean} return a boolean that indict weither the game is finish or not
+ * @description Add to the p pass in param the description of the previousRecord and the comparaison to the currentRun.
+ * The useCase of this function is to be called when the user loose a game or win a game without beating his record
+ * and the win / loose popUp has to show what is the current record in this category
+ * @param p The p element to add the record description
+ * @param record The record of the category
+ * @param run The current run in the same category
+ * @param endGameStatus The game status, if set to win, we display the diff of time between run and record, otherwise not
  */
-export function isGameFinish(verifyButton: HTMLButtonElement): boolean {
-  if (verifyButton.innerHTML == GameStatus.finish) return true;
+export function displayPreviousRecord(
+  p: HTMLParagraphElement,
+  record: Run | null,
+  run: Run,
+  gameState: GameState,
+) {
+  let text = '';
+  if (!record) {
+    text = "Vous n'avez pas encore de record dans cette catégorie.";
+  } else {
+    const timeString = convertTimeToString(convertMsToTime(record.time));
+    const runDiff = convertTimeToString(
+      convertMsToTime(run.time - record.time),
+    );
 
-  return false;
+    text = `Votre meilleur score dans cette catégorie est de :<br><strong>${timeString}</strong> effectué le <strong>${record.date.toLocaleDateString()}</strong> à <strong>${record.date.toLocaleTimeString()}</strong><br>`;
+
+    if (gameState == GameState.win) {
+      text += `Vous avez mis <strong style="color:var(--red)">${runDiff}</strong> de plus`;
+    }
+  }
+
+  p.innerHTML = text;
+}
+
+/**
+ * @description Add to the p pass in param the description of the new Record that the user just made in the current Run.
+ * If there is a previous record, it will show the differencee.
+ * @param p The p element to add the record description
+ * @param newRecord The new record of the category, the current run
+ * @param previousRecord The previous recorrd of this category
+ *
+ */
+export function displayNewRecord(
+  p: HTMLParagraphElement,
+  newRecord: Run,
+  previousRecord: Run | null,
+) {
+  let text =
+    'Bravo, vous venez de créer un nouveau record pour cette catégorie !<br>';
+
+  if (previousRecord) {
+    const timeDiff = convertTimeToString(
+      convertMsToTime(previousRecord.time - newRecord.time),
+    );
+    text += `Vous avez mis <strong style="color:var(--green)">${timeDiff}</strong> de moins que votre précédent record`;
+  }
+
+  p.innerHTML = text;
 }

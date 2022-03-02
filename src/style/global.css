@@ -413,3 +413,19 @@ input {
   animation: line-enter 300ms ease;
   transition: all ease 200ms;
 }
+
+#lose-record,
+#win-record {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin: 20px 0;
+}
+
+#lose-record p,
+#win-record p {
+  flex: 1;
+  text-align: center;
+  margin: 0 20px;
+}
