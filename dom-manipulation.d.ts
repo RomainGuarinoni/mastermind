@@ -1,10 +1,8 @@
+import { Run } from './record';
+import GameState from './game-state';
 export declare enum Indicators {
     'white' = 0,
     'red' = 1
-}
-export declare enum GameStatus {
-    running = "V\u00E9rifier",
-    finish = "Voir le r\u00E9sultat"
 }
 declare type Display = 'block' | 'flex' | 'none' | 'inline';
 /**
@@ -62,11 +60,24 @@ export declare function getCurrentNumbersOfLine(): number;
  * @param {HTMLButtonElement} verifyButton
  * @param {'Verify' | 'result'} content
  */
-export declare function changeGameStatus(verifyButton: HTMLButtonElement, status: GameStatus): void;
+export declare function changeVerifyContent(verifyButton: HTMLButtonElement, gameState: GameState): void;
 /**
- * @description Return true if the game is finish
- * @param {HTMLButtonElement} verifyButton the verify button of the game
- * @returns {boolean} return a boolean that indict weither the game is finish or not
+ * @description Add to the p pass in param the description of the previousRecord and the comparaison to the currentRun.
+ * The useCase of this function is to be called when the user loose a game or win a game without beating his record
+ * and the win / loose popUp has to show what is the current record in this category
+ * @param p The p element to add the record description
+ * @param record The record of the category
+ * @param run The current run in the same category
+ * @param endGameStatus The game status, if set to win, we display the diff of time between run and record, otherwise not
  */
-export declare function isGameFinish(verifyButton: HTMLButtonElement): boolean;
+export declare function displayPreviousRecord(p: HTMLParagraphElement, record: Run | null, run: Run, gameState: GameState): void;
+/**
+ * @description Add to the p pass in param the description of the new Record that the user just made in the current Run.
+ * If there is a previous record, it will show the differencee.
+ * @param p The p element to add the record description
+ * @param newRecord The new record of the category, the current run
+ * @param previousRecord The previous recorrd of this category
+ *
+ */
+export declare function displayNewRecord(p: HTMLParagraphElement, newRecord: Run, previousRecord: Run | null): void;
 export {};
