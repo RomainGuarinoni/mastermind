@@ -1,7 +1,7 @@
 # Developper documentation
 
 > This documention contains every details of the project architecture, the
-> guidlines to contribute and the roadmap of the project
+> guidelines to contribute and the roadmap of the project
 
 ## table of content
 
@@ -74,7 +74,7 @@ while developing. Just run the following command :
 npm run start
 ```
 
-It will automatically lunch your browser and serve the app on the
+It will automatically launch your browser and serve the app on the
 `http://localhost:8081`. The website will re build with the hot module
 replacement when any changes are detected in the src files.
 
