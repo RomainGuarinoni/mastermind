@@ -1,13 +1,13 @@
 # User documentation
 
 > Cette documention contiens tous les details sur les règles du mastermind,
-> comment y jouer sur notre site web, les différrents paramètres disponible et
+> comment y jouer sur notre site web, les différents paramètres disponibles et
 > enfin le système de record.
 
 ## Règles du mastermind
 
-Le mastermind est un jeu ou le but est de trouver un code composé de diférrentes
-couleurs en un nombre de tours définit.
+Le mastermind est un jeu où le but est de trouver un code composé de différentes
+couleurs en un nombre de tours définie.
 
 Petit point histoire issu de wikipedia :
 
@@ -27,8 +27,8 @@ automatiquement. Votre but va être de le trouver le plus vite possible.
 ### La création d'une combinaison
 
 Pour pouvoir trouver quel est le code secret de la partie, vous allez devoir
-créer des combinaisons de couleurs et faire des déductions pour trouver le bons
-codes.
+créer des combinaisons de couleurs et faire des déductions pour trouver le bon
+code.
 
 Pour cela, il suffit de déposer des couleurs dans la ligne en cours comme le
 montre la photo ci dessous :
@@ -54,13 +54,13 @@ Prenons l'exemple ci-dessous :
 
 Dans cette combinaion:
 
-- l'indicateur rouge inqique que l'une des couleurs est bien placé
-- l'indicateur blanc indique que l'une des couleurs est mal placé
-- deux couleurs ne sont pas présente dans la combinaison secrète
+- l'indicateur rouge inqique que l'une des couleurs est bien placée
+- l'indicateur blanc indique que l'une des couleurs est mal placée
+- deux couleurs ne sont pas présentes dans la combinaison secrète
 
 ### Fin de la partie
 
-Si vous arrivez à trouver la combinaison secrète avant le nombre d'essais
+Si vous arrivez à trouver la combinaison secrète avant le nombre de tours
 maximal, une fenètre vous indiquant votre victoire apparaitra. Sinon, une
 fenètre vous anoncera que vous avez perdu la partie.
 
@@ -74,18 +74,18 @@ système du
 
 ![demo](./assets/demo-final.gif)
 
-## Les différends paramètres
+## Les différents paramètres
 
 En cliquant sur l'icone paramètres en haut a droite de votre écran, vous pourrez
-accéder aux différends paramètres du jeux mastermind :
+accéder aux différents paramètres du jeux mastermind :
 
 1. **Couleurs dupliquées**: permet de définir si la combinaison secrète peut
    contenir des couleurs en double ou non
-2. **Nombre de couleurs**: permet de définir le nombre de couleur accessible
-   pourr créer une combinaison
+2. **Nombre de couleurs**: permet de définir le nombre de couleurs accessibles
+   pour créer une combinaison
 3. **Nombre de tours**: permet de définir le nombre de tours que dure la partie
 4. **Nombre de possibilités par ligne**: permet de définir le nombre de couleurs
-   (distincte ou non) que possède une combinaison.
+   (distinctes ou non) que possède une combinaison.
 
 Lorsque que vous changez l'un de ces paramètres, une nouvelle partie se lance
 automatiquement.
