@@ -16,9 +16,9 @@
 
   <p align="center">
     <br />
-    <a href="https://github.com/alexandrelam/ilog"><strong>User documentation</strong></a>
+    <a href="https://github.com/RomainGuarinoni/mastermind/blob/main/docs/user.md"><strong>User documentation</strong></a>
     ·
-     <a href="https://github.com/alexandrelam/ilog"><strong>Developper documentation</strong></a>
+     <a href="https://github.com/RomainGuarinoni/mastermind/blob/main/docs/developper.md"><strong>Developper documentation</strong></a>
     <br />
     <br />
     <a href="https://romainguarinoni.github.io/mastermind/">Website</a>
