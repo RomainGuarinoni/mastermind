@@ -255,6 +255,9 @@ See below the organization of the modules :
 The goal in these module is to make all the function as pure as possible to test
 them easily.
 
+For each function you add or changes in the code, you have to create unit tests
+to test the changes. All the test are situated in the `test/` folder.
+
 Normally, you should be able to implement your feature and developp your
 function using all these files. If you think you should create a new file to
 create a new module, use a explicit name that describe what does the function do
