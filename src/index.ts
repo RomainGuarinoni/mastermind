@@ -11,6 +11,7 @@ import {
   setDragListenerOnPieces,
   addReducePopUpListener,
   addFormEvent,
+  onClickOutside,
 } from './listeners';
 
 import {
@@ -166,6 +167,8 @@ function startNewGame() {
     nbPossibilities,
     duplicate,
   );
+
+  console.log(gameCombination);
 
   gameContainer.innerHTML = '';
   addNewGameLine(currentRound, gameContainer, nbPossibilities);
@@ -379,6 +382,16 @@ cancelParametersButton.onclick = () => {
 parametersButton.onclick = () => {
   parametersPopup.style.display = 'flex';
 };
+
+onClickOutside(
+  [
+    parametersPopup.querySelector('#paramsPopUp') as HTMLDivElement,
+    parametersButton,
+  ],
+  () => {
+    parametersPopup.style.display = 'none';
+  },
+);
 
 winRestartButton.onclick = (e) => {
   e.preventDefault();

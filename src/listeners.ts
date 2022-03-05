@@ -135,3 +135,19 @@ export function addFormEvent(form: HTMLFormElement, action: () => void) {
     action();
   });
 }
+
+/**
+ * @description Run a callback if none of the elements contain the click
+ * @param {HTMLElement[]} elements An array of element that can contain the click
+ * @param  {()=>void} callback the callback to run if none of the elements contain the clidk
+ */
+export function onClickOutside(elements: HTMLElement[], callback: () => void) {
+  window.addEventListener('click', (e) => {
+    for (let i = 0; i < elements.length; i++) {
+      if (elements[i].contains(e.target as HTMLElement)) {
+        return;
+      }
+    }
+    callback();
+  });
+}
