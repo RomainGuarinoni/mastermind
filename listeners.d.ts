@@ -25,3 +25,9 @@ export declare function addReducePopUpListener(buttons: HTMLCollectionOf<HTMLBut
  * @param action  the callback
  */
 export declare function addFormEvent(form: HTMLFormElement, action: () => void): void;
+/**
+ * @description Run a callback if none of the elements contain the click
+ * @param {HTMLElement[]} elements An array of element that can contain the click
+ * @param  {()=>void} callback the callback to run if none of the elements contain the clidk
+ */
+export declare function onClickOutside(elements: HTMLElement[], callback: () => void): void;
